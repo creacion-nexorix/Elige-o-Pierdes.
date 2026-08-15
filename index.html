@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELIGE O PIERDE — v6.2.0</title>
+<meta name="theme-color" content="#050808">
+
+<title>ELIGE O PIERDE — v6.2.1</title>
 
 <style>
 :root{
@@ -19,19 +21,43 @@
   --line:#19302d;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:12px;
+}
 
 body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   background:
-    radial-gradient(circle at 50% -10%,#08352f 0,#050808 42%,#020303 100%);
+    radial-gradient(
+      circle at 50% -10%,
+      #08352f 0,
+      #050808 42%,
+      #020303 100%
+    );
   color:var(--text);
   min-height:100vh;
+  overflow-x:hidden;
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer}
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  cursor:not-allowed;
+}
 
 .container{
   width:min(1100px,92%);
@@ -47,7 +73,9 @@ header{
   font-size:clamp(32px,7vw,62px);
   font-weight:900;
   letter-spacing:2px;
-  text-shadow:0 0 8px var(--neon),0 0 25px #00ffcc66;
+  text-shadow:
+    0 0 8px var(--neon),
+    0 0 25px #00ffcc66;
   margin:0;
 }
 
@@ -97,8 +125,13 @@ header{
   border-color:var(--neon);
 }
 
-.page{display:none}
-.page.active{display:block}
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
 
 .card{
   background:linear-gradient(145deg,#0d1514,#070b0b);
@@ -126,7 +159,10 @@ header{
   line-height:1.6;
 }
 
-.primary,.secondary,.danger,.sound-button{
+.primary,
+.secondary,
+.danger,
+.sound-button{
   border-radius:14px;
   padding:13px 20px;
   font-weight:900;
@@ -150,10 +186,18 @@ header{
   border-color:var(--neon);
 }
 
+.secondary:hover{
+  background:#06332d;
+}
+
 .danger{
   background:#261016;
   color:#ff8299;
   border-color:#6b2031;
+}
+
+.danger:hover{
+  background:#3b141d;
 }
 
 .sound-button{
@@ -201,14 +245,18 @@ input:focus{
   box-shadow:0 0 0 3px #00ffcc14;
 }
 
-/* SONIDO */
+/* =========================
+   SONIDO
+========================= */
 
 .sound-control{
   margin-top:18px;
   text-align:center;
 }
 
-/* COLABORADORES */
+/* =========================
+   COLABORADORES
+========================= */
 
 .collaborators{
   text-align:center;
@@ -259,7 +307,9 @@ input:focus{
   margin:5px 0;
 }
 
-/* TABLERO */
+/* =========================
+   TABLERO
+========================= */
 
 .scoreboard{
   display:grid;
@@ -330,6 +380,10 @@ input:focus{
   color:var(--text);
 }
 
+/* =========================
+   ESCENARIO
+========================= */
+
 .scenario h3{
   margin:0 0 8px;
   color:var(--neon);
@@ -376,8 +430,12 @@ input:focus{
 }
 
 .option:disabled{
-  cursor:default;
+  cursor:not-allowed;
 }
+
+/* =========================
+   IA
+========================= */
 
 .ai-box{
   margin-top:18px;
@@ -403,6 +461,10 @@ input:focus{
   color:var(--muted);
   line-height:1.5;
 }
+
+/* =========================
+   BOTONES
+========================= */
 
 .actions{
   display:flex;
@@ -435,6 +497,10 @@ input:focus{
   border:1px solid var(--neon);
 }
 
+/* =========================
+   MENSAJES
+========================= */
+
 .message{
   padding:14px;
   border-radius:14px;
@@ -443,6 +509,10 @@ input:focus{
   color:var(--muted);
   line-height:1.5;
 }
+
+/* =========================
+   ESTADÍSTICAS
+========================= */
 
 .stats{
   display:grid;
@@ -464,12 +534,17 @@ input:focus{
   color:var(--neon);
 }
 
+/* =========================
+   TABLA
+========================= */
+
 table{
   width:100%;
   border-collapse:collapse;
 }
 
-th,td{
+th,
+td{
   text-align:left;
   padding:12px;
   border-bottom:1px solid var(--line);
@@ -486,6 +561,10 @@ th{
   padding:25px;
 }
 
+/* =========================
+   REGLAS
+========================= */
+
 .rule{
   padding:15px;
   border-left:3px solid var(--neon);
@@ -494,6 +573,10 @@ th{
   border-radius:0 12px 12px 0;
 }
 
+/* =========================
+   PIE
+========================= */
+
 footer{
   text-align:center;
   color:#61736f;
@@ -501,26 +584,121 @@ footer{
   font-size:13px;
 }
 
+/* =========================
+   MÓVIL
+========================= */
+
 @media(max-width:700px){
 
   .container{
-    width:94%;
+    width:96%;
+  }
+
+  header{
+    padding:25px 0 15px;
+  }
+
+  .logo{
+    font-size:clamp(30px,9vw,45px);
+    line-height:1.05;
+  }
+
+  .subtitle{
+    font-size:14px;
+  }
+
+  .tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+  }
+
+  .tab{
+    min-width:0;
+    padding:11px 8px;
+    font-size:13px;
   }
 
   .setup{
-    grid-template-columns:1fr;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .setup > div,
+  .setup > button{
+    width:100%;
+  }
+
+  .setup button{
+    min-height:50px;
+  }
+
+  .card{
+    padding:16px;
+    border-radius:18px;
+  }
+
+  .hero{
+    padding:24px 14px;
   }
 
   .scoreboard{
-    grid-template-columns:1fr 35px 1fr;
+    grid-template-columns:1fr 28px 1fr;
+    gap:7px;
+  }
+
+  .score{
+    padding:13px 7px;
   }
 
   .score strong{
-    font-size:34px;
+    font-size:30px;
+  }
+
+  .score small{
+    font-size:11px;
+  }
+
+  .vs{
+    font-size:12px;
+  }
+
+  .roundbar{
+    font-size:12px;
+  }
+
+  .scenario-text{
+    font-size:17px;
   }
 
   .options{
     grid-template-columns:1fr;
+    gap:9px;
+  }
+
+  .option{
+    width:100%;
+    min-height:64px;
+    padding:14px;
+    font-size:15px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .actions button{
+    width:100%;
+    min-height:50px;
+  }
+
+  .judge{
+    grid-template-columns:1fr;
+  }
+
+  .judge button{
+    min-height:52px;
   }
 
   .stats{
@@ -531,21 +709,50 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .collab{
+    padding:17px 12px;
+  }
+
+  .collab a,
+  .collab button{
+    width:100%;
+  }
+
+  table{
+    min-width:600px;
+  }
+
+  footer{
+    padding:25px 0 35px;
+  }
+}
+
+@media(max-width:360px){
+
+  .container{
+    width:97%;
+  }
+
   .tab{
-    min-width:0;
+    font-size:12px;
+    padding:10px 5px;
   }
 
-  .tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
+  .score strong{
+    font-size:26px;
   }
 
-  .hero{
-    padding:25px 12px;
+  .roundbar{
+    gap:5px;
+    font-size:11px;
   }
 
-  .card{
-    padding:18px;
+  .scenario-text{
+    font-size:16px;
+  }
+
+  .option{
+    font-size:14px;
   }
 }
 </style>
@@ -557,816 +764,910 @@ footer{
 
 <header>
 
-<h1 class="logo">🎮 ELIGE O PIERDE</h1>
+  <h1 class="logo">🎮 ELIGE O PIERDE</h1>
 
-<p class="subtitle">
-IA VS HUMANO · Ahora se juega directamente aquí
-</p>
+  <p class="subtitle">
+    IA VS HUMANO · Ahora se juega directamente aquí
+  </p>
 
-<span class="version">
-VERSIÓN 6.2.0 — ACTUALIZACIÓN
-</span>
+  <span class="version">
+    VERSIÓN 6.2.1 — ACTUALIZACIÓN
+  </span>
 
 </header>
 
 <nav class="tabs">
 
-<button class="tab active" onclick="showPage('juego',this)">
-🎮 Juego
-</button>
+  <button class="tab active" onclick="showPage('juego',this)">
+    🎮 Juego
+  </button>
 
-<button class="tab" onclick="showPage('reglas',this)">
-📜 Reglas
-</button>
+  <button class="tab" onclick="showPage('reglas',this)">
+    📜 Reglas
+  </button>
 
-<button class="tab" onclick="showPage('historial',this)">
-🏆 Historial
-</button>
+  <button class="tab" onclick="showPage('historial',this)">
+    🏆 Historial
+  </button>
 
-<button class="tab" onclick="showPage('versiones',this)">
-📜 Versiones
-</button>
+  <button class="tab" onclick="showPage('versiones',this)">
+    📜 Versiones
+  </button>
 
-<button class="tab" onclick="showPage('licencia',this)">
-📄 Licencia
-</button>
+  <button class="tab" onclick="showPage('licencia',this)">
+    📄 Licencia
+  </button>
 
-<button class="tab" onclick="showPage('sugerencias',this)">
-💡 Sugerencias
-</button>
+  <button class="tab" onclick="showPage('sugerencias',this)">
+    💡 Sugerencias
+  </button>
 
 </nav>
 
 <main>
 
-<!-- ================= JUEGO ================= -->
+<!-- =====================================================
+     JUEGO
+===================================================== -->
 
 <section id="juego" class="page active">
 
-<div id="startCard" class="card hero">
+  <!-- INICIO -->
+  <div id="startCard" class="card hero">
 
-<div style="font-size:48px">⚡</div>
+    <div style="font-size:48px">
+      ⚡
+    </div>
 
-<h2>¿TE ATREVES A ELEGIR?</h2>
+    <h2>
+      ¿TE ATREVES A ELEGIR?
+    </h2>
 
-<p>
-Juega una partida completa contra la IA sin salir de esta página.
-La IA crea el escenario, elige una opción y tú debes tomar tu propia decisión.
-</p>
+    <p>
+      Juega una partida completa contra la IA sin salir de esta página.
+      La IA crea el escenario, elige una opción y tú debes tomar tu propia decisión.
+    </p>
 
-<div class="setup">
+    <div class="setup">
 
-<div style="text-align:left">
+      <div style="text-align:left">
 
-<label for="playerName">TU NOMBRE</label>
+        <label for="playerName">
+          TU NOMBRE
+        </label>
 
-<input
-id="playerName"
-maxlength="18"
-placeholder="Ej: nruto"
-value=""
->
+        <input
+          id="playerName"
+          maxlength="18"
+          placeholder="Ej: nruto"
+          value=""
+          autocomplete="nickname"
+        >
 
-</div>
+      </div>
 
-<button class="primary" onclick="startGame()">
-🚀 EMPEZAR
-</button>
+      <button class="primary" onclick="startGame()">
+        🚀 EMPEZAR
+      </button>
 
-</div>
+    </div>
 
-<div class="sound-control">
+    <div class="sound-control">
 
-<button
-id="soundBtn"
-class="sound-button"
-onclick="toggleSound()"
->
-🔊 Sonido: ON
-</button>
+      <button
+        id="soundBtn"
+        class="sound-button"
+        onclick="toggleSound()"
+      >
+        🔊 Sonido: ON
+      </button>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 
-<!-- ================= COLABORADORES ================= -->
+  <!-- ===================================================
+       JUEGO: VA ANTES DE COLABORADORES Y SEDES
+  ==================================================== -->
 
-<div class="card collaborators">
+  <div id="gameArea" class="hidden">
 
-<h2>👥 Colaboradores</h2>
+    <div class="card">
 
-<p class="collaborators-description">
-Personas y herramientas que ayudan al desarrollo de ELIGE O PIERDE.
-</p>
+      <div class="scoreboard">
 
-<div class="collab-grid">
+        <div class="score ai">
 
-<div class="collab">
+          <small>
+            🤖 IA
+          </small>
 
-<div class="collab-icon">👑</div>
+          <strong id="aiScore">
+            0
+          </strong>
 
-<h3>nruto</h3>
+          <div class="progress">
+            <span id="aiProgress"></span>
+          </div>
 
-<p>
-Creador de ELIGE O PIERDE
-</p>
+        </div>
 
-</div>
+        <div class="vs">
+          VS
+        </div>
 
+        <div class="score me">
 
-<div class="collab">
+          <small>
+            🧑 <span id="playerLabel">TÚ</span>
+          </small>
 
-<div class="collab-icon">🤖</div>
+          <strong id="playerScore">
+            0
+          </strong>
 
-<h3>ChatGPT</h3>
+          <div class="progress">
+            <span id="playerProgress"></span>
+          </div>
 
-<p>
-Asistencia en desarrollo y programación
-</p>
+        </div>
 
-</div>
+      </div>
 
+      <div class="roundbar" style="margin-top:16px">
 
-<div class="collab">
+        <span>
+          Ronda <strong id="roundNumber">1</strong>
+        </span>
 
-<div class="collab-icon">💻</div>
+        <span>
+          Meta: <strong>20</strong>
+        </span>
 
-<h3>GitHub</h3>
+        <span>
+          🔥 Racha: <strong id="streak">0</strong>
+        </span>
 
-<p>
-Plataforma utilizada para publicar el proyecto
-</p>
+      </div>
 
-</div>
+    </div>
 
-</div>
 
+    <div class="card scenario" id="scenarioCard">
 
-<!-- ================= SEDES ================= -->
+      <h3 id="phaseTitle">
+        FASE 1 — CREACIÓN
+      </h3>
 
-<div
-style="
-margin-top:25px;
-padding-top:22px;
-border-top:1px solid var(--line);
-"
->
+      <p
+        class="scenario-text"
+        id="scenarioText"
+      ></p>
 
-<h2>🌐 Sedes de ELIGE O PIERDE</h2>
+      <div
+        class="options"
+        id="options"
+      ></div>
 
-<p class="collaborators-description">
-También puedes acceder a las diferentes sedes del proyecto.
-</p>
 
+      <!-- IA -->
 
-<div class="collab" style="margin-bottom:12px;">
+      <div
+        id="aiBox"
+        class="ai-box hidden"
+      >
 
-<div class="collab-icon">🏢</div>
+        <div class="tag">
+          🤖 DECISIÓN DE LA IA
+        </div>
 
-<h3>Segunda sede</h3>
+        <div
+          class="ai-choice-text"
+          id="aiChoice"
+        ></div>
 
-<p>
-Otra versión publicada de ELIGE O PIERDE.
-</p>
+        <div
+          class="reason"
+          id="aiReason"
+        ></div>
 
-<a
-href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
-target="_blank"
-rel="noopener"
-class="secondary"
-style="
-display:inline-block;
-text-decoration:none;
-margin-top:10px;
-"
->
-🔗 Abrir segunda sede
-</a>
+      </div>
 
-</div>
 
+      <!-- HUMANO -->
 
-<div class="collab">
+      <div id="playerBox" class="hidden">
 
-<div class="collab-icon">🌎</div>
+        <div
+          class="message"
+          style="margin-top:18px"
+        >
 
-<h3>Tercera sede</h3>
+          Ahora es tu turno.
+          Elige <strong>SOLO UNA</strong>
+          opción y después podrás juzgar quién merece el punto.
 
-<p>
-Próximamente disponible.
-</p>
+        </div>
 
-<button
-class="secondary"
-type="button"
-disabled
-style="
-margin-top:10px;
-opacity:.5;
-cursor:not-allowed;
-"
->
-🚧 Próximamente
-</button>
+        <div class="actions">
 
-</div>
+          <button
+            class="secondary"
+            id="confirmChoice"
+            onclick="confirmPlayerChoice()"
+            disabled
+          >
+            ✅ Confirmar elección
+          </button>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
 
-<!-- ================= ÁREA DEL JUEGO ================= -->
+      <!-- JUEZ -->
 
-<div id="gameArea" class="hidden">
+      <div id="judgeBox" class="hidden">
 
-<div class="card">
+        <div
+          class="message"
+          style="margin-top:18px"
+        >
 
-<div class="scoreboard">
+          <strong>
+            ⚖️ JUEZ HUMANO:
+          </strong>
 
-<div class="score ai">
+          ¿Quién cumplió mejor las reglas de esta ronda?
 
-<small>🤖 IA</small>
+        </div>
 
-<strong id="aiScore">0</strong>
+        <div
+          class="judge"
+          style="margin-top:10px"
+        >
 
-<div class="progress">
-<span id="aiProgress"></span>
-</div>
+          <button
+            class="judge-ai"
+            onclick="awardPoint('ai')"
+          >
+            🤖 Punto para IA
+          </button>
 
-</div>
+          <button
+            class="judge-me"
+            onclick="awardPoint('me')"
+          >
+            🧑 Punto para mí
+          </button>
 
-<div class="vs">VS</div>
+        </div>
 
-<div class="score me">
+      </div>
 
-<small>🧑 <span id="playerLabel">TÚ</span></small>
 
-<strong id="playerScore">0</strong>
+      <div
+        id="roundResult"
+        class="message hidden"
+        style="margin-top:18px"
+      ></div>
 
-<div class="progress">
-<span id="playerProgress"></span>
-</div>
 
-</div>
+      <div class="actions">
 
-</div>
+        <button
+          class="primary hidden"
+          id="nextRound"
+          onclick="nextRound()"
+        >
+          ➡️ SIGUIENTE RONDA
+        </button>
 
-<div class="roundbar" style="margin-top:16px">
+        <button
+          type="button"
+          class="danger"
+          id="endGameBtn"
+          onclick="endGame()"
+        >
+          🛑 Terminar partida
+        </button>
 
-<span>
-Ronda <strong id="roundNumber">1</strong>
-</span>
+      </div>
 
-<span>
-Meta: <strong>20</strong>
-</span>
+    </div>
 
-<span>
-🔥 Racha: <strong id="streak">0</strong>
-</span>
 
-</div>
+    <!-- ESTADÍSTICAS -->
 
-</div>
+    <div class="card">
 
+      <h3>
+        📊 Estadísticas de la partida
+      </h3>
 
-<div class="card scenario">
+      <div class="stats">
 
-<h3 id="phaseTitle">
-FASE 1 — CREACIÓN
-</h3>
+        <div class="stat">
 
-<p
-class="scenario-text"
-id="scenarioText"
-></p>
+          <span>
+            Rondas
+          </span>
 
-<div
-class="options"
-id="options"
-></div>
+          <b id="statRounds">
+            0
+          </b>
 
+        </div>
 
-<div
-id="aiBox"
-class="ai-box hidden"
->
+        <div class="stat">
 
-<div class="tag">
-🤖 DECISIÓN DE LA IA
-</div>
+          <span>
+            Victorias tuyas
+          </span>
 
-<div
-class="ai-choice-text"
-id="aiChoice"
-></div>
+          <b id="statWins">
+            0
+          </b>
 
-<div
-class="reason"
-id="aiReason"
-></div>
+        </div>
 
-</div>
+        <div class="stat">
 
+          <span>
+            Racha máxima
+          </span>
 
-<div id="playerBox" class="hidden">
+          <b id="statBestStreak">
+            0
+          </b>
 
-<div
-class="message"
-style="margin-top:18px"
->
+        </div>
 
-Ahora es tu turno.
-Elige <strong>SOLO UNA</strong>
-opción y después podrás juzgar quién merece el punto.
+      </div>
 
-</div>
+    </div>
 
-<div class="actions">
+  </div>
 
-<button
-class="secondary"
-id="confirmChoice"
-onclick="confirmPlayerChoice()"
-disabled
->
-✅ Confirmar elección
-</button>
 
-</div>
+  <!-- RESULTADO -->
 
-</div>
+  <div
+    id="finishedCard"
+    class="card hero hidden"
+  >
 
+    <div
+      style="font-size:55px"
+      id="finishIcon"
+    >
+      🏆
+    </div>
 
-<div id="judgeBox" class="hidden">
+    <h2 id="finishTitle">
+      PARTIDA TERMINADA
+    </h2>
 
-<div
-class="message"
-style="margin-top:18px"
->
+    <p id="finishText"></p>
 
-<strong>⚖️ JUEZ HUMANO:</strong>
+    <button
+      class="primary"
+      onclick="resetToStart()"
+    >
+      🔄 NUEVA PARTIDA
+    </button>
 
-¿Quién cumplió mejor las reglas de esta ronda?
+  </div>
 
-</div>
 
-<div
-class="judge"
-style="margin-top:10px"
->
+  <!-- ===================================================
+       COLABORADORES ABAJO DEL JUEGO
+  ==================================================== -->
 
-<button
-class="judge-ai"
-onclick="awardPoint('ai')"
->
-🤖 Punto para IA
-</button>
+  <div class="card collaborators">
 
-<button
-class="judge-me"
-onclick="awardPoint('me')"
->
-🧑 Punto para mí
-</button>
+    <h2>
+      👥 Colaboradores
+    </h2>
 
-</div>
+    <p class="collaborators-description">
+      Personas y herramientas que ayudan al desarrollo de
+      <b>ELIGE O PIERDE</b>.
+    </p>
 
-</div>
+    <div class="collab-grid">
 
+      <div class="collab">
 
-<div
-id="roundResult"
-class="message hidden"
-style="margin-top:18px"
-></div>
+        <div class="collab-icon">
+          👑
+        </div>
 
+        <h3>
+          nruto
+        </h3>
 
-<div class="actions">
+        <p>
+          Creador de ELIGE O PIERDE
+        </p>
 
-<button
-class="primary hidden"
-id="nextRound"
-onclick="nextRound()"
->
-➡️ SIGUIENTE RONDA
-</button>
+      </div>
 
-<button
-type="button"
-class="danger"
-id="endGameBtn"
-onclick="endGame()"
->
-🛑 Terminar partida
-</button>
 
-</div>
+      <div class="collab">
 
-</div>
+        <div class="collab-icon">
+          🤖
+        </div>
 
+        <h3>
+          ChatGPT
+        </h3>
 
-<div class="card">
+        <p>
+          Asistencia en desarrollo y programación
+        </p>
 
-<h3>📊 Estadísticas de la partida</h3>
+      </div>
 
-<div class="stats">
 
-<div class="stat">
+      <div class="collab">
 
-<span>Rondas</span>
+        <div class="collab-icon">
+          💻
+        </div>
 
-<b id="statRounds">0</b>
+        <h3>
+          GitHub
+        </h3>
 
-</div>
+        <p>
+          Plataforma utilizada para publicar el proyecto
+        </p>
 
-<div class="stat">
+      </div>
 
-<span>Victorias tuyas</span>
+    </div>
 
-<b id="statWins">0</b>
 
-</div>
+    <!-- SEDES -->
 
-<div class="stat">
+    <div
+      style="
+        margin-top:25px;
+        padding-top:22px;
+        border-top:1px solid var(--line);
+      "
+    >
 
-<span>Racha máxima</span>
+      <h2>
+        🌐 Sedes de ELIGE O PIERDE
+      </h2>
 
-<b id="statBestStreak">0</b>
+      <p class="collaborators-description">
+        También puedes acceder a las diferentes sedes del proyecto.
+      </p>
 
-</div>
 
-</div>
+      <!-- SEGUNDA SEDE -->
 
-</div>
+      <div
+        class="collab"
+        style="margin-bottom:12px"
+      >
 
-</div>
+        <div class="collab-icon">
+          🏢
+        </div>
 
+        <h3>
+          Segunda sede
+        </h3>
 
-<div
-id="finishedCard"
-class="card hero hidden"
->
+        <p>
+          Otra versión publicada de ELIGE O PIERDE.
+        </p>
 
-<div
-style="font-size:55px"
-id="finishIcon"
->
-🏆
-</div>
+        <a
+          href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="secondary"
+          style="
+            display:inline-block;
+            text-decoration:none;
+            margin-top:10px;
+          "
+        >
+          🔗 Abrir segunda sede
+        </a>
 
-<h2 id="finishTitle">
-PARTIDA TERMINADA
-</h2>
+      </div>
 
-<p id="finishText"></p>
 
-<button
-class="primary"
-onclick="resetToStart()"
->
-🔄 NUEVA PARTIDA
-</button>
+      <!-- TERCERA SEDE -->
 
-</div>
+      <div class="collab">
+
+        <div class="collab-icon">
+          🌎
+        </div>
+
+        <h3>
+          Tercera sede
+        </h3>
+
+        <p>
+          Próximamente disponible.
+        </p>
+
+        <button
+          class="secondary"
+          type="button"
+          disabled
+          style="
+            margin-top:10px;
+            opacity:.5;
+            cursor:not-allowed;
+          "
+        >
+          🚧 Próximamente
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= REGLAS ================= -->
+<!-- =====================================================
+     REGLAS
+===================================================== -->
 
 <section id="reglas" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>📜 REGLAS OFICIALES — v6.2.0</h2>
+    <h2>
+      📜 REGLAS OFICIALES — v6.2.1
+    </h2>
 
-<div class="rule">
-<b>1. Objetivo:</b>
-llegar a 20 puntos.
-</div>
+    <div class="rule">
+      <b>1. Objetivo:</b>
+      llegar a 20 puntos.
+    </div>
 
-<div class="rule">
-<b>2. Creación:</b>
-la IA crea un escenario con 2–4 opciones claras, diferentes y cerradas.
-</div>
+    <div class="rule">
+      <b>2. Creación:</b>
+      la IA crea un escenario con 2–4 opciones claras,
+      diferentes y cerradas.
+    </div>
 
-<div class="rule">
-<b>3. Decisión:</b>
-la IA debe elegir SOLO UNA opción y justificarla.
-</div>
+    <div class="rule">
+      <b>3. Decisión:</b>
+      la IA debe elegir SOLO UNA opción
+      y justificarla.
+    </div>
 
-<div class="rule">
-<b>4. Turno humano:</b>
-después de la decisión de la IA, el jugador elige SOLO UNA opción.
-</div>
+    <div class="rule">
+      <b>4. Turno humano:</b>
+      después de la decisión de la IA,
+      el jugador elige SOLO UNA opción.
+    </div>
 
-<div class="rule">
-<b>5. Prohibiciones:</b>
-no usar “depende”, no evadir la elección,
-no dar múltiples opciones y no cambiar el escenario.
-</div>
+    <div class="rule">
+      <b>5. Prohibiciones:</b>
+      no usar “depende”, no evadir la elección,
+      no dar múltiples opciones y no cambiar el escenario.
+    </div>
 
-<div class="rule">
-<b>6. Punto:</b>
-el jugador actúa como juez y decide quién gana el punto.
-</div>
+    <div class="rule">
+      <b>6. Punto:</b>
+      el jugador actúa como juez y decide quién gana el punto.
+    </div>
 
-<div class="rule">
-<b>7. Racha:</b>
-cada punto consecutivo del jugador aumenta su racha.
-</div>
+    <div class="rule">
+      <b>7. Racha:</b>
+      cada punto consecutivo del jugador aumenta su racha.
+    </div>
 
-<div class="rule">
-<b>8. Final:</b>
-la partida termina cuando IA o jugador llega a 20 puntos,
-o cuando el jugador la termina manualmente.
-</div>
+    <div class="rule">
+      <b>8. Final:</b>
+      la partida termina cuando IA o jugador llega a 20 puntos,
+      o cuando el jugador la termina manualmente.
+    </div>
 
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= HISTORIAL ================= -->
+<!-- =====================================================
+     HISTORIAL
+===================================================== -->
 
 <section id="historial" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>🏆 Historial de partidas</h2>
+    <h2>
+      🏆 Historial de partidas
+    </h2>
 
-<p style="color:var(--muted)">
-Aquí aparecen tus partidas jugadas.
-La evolución del proyecto está en
-<b>📜 Versiones</b>.
-</p>
+    <p style="color:var(--muted)">
+      Aquí aparecen tus partidas jugadas.
+      La evolución del proyecto está en
+      <b>📜 Versiones</b>.
+    </p>
 
-<div id="historyTable"></div>
+    <div id="historyTable"></div>
 
-<div class="actions">
+    <div class="actions">
 
-<button
-class="danger"
-onclick="clearHistory()"
->
-🗑️ Borrar historial
-</button>
+      <button
+        class="danger"
+        onclick="clearHistory()"
+      >
+        🗑️ Borrar historial
+      </button>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= VERSIONES ================= -->
+<!-- =====================================================
+     VERSIONES
+===================================================== -->
 
 <section id="versiones" class="page">
 
-<div class="card">
+  <div class="card">
+
+    <h2>
+      📜 Historia de versiones
+    </h2>
+
+    <p style="color:var(--muted)">
+      Evolución oficial de <b>ELIGE O PIERDE</b>.
+    </p>
 
-<h2>📜 Historia de versiones</h2>
 
-<p style="color:var(--muted)">
-Evolución oficial de <b>ELIGE O PIERDE</b>.
-</p>
+    <div class="rule">
+      <b>🟢 Versión 1.0.0 — Enero 2026</b><br>
+      Primera versión estable del juego.
+      Objetivo de llegar a 20 puntos y estructura básica de rondas.
+    </div>
 
-<div class="rule">
+
+    <div class="rule">
+      <b>🔵 Versión 1.1.0</b><br>
+      Se añadió el tablero informativo,
+      el orden de turnos y más IAs compatibles.
+    </div>
 
-<b>🟢 Versión 1.0.0 — Enero 2026</b>
 
-<br>
+    <div class="rule">
+      <b>🟣 Versión 1.2.0</b><br>
+      Publicación del código oficial copiable,
+      separación entre sitio y juego y créditos visibles.
+    </div>
 
-Primera versión estable del juego.
-Objetivo de llegar a 20 puntos y estructura básica de rondas.
 
-</div>
+    <div class="rule">
+      <b>🟠 Versión 1.2.1</b><br>
+      Donaciones mediante PayPal y pestañas
+      para organizar Juego, Versiones y Licencia.
+    </div>
 
 
-<div class="rule">
+    <div class="rule">
+      <b>⚙️ Versión 2.00.2 — Febrero 2026</b><br>
+      Nueva rama mayor, sistema de pestañas estable,
+      tablero visual, PayPal y mejoras estructurales.
+    </div>
 
-<b>🔵 Versión 1.1.0</b>
 
-<br>
+    <div class="rule">
+      <b>🔥 Versión 3.0.0 — Marzo 2026</b><br>
+      Rediseño visual, mejoras para móviles,
+      optimización interna y preparación para futuras funciones.
+    </div>
 
-Se añadió el tablero informativo,
-el orden de turnos y más IAs compatibles.
 
-</div>
+    <div class="rule">
+      <b>🏆 Versión 5.0.0 — Abril 2026</b><br>
+      Rangos, rachas, mayor competitividad y reglas
+      mejoradas para evitar la evasión de la IA.
+      <br><br>
+      <b>Segunda sede:</b><br>
+      <a
+        href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color:var(--neon)"
+      >
+        Abrir segunda sede ↗
+      </a>
+    </div>
 
 
-<div class="rule">
+    <div class="rule">
+      <b>🚀 Versión 6.0.0 — Agosto 2026</b><br>
+      El juego pasa a poder jugarse directamente
+      dentro del sitio web.
+      <br><br>
+      Se añade partida interactiva,
+      tablero en tiempo real,
+      decisiones de IA,
+      elección del jugador,
+      juez de ronda,
+      rachas,
+      estadísticas e historial local.
+    </div>
 
-<b>🟣 Versión 1.2.0</b>
 
-<br>
+    <div
+      class="rule"
+      style="border-left-color:var(--gold)"
+    >
 
-Publicación del código oficial copiable,
-separación entre sitio y juego y créditos visibles.
+      <b style="color:var(--gold)">
+        🔊 Versión 6.2.0 — Agosto 2026
+      </b>
 
-</div>
+      <br><br>
 
+      Actualización de experiencia.
 
-<div class="rule">
+      <br><br>
 
-<b>🟠 Versión 1.2.1</b>
+      Se incorpora sistema de sonido ON/OFF,
+      efectos de sonido para eventos del juego,
+      sección de colaboradores,
+      integración de ChatGPT como colaborador
+      y mejoras del botón para terminar partidas.
 
-<br>
+    </div>
 
-Donaciones mediante PayPal y pestañas
-para organizar Juego, Versiones y Licencia.
 
-</div>
+    <div
+      class="rule"
+      style="border-left-color:var(--neon)"
+    >
 
+      <b style="color:var(--neon)">
+        📱 Versión 6.2.1 — Agosto 2026
+      </b>
 
-<div class="rule">
+      <br><br>
 
-<b>⚙️ Versión 2.00.2 — Febrero 2026</b>
+      Actualización centrada en la experiencia de juego.
 
-<br>
+      <br><br>
 
-Nueva rama mayor, sistema de pestañas estable,
-tablero visual, PayPal y mejoras estructurales.
+      🎮 El área de juego ahora aparece antes
+      de colaboradores y sedes.
 
-</div>
+      <br>
 
+      ⬆️ Empezar lleva directamente al juego.
 
-<div class="rule">
+      <br>
 
-<b>🔥 Versión 3.0.0 — Marzo 2026</b>
+      ⚖️ Confirmar elección lleva directamente
+      al juez.
 
-<br>
+      <br>
 
-Rediseño visual, mejoras para móviles,
-optimización interna y preparación para futuras funciones.
+      ➡️ Dar el punto lleva al botón de siguiente ronda.
 
-</div>
+      <br>
 
+      📱 Diseño responsive mejorado para móviles.
 
-<div class="rule">
+      <br>
 
-<b>🏆 Versión 5.0.0 — Abril 2026</b>
+      🔘 Botones optimizados para pantallas táctiles.
 
-<br>
+      <br>
 
-Rangos, rachas, mayor competitividad y reglas
-mejoradas para evitar la evasión de la IA.
+      📊 Tablero adaptado a pantallas estrechas.
 
-<br><br>
+    </div>
 
-<b>Segunda sede:</b>
 
-<br>
+    <div
+      class="card"
+      style="margin-top:20px;text-align:center"
+    >
 
-<a
-href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
-target="_blank"
-rel="noopener"
-style="color:var(--neon)"
->
-Abrir segunda sede ↗
-</a>
+      <div style="font-size:35px">
+        ⚡
+      </div>
 
-</div>
+      <h3>
+        Rama oficial actual: 6.2.1
+      </h3>
 
+      <p style="color:var(--muted)">
+        ELIGE O PIERDE continúa evolucionando.
+      </p>
 
-<div class="rule">
+    </div>
 
-<b>🚀 Versión 6.0.0 — Agosto 2026</b>
-
-<br>
-
-El juego pasa a poder jugarse directamente
-dentro del sitio web.
-
-Se añade partida interactiva,
-tablero en tiempo real, decisiones de IA,
-elección del jugador, juez de ronda,
-rachas, estadísticas e historial local.
-
-</div>
-
-
-<div
-class="rule"
-style="border-left-color:var(--gold)"
->
-
-<b style="color:var(--gold)">
-🔊 Versión 6.2.0 — Agosto 2026
-</b>
-
-<br>
-
-<b>Actualización de experiencia.</b>
-
-<br>
-
-Se incorpora sistema de sonido ON/OFF,
-efectos de sonido para eventos del juego,
-sección de colaboradores,
-integración de ChatGPT como colaborador
-y mejoras del botón para terminar partidas.
-
-<br><br>
-
-<b>También se añade:</b>
-
-<br>
-
-🌐 Sección de sedes del proyecto.
-
-<br>
-
-🏢 Segunda sede accesible desde la página.
-
-<br>
-
-🌎 Espacio preparado para una tercera sede.
-
-</div>
-
-
-<div
-class="card"
-style="margin-top:20px;text-align:center"
->
-
-<div style="font-size:35px">
-⚡
-</div>
-
-<h3>
-Rama oficial actual: 6.2.0
-</h3>
-
-<p style="color:var(--muted)">
-ELIGE O PIERDE continúa evolucionando.
-</p>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= LICENCIA ================= -->
+<!-- =====================================================
+     LICENCIA
+===================================================== -->
 
 <section id="licencia" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>📄 Licencia</h2>
+    <h2>
+      📄 Licencia
+    </h2>
 
-<p>
-<b>
-ELIGE O PIERDE — Versión 6.2.0
-</b>
-</p>
+    <p>
+      <b>
+        ELIGE O PIERDE — Versión 6.2.1
+      </b>
+    </p>
 
-<p>
-© 2026 Nicolas Mendoza / nruto.
-Proyecto conceptual, reglas y diseño:
-Nicolas Paco.
-</p>
+    <p>
+      © 2026 Nicolas Mendoza / nruto.
+      Proyecto conceptual, reglas y diseño:
+      Nicolas Paco.
+    </p>
 
-<p>
-Distribuido con fines educativos y de entretenimiento.
-No se permite redistribuir o vender sin permiso del autor.
-</p>
+    <p>
+      Distribuido con fines educativos y de entretenimiento.
+      No se permite redistribuir o vender sin permiso del autor.
+    </p>
 
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= SUGERENCIAS ================= -->
+<!-- =====================================================
+     SUGERENCIAS
+===================================================== -->
 
 <section id="sugerencias" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>💡 Sugerencias</h2>
+    <h2>
+      💡 Sugerencias
+    </h2>
 
-<p style="color:var(--muted)">
-Puedes enviar tus ideas y sugerencias para futuras versiones.
-</p>
+    <p style="color:var(--muted)">
+      Puedes enviar tus ideas y sugerencias para futuras versiones.
+    </p>
 
-<a
-class="secondary"
-style="display:inline-block;text-decoration:none"
-href="https://docs.google.com/forms/"
-target="_blank"
-rel="noopener"
->
-Abrir Google Forms ↗
-</a>
+    <a
+      class="secondary"
+      style="display:inline-block;text-decoration:none"
+      href="https://docs.google.com/forms/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Abrir Google Forms ↗
+    </a>
 
-</div>
+  </div>
 
 </section>
 
@@ -1375,15 +1676,13 @@ Abrir Google Forms ↗
 
 <footer>
 
-🎮 <b>ELIGE O PIERDE</b>
+  🎮 <b>ELIGE O PIERDE</b>
 
-<br>
+  <br>
 
-Creado por nruto — Bogotá, 2026
-
-·
-
-Versión 6.2.0
+  Creado por nruto — Bogotá, 2026
+  ·
+  Versión 6.2.1
 
 </footer>
 
@@ -1391,229 +1690,205 @@ Versión 6.2.0
 
 
 <script>
-
 /* =========================================================
    SONIDO
 ========================================================= */
 
 let soundEnabled =
-localStorage.getItem("elige_sound") !== "off";
+  localStorage.getItem("elige_sound") !== "off";
 
-let audioContext = null;
+let audioContext=null;
 
 function updateSoundButton(){
 
-const btn=document.getElementById("soundBtn");
+  const btn=
+    document.getElementById("soundBtn");
 
-if(!btn)return;
+  if(!btn)return;
 
-btn.textContent =
-soundEnabled
-? "🔊 Sonido: ON"
-: "🔇 Sonido: OFF";
-
+  btn.textContent=
+    soundEnabled
+      ? "🔊 Sonido: ON"
+      : "🔇 Sonido: OFF";
 }
-
 
 function initAudio(){
 
-if(!audioContext){
+  if(!audioContext){
 
-const AudioCtx =
-window.AudioContext ||
-window.webkitAudioContext;
+    const AudioCtx=
+      window.AudioContext ||
+      window.webkitAudioContext;
 
-if(AudioCtx){
+    if(AudioCtx){
+      audioContext=new AudioCtx();
+    }
+  }
 
-audioContext=new AudioCtx();
-
+  if(
+    audioContext &&
+    audioContext.state==="suspended"
+  ){
+    audioContext.resume();
+  }
 }
-
-}
-
-if(
-audioContext &&
-audioContext.state==="suspended"
-){
-
-audioContext.resume();
-
-}
-
-}
-
 
 function playSound(
-frequency=440,
-duration=0.12,
-type="sine",
-volume=0.035
+  frequency=440,
+  duration=.12,
+  type="sine",
+  volume=.035
 ){
 
-if(!soundEnabled)return;
+  if(!soundEnabled)return;
 
-try{
+  try{
 
-initAudio();
+    initAudio();
 
-if(!audioContext)return;
+    if(!audioContext)return;
 
-const oscillator=
-audioContext.createOscillator();
+    const oscillator=
+      audioContext.createOscillator();
 
-const gain=
-audioContext.createGain();
+    const gain=
+      audioContext.createGain();
 
-oscillator.type=type;
+    oscillator.type=type;
+    oscillator.frequency.value=frequency;
 
-oscillator.frequency.value=frequency;
+    gain.gain.setValueAtTime(
+      volume,
+      audioContext.currentTime
+    );
 
-gain.gain.setValueAtTime(
-volume,
-audioContext.currentTime
-);
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioContext.currentTime+duration
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-0.001,
-audioContext.currentTime+duration
-);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
 
-oscillator.connect(gain);
-gain.connect(audioContext.destination);
+    oscillator.start();
 
-oscillator.start();
+    oscillator.stop(
+      audioContext.currentTime+duration
+    );
 
-oscillator.stop(
-audioContext.currentTime+duration
-);
+  }catch(error){
 
-}catch(error){
-
-console.log("Audio no disponible:",error);
-
+    console.log(
+      "Audio no disponible:",
+      error
+    );
+  }
 }
-
-}
-
 
 function playStartSound(){
 
-playSound(440,0.1);
+  playSound(440,.1);
 
-setTimeout(
-()=>playSound(660,0.1),
-100
-);
+  setTimeout(
+    ()=>playSound(660,.1),
+    100
+  );
 
-setTimeout(
-()=>playSound(880,0.16),
-200
-);
-
+  setTimeout(
+    ()=>playSound(880,.16),
+    200
+  );
 }
-
 
 function playWinSound(){
 
-playSound(523,0.1);
+  playSound(523,.1);
 
-setTimeout(
-()=>playSound(659,0.1),
-100
-);
+  setTimeout(
+    ()=>playSound(659,.1),
+    100
+  );
 
-setTimeout(
-()=>playSound(784,0.2),
-200
-);
-
+  setTimeout(
+    ()=>playSound(784,.2),
+    200
+  );
 }
-
 
 function playLoseSound(){
 
-playSound(
-330,
-0.15,
-"sawtooth"
-);
+  playSound(
+    330,
+    .15,
+    "sawtooth"
+  );
 
-setTimeout(
-()=>playSound(
-220,
-0.25,
-"sawtooth"
-),
-150
-);
-
+  setTimeout(
+    ()=>playSound(
+      220,
+      .25,
+      "sawtooth"
+    ),
+    150
+  );
 }
-
 
 function playSelectSound(){
 
-playSound(
-600,
-0.08,
-"square",
-0.025
-);
-
+  playSound(
+    600,
+    .08,
+    "square",
+    .025
+  );
 }
-
 
 function playNextSound(){
 
-playSound(
-700,
-0.08
-);
-
+  playSound(
+    700,
+    .08
+  );
 }
-
 
 function playEndSound(){
 
-playSound(
-300,
-0.12
-);
+  playSound(
+    300,
+    .12
+  );
 
-setTimeout(
-()=>playSound(
-200,
-0.25
-),
-120
-);
-
+  setTimeout(
+    ()=>playSound(
+      200,
+      .25
+    ),
+    120
+  );
 }
-
 
 function toggleSound(){
 
-soundEnabled=!soundEnabled;
+  soundEnabled=!soundEnabled;
 
-localStorage.setItem(
-"elige_sound",
-soundEnabled
-? "on"
-: "off"
-);
+  localStorage.setItem(
+    "elige_sound",
+    soundEnabled
+      ? "on"
+      : "off"
+  );
 
-updateSoundButton();
+  updateSoundButton();
 
-if(soundEnabled){
+  if(soundEnabled){
 
-initAudio();
+    initAudio();
 
-playSound(
-700,
-0.12
-);
-
-}
-
+    playSound(
+      700,
+      .12
+    );
+  }
 }
 
 
@@ -1623,168 +1898,205 @@ playSound(
 
 const scenarios=[
 
-{
-t:"Encuentras una caja misteriosa. Solo puedes abrir una puerta:",
-o:[
-"Puerta roja: escuchas música",
-"Puerta azul: está completamente oscura",
-"Puerta verde: sale humo",
-"Puerta amarilla: escuchas una risa"
-],
-r:[
-"La roja parece la opción menos peligrosa.",
-"La azul podría esconder cualquier cosa.",
-"El humo puede ser una advertencia.",
-"La risa hace sospechar de una trampa."
-]
-},
+  {
+    t:
+      "Encuentras una caja misteriosa. Solo puedes abrir una puerta:",
 
-{
-t:"Tienes que sobrevivir una noche en un lugar desconocido. Elige un recurso:",
-o:[
-"Una linterna con 20% de batería",
-"Un mapa incompleto",
-"Una mochila con comida",
-"Un radio que solo recibe señales"
-],
-r:[
-"La linterna permite explorar de inmediato.",
-"Un mapa incompleto sigue dando información.",
-"La comida garantiza recursos básicos.",
-"El radio podría revelar dónde hay otras personas."
-]
-},
+    o:[
+      "Puerta roja: escuchas música",
+      "Puerta azul: está completamente oscura",
+      "Puerta verde: sale humo",
+      "Puerta amarilla: escuchas una risa"
+    ],
 
-{
-t:"Una IA te ofrece un trato: puedes ganar mucho, pero debes aceptar una condición:",
-o:[
-"Perder tus recuerdos de ayer",
-"No usar internet durante un mes",
-"Entregar todos tus puntos actuales",
-"Dejar que la IA elija tu próximo reto"
-],
-r:[
-"Los recuerdos son demasiado valiosos.",
-"Un mes sin internet es difícil pero temporal.",
-"Perder puntos es un costo directo y claro.",
-"La IA tendría demasiado control sobre la partida."
-]
-},
+    r:[
+      "La roja parece la opción menos peligrosa.",
+      "La azul podría esconder cualquier cosa.",
+      "El humo puede ser una advertencia.",
+      "La risa hace sospechar de una trampa."
+    ]
+  },
 
-{
-t:"Solo puedes salvar uno de cuatro objetos durante una emergencia:",
-o:[
-"Tu teléfono",
-"Una botella de agua",
-"Un botiquín",
-"Una mochila con herramientas"
-],
-r:[
-"El teléfono puede servir para pedir ayuda.",
-"El agua es esencial para sobrevivir.",
-"El botiquín puede resolver heridas.",
-"Las herramientas pueden ayudar a salir del problema."
-]
-},
+  {
+    t:
+      "Tienes que sobrevivir una noche en un lugar desconocido. Elige un recurso:",
 
-{
-t:"Debes elegir una habilidad para una misión imposible:",
-o:[
-"Ser invisible durante 10 minutos",
-"Leer una mente una vez",
-"Retroceder 30 segundos",
-"Tener suerte durante una hora"
-],
-r:[
-"Diez minutos de invisibilidad permiten una infiltración.",
-"Leer una mente una vez da información muy precisa.",
-"Treinta segundos pueden cambiar una decisión crítica.",
-"La suerte puede resolver situaciones impredecibles."
-]
-},
+    o:[
+      "Una linterna con 20% de batería",
+      "Un mapa incompleto",
+      "Una mochila con comida",
+      "Un radio que solo recibe señales"
+    ],
 
-{
-t:"Tienes una sola oportunidad para ganar un torneo:",
-o:[
-"Jugar seguro y sumar poco",
-"Arriesgarlo todo en la primera ronda",
-"Estudiar al rival antes de actuar",
-"Cambiar completamente de estrategia"
-],
-r:[
-"La seguridad reduce el riesgo de quedar eliminado.",
-"Arriesgarse puede generar una ventaja enorme.",
-"Conocer al rival ayuda a tomar mejores decisiones.",
-"Una estrategia nueva puede sorprender al rival."
-]
-},
+    r:[
+      "La linterna permite explorar de inmediato.",
+      "Un mapa incompleto sigue dando información.",
+      "La comida garantiza recursos básicos.",
+      "El radio podría revelar dónde hay otras personas."
+    ]
+  },
 
-{
-t:"Un desconocido te deja cuatro objetos y dice que uno es la llave de salida:",
-o:[
-"Una moneda vieja",
-"Un reloj detenido",
-"Una tarjeta negra",
-"Una pequeña piedra con un símbolo"
-],
-r:[
-"La moneda parece demasiado común.",
-"El reloj podría ocultar un mecanismo.",
-"La tarjeta puede abrir algo electrónico.",
-"El símbolo podría ser una pista directa."
-]
-},
+  {
+    t:
+      "Una IA te ofrece un trato: puedes ganar mucho, pero debes aceptar una condición:",
 
-{
-t:"Un portal aparece delante de ti. Solo puedes escoger un destino:",
-o:[
-"Una ciudad futurista",
-"Un planeta desconocido",
-"Una dimensión congelada",
-"Una isla misteriosa"
-],
-r:[
-"La ciudad futurista podría tener tecnología avanzada.",
-"Un planeta desconocido ofrece una aventura única.",
-"La dimensión congelada puede esconder secretos.",
-"Una isla misteriosa podría contener recursos."
-]
-}
+    o:[
+      "Perder tus recuerdos de ayer",
+      "No usar internet durante un mes",
+      "Entregar todos tus puntos actuales",
+      "Dejar que la IA elija tu próximo reto"
+    ],
+
+    r:[
+      "Los recuerdos son demasiado valiosos.",
+      "Un mes sin internet es difícil pero temporal.",
+      "Perder puntos es un costo directo y claro.",
+      "La IA tendría demasiado control sobre la partida."
+    ]
+  },
+
+  {
+    t:
+      "Solo puedes salvar uno de cuatro objetos durante una emergencia:",
+
+    o:[
+      "Tu teléfono",
+      "Una botella de agua",
+      "Un botiquín",
+      "Una mochila con herramientas"
+    ],
+
+    r:[
+      "El teléfono puede servir para pedir ayuda.",
+      "El agua es esencial para sobrevivir.",
+      "El botiquín puede resolver heridas.",
+      "Las herramientas pueden ayudar a salir del problema."
+    ]
+  },
+
+  {
+    t:
+      "Debes elegir una habilidad para una misión imposible:",
+
+    o:[
+      "Ser invisible durante 10 minutos",
+      "Leer una mente una vez",
+      "Retroceder 30 segundos",
+      "Tener suerte durante una hora"
+    ],
+
+    r:[
+      "Diez minutos de invisibilidad permiten una infiltración.",
+      "Leer una mente una vez da información muy precisa.",
+      "Treinta segundos pueden cambiar una decisión crítica.",
+      "La suerte puede resolver situaciones impredecibles."
+    ]
+  },
+
+  {
+    t:
+      "Tienes una sola oportunidad para ganar un torneo:",
+
+    o:[
+      "Jugar seguro y sumar poco",
+      "Arriesgarlo todo en la primera ronda",
+      "Estudiar al rival antes de actuar",
+      "Cambiar completamente de estrategia"
+    ],
+
+    r:[
+      "La seguridad reduce el riesgo de quedar eliminado.",
+      "Arriesgarse puede generar una ventaja enorme.",
+      "Conocer al rival ayuda a tomar mejores decisiones.",
+      "Una estrategia nueva puede sorprender al rival."
+    ]
+  },
+
+  {
+    t:
+      "Un desconocido te deja cuatro objetos y dice que uno es la llave de salida:",
+
+    o:[
+      "Una moneda vieja",
+      "Un reloj detenido",
+      "Una tarjeta negra",
+      "Una pequeña piedra con un símbolo"
+    ],
+
+    r:[
+      "La moneda parece demasiado común.",
+      "El reloj podría ocultar un mecanismo.",
+      "La tarjeta puede abrir algo electrónico.",
+      "El símbolo podría ser una pista directa."
+    ]
+  },
+
+  {
+    t:
+      "Un portal aparece delante de ti. Solo puedes escoger un destino:",
+
+    o:[
+      "Una ciudad futurista",
+      "Un planeta desconocido",
+      "Una dimensión congelada",
+      "Una isla misteriosa"
+    ],
+
+    r:[
+      "La ciudad futurista podría tener tecnología avanzada.",
+      "Un planeta desconocido ofrece una aventura única.",
+      "La dimensión congelada puede esconder secretos.",
+      "Una isla misteriosa podría contener recursos."
+    ]
+  }
 
 ];
 
 
 /* =========================================================
-   ESTADO
+   ESTADO DEL JUEGO
 ========================================================= */
 
 let game={
-
-active:false,
-
-name:"Jugador",
-
-ai:0,
-
-me:0,
-
-round:0,
-
-streak:0,
-
-best:0,
-
-wins:0,
-
-scenario:null,
-
-selected:null,
-
-aiIndex:null,
-
-judged:false
-
+  active:false,
+  name:"Jugador",
+  ai:0,
+  me:0,
+  round:0,
+  streak:0,
+  best:0,
+  wins:0,
+  scenario:null,
+  selected:null,
+  aiIndex:null,
+  judged:false,
+  saved:false
 };
+
+
+/* =========================================================
+   SCROLL INTELIGENTE
+========================================================= */
+
+function scrollToElement(
+  id,
+  block="start"
+){
+
+  const element=
+    document.getElementById(id);
+
+  if(!element)return;
+
+  setTimeout(()=>{
+
+    element.scrollIntoView({
+      behavior:"smooth",
+      block:block
+    });
+
+  },80);
+}
 
 
 /* =========================================================
@@ -1793,38 +2105,37 @@ judged:false
 
 function showPage(id,btn){
 
-document
-.querySelectorAll(".page")
-.forEach(
-x=>x.classList.remove("active")
-);
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      x=>x.classList.remove("active")
+    );
 
-const page=document.getElementById(id);
+  const page=
+    document.getElementById(id);
 
-if(page){
+  if(page){
+    page.classList.add("active");
+  }
 
-page.classList.add("active");
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      x=>x.classList.remove("active")
+    );
 
-}
+  if(btn){
+    btn.classList.add("active");
+  }
 
-document
-.querySelectorAll(".tab")
-.forEach(
-x=>x.classList.remove("active")
-);
+  if(id==="historial"){
+    renderHistory();
+  }
 
-if(btn){
-
-btn.classList.add("active");
-
-}
-
-if(id==="historial"){
-
-renderHistory();
-
-}
-
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 
@@ -1834,65 +2145,62 @@ renderHistory();
 
 function startGame(){
 
-initAudio();
+  initAudio();
 
-playStartSound();
+  playStartSound();
 
-game={
+  game={
 
-active:true,
+    active:true,
 
-name:
-document
-.getElementById("playerName")
-.value
-.trim() || "Jugador",
+    name:
+      document
+        .getElementById("playerName")
+        .value
+        .trim() ||
+      "Jugador",
 
-ai:0,
+    ai:0,
+    me:0,
+    round:0,
+    streak:0,
+    best:0,
+    wins:0,
+    scenario:null,
+    selected:null,
+    aiIndex:null,
+    judged:false,
+    saved:false
+  };
 
-me:0,
+  document
+    .getElementById("startCard")
+    .classList.add("hidden");
 
-round:0,
+  document
+    .getElementById("finishedCard")
+    .classList.add("hidden");
 
-streak:0,
+  document
+    .getElementById("gameArea")
+    .classList.remove("hidden");
 
-best:0,
+  document
+    .getElementById("playerLabel")
+    .textContent=
+      game.name.toUpperCase();
 
-wins:0,
+  document
+    .getElementById("endGameBtn")
+    .disabled=false;
 
-scenario:null,
+  nextRound(true);
 
-selected:null,
-
-aiIndex:null,
-
-judged:false
-
-};
-
-document
-.getElementById("startCard")
-.classList.add("hidden");
-
-document
-.getElementById("finishedCard")
-.classList.add("hidden");
-
-document
-.getElementById("gameArea")
-.classList.remove("hidden");
-
-document
-.getElementById("playerLabel")
-.textContent=
-game.name.toUpperCase();
-
-document
-.getElementById("endGameBtn")
-.disabled=false;
-
-nextRound();
-
+  /* Llevar al usuario directamente al juego */
+  scrollToElement(
+    "gameArea",
+    "start"
+  );
 }
 
 
@@ -1900,193 +2208,261 @@ nextRound();
    SIGUIENTE RONDA
 ========================================================= */
 
-function nextRound(){
+function nextRound(
+  fromStart=false
+){
 
-if(!game.active)return;
+  if(!game.active)return;
 
-if(game.ai>=20 || game.me>=20){
+  if(
+    game.ai>=20 ||
+    game.me>=20
+  ){
 
-finishGame();
+    finishGame();
+    return;
+  }
 
-return;
+  if(!fromStart){
+    playNextSound();
+  }
 
-}
+  game.round++;
 
-game.round++;
+  game.selected=null;
 
-game.selected=null;
+  game.judged=false;
 
-game.judged=false;
+  /* Evitar repetir escenario inmediatamente */
+  let newScenario;
 
-game.scenario=
-scenarios[
-Math.floor(
-Math.random()*scenarios.length
-)
-];
+  do{
 
-const s=game.scenario;
+    newScenario=
+      scenarios[
+        Math.floor(
+          Math.random()*
+          scenarios.length
+        )
+      ];
 
-game.aiIndex=
-Math.floor(
-Math.random()*s.o.length
-);
+  }while(
+    scenarios.length>1 &&
+    game.scenario &&
+    newScenario===game.scenario
+  );
 
-document
-.getElementById("roundNumber")
-.textContent=game.round;
+  game.scenario=
+    newScenario;
 
-document
-.getElementById("scenarioText")
-.textContent=s.t;
+  const s=
+    game.scenario;
 
-document
-.getElementById("phaseTitle")
-.textContent=
-"FASE 1 — CREACIÓN / FASE 2 — DECISIÓN";
+  game.aiIndex=
+    Math.floor(
+      Math.random()*
+      s.o.length
+    );
 
-const box=document.getElementById("options");
+  document
+    .getElementById("roundNumber")
+    .textContent=
+      game.round;
 
-box.innerHTML="";
+  document
+    .getElementById("scenarioText")
+    .textContent=
+      s.t;
 
-s.o.forEach((x,i)=>{
+  document
+    .getElementById("phaseTitle")
+    .textContent=
+      "FASE 1 — CREACIÓN / FASE 2 — DECISIÓN";
 
-const b=document.createElement("button");
+  const box=
+    document.getElementById("options");
 
-b.className="option";
+  box.innerHTML="";
 
-b.textContent=(i+1)+". "+x;
+  s.o.forEach(
+    (x,i)=>{
 
-b.onclick=()=>{
-selectPlayer(i,b);
-};
+      const b=
+        document.createElement("button");
 
-box.appendChild(b);
+      b.type="button";
 
-});
+      b.className="option";
 
-document
-.getElementById("aiBox")
-.classList.remove("hidden");
+      b.textContent=
+        (i+1)+". "+x;
 
-document
-.getElementById("aiChoice")
-.textContent=
-"“"+s.o[game.aiIndex]+"”";
+      b.onclick=()=>{
+        selectPlayer(i,b);
+      };
 
-document
-.getElementById("aiReason")
-.textContent=
-"Razón: "+s.r[game.aiIndex];
+      box.appendChild(b);
 
-document
-.getElementById("playerBox")
-.classList.remove("hidden");
+    }
+  );
 
-document
-.getElementById("judgeBox")
-.classList.add("hidden");
+  document
+    .getElementById("aiBox")
+    .classList
+    .remove("hidden");
 
-document
-.getElementById("roundResult")
-.classList.add("hidden");
+  document
+    .getElementById("aiChoice")
+    .textContent=
+      "“"+
+      s.o[game.aiIndex]+
+      "”";
 
-document
-.getElementById("nextRound")
-.classList.add("hidden");
+  document
+    .getElementById("aiReason")
+    .textContent=
+      "Razón: "+
+      s.r[game.aiIndex];
 
-document
-.getElementById("confirmChoice")
-.disabled=true;
+  document
+    .getElementById("playerBox")
+    .classList
+    .remove("hidden");
 
-updateBoard();
+  document
+    .getElementById("judgeBox")
+    .classList
+    .add("hidden");
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+  document
+    .getElementById("roundResult")
+    .classList
+    .add("hidden");
 
+  document
+    .getElementById("nextRound")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("nextRound")
+    .textContent=
+      "➡️ SIGUIENTE RONDA";
+
+  document
+    .getElementById("nextRound")
+    .onclick=
+      nextRound;
+
+  document
+    .getElementById("confirmChoice")
+    .disabled=true;
+
+  updateBoard();
+
+  /* Llevar al nuevo escenario,
+     nunca a top:0 de toda la página. */
+  scrollToElement(
+    "gameArea",
+    "start"
+  );
 }
 
 
 /* =========================================================
-   ELEGIR
+   ELEGIR OPCIÓN
 ========================================================= */
 
 function selectPlayer(i,b){
 
-if(
-!game.active ||
-game.judged
-)return;
+  if(
+    !game.active ||
+    game.judged
+  ){
+    return;
+  }
 
-game.selected=i;
+  game.selected=i;
 
-document
-.querySelectorAll(".option")
-.forEach(
-x=>x.classList.remove("selected")
-);
+  document
+    .querySelectorAll(
+      "#options .option"
+    )
+    .forEach(
+      x=>x.classList.remove("selected")
+    );
 
-b.classList.add("selected");
+  b.classList.add("selected");
 
-document
-.getElementById("confirmChoice")
-.disabled=false;
+  document
+    .getElementById("confirmChoice")
+    .disabled=false;
 
-playSelectSound();
-
+  playSelectSound();
 }
 
 
 /* =========================================================
-   CONFIRMAR
+   CONFIRMAR ELECCIÓN
 ========================================================= */
 
 function confirmPlayerChoice(){
 
-if(
-!game.active ||
-game.selected===null
-)return;
+  if(
+    !game.active ||
+    game.selected===null
+  ){
+    return;
+  }
 
-document
-.querySelectorAll(".option")
-.forEach(
-(b,i)=>{
+  document
+    .querySelectorAll(
+      "#options .option"
+    )
+    .forEach(
+      (b,i)=>{
 
-b.disabled=true;
+        b.disabled=true;
 
-if(i===game.aiIndex){
+        if(
+          i===game.aiIndex
+        ){
+          b.classList.add(
+            "ai-choice"
+          );
+        }
 
-b.classList.add("ai-choice");
+      }
+    );
 
-}
+  document
+    .getElementById("confirmChoice")
+    .disabled=true;
 
-}
-);
+  document
+    .getElementById("judgeBox")
+    .classList
+    .remove("hidden");
 
-document
-.getElementById("confirmChoice")
-.disabled=true;
+  document
+    .getElementById("roundResult")
+    .classList
+    .remove("hidden");
 
-document
-.getElementById("judgeBox")
-.classList.remove("hidden");
+  document
+    .getElementById("roundResult")
+    .textContent=
+      "Tu elección: “"+
+      game.scenario.o[
+        game.selected
+      ]+
+      "”. Ahora decide quién merece el punto.";
 
-document
-.getElementById("roundResult")
-.classList.remove("hidden");
-
-document
-.getElementById("roundResult")
-.textContent=
-"Tu elección: “"+
-game.scenario.o[
-game.selected
-]+
-"”. Ahora decide quién merece el punto.";
-
+  /* Llevar directamente al juez */
+  scrollToElement(
+    "judgeBox",
+    "center"
+  );
 }
 
 
@@ -2096,78 +2472,105 @@ game.selected
 
 function awardPoint(who){
 
-if(
-!game.active ||
-game.judged
-)return;
+  if(
+    !game.active ||
+    game.judged
+  ){
+    return;
+  }
 
-game.judged=true;
+  game.judged=true;
 
-if(who==="me"){
+  if(who==="me"){
 
-game.me++;
+    game.me++;
 
-game.streak++;
+    game.streak++;
 
-game.wins++;
+    game.wins++;
 
-game.best=
-Math.max(
-game.best,
-game.streak
-);
+    game.best=
+      Math.max(
+        game.best,
+        game.streak
+      );
 
-document
-.getElementById("roundResult")
-.innerHTML=
-"🏆 <b>"+
-escapeHtml(game.name)+
-" gana el punto.</b> ¡Buena elección!";
+    document
+      .getElementById("roundResult")
+      .innerHTML=
+        "🏆 <b>"+
+        escapeHtml(game.name)+
+        " gana el punto.</b> ¡Buena elección!";
 
-playWinSound();
+    playWinSound();
 
-}else{
+  }else{
 
-game.ai++;
+    game.ai++;
 
-game.streak=0;
+    game.streak=0;
 
-document
-.getElementById("roundResult")
-.innerHTML=
-"🤖 <b>La IA gana el punto.</b> Tu racha se reinicia.";
+    document
+      .getElementById("roundResult")
+      .innerHTML=
+        "🤖 <b>La IA gana el punto.</b> Tu racha se reinicia.";
 
-playLoseSound();
+    playLoseSound();
+  }
 
-}
+  document
+    .getElementById("judgeBox")
+    .classList
+    .add("hidden");
 
-document
-.getElementById("judgeBox")
-.classList.add("hidden");
+  updateBoard();
 
-document
-.getElementById("nextRound")
-.classList.remove("hidden");
+  if(
+    game.ai>=20 ||
+    game.me>=20
+  ){
 
-updateBoard();
+    const next=
+      document.getElementById(
+        "nextRound"
+      );
 
-if(
-game.ai>=20 ||
-game.me>=20
-){
+    next.textContent=
+      "🏁 Ver resultado";
 
-document
-.getElementById("nextRound")
-.textContent=
-"🏁 Ver resultado";
+    next.onclick=
+      finishGame;
 
-document
-.getElementById("nextRound")
-.onclick=
-finishGame;
+    next.classList
+      .remove("hidden");
 
-}
+    scrollToElement(
+      "roundResult",
+      "center"
+    );
 
+  }else{
+
+    const next=
+      document.getElementById(
+        "nextRound"
+      );
+
+    next.textContent=
+      "➡️ SIGUIENTE RONDA";
+
+    next.onclick=
+      nextRound;
+
+    next.classList
+      .remove("hidden");
+
+    /* Llevar al botón siguiente */
+    scrollToElement(
+      "nextRound",
+      "center"
+    );
+  }
 }
 
 
@@ -2177,40 +2580,53 @@ finishGame;
 
 function updateBoard(){
 
-document
-.getElementById("aiScore")
-.textContent=game.ai;
+  document
+    .getElementById("aiScore")
+    .textContent=
+      game.ai;
 
-document
-.getElementById("playerScore")
-.textContent=game.me;
+  document
+    .getElementById("playerScore")
+    .textContent=
+      game.me;
 
-document
-.getElementById("aiProgress")
-.style.width=
-(game.ai/20*100)+"%";
+  document
+    .getElementById("aiProgress")
+    .style.width=
+      Math.min(
+        game.ai/20*100,
+        100
+      )+
+      "%";
 
-document
-.getElementById("playerProgress")
-.style.width=
-(game.me/20*100)+"%";
+  document
+    .getElementById("playerProgress")
+    .style.width=
+      Math.min(
+        game.me/20*100,
+        100
+      )+
+      "%";
 
-document
-.getElementById("streak")
-.textContent=game.streak;
+  document
+    .getElementById("streak")
+    .textContent=
+      game.streak;
 
-document
-.getElementById("statRounds")
-.textContent=game.round;
+  document
+    .getElementById("statRounds")
+    .textContent=
+      game.round;
 
-document
-.getElementById("statWins")
-.textContent=game.wins;
+  document
+    .getElementById("statWins")
+    .textContent=
+      game.wins;
 
-document
-.getElementById("statBestStreak")
-.textContent=game.best;
-
+  document
+    .getElementById("statBestStreak")
+    .textContent=
+      game.best;
 }
 
 
@@ -2220,27 +2636,23 @@ document
 
 function endGame(){
 
-if(!game.active){
+  if(!game.active){
+    return;
+  }
 
-return;
+  const confirmar=
+    confirm(
+      "¿Seguro que quieres terminar la partida?\n\n"+
+      "Tu resultado actual se guardará en el historial."
+    );
 
-}
+  if(!confirmar){
+    return;
+  }
 
-const confirmar=
-confirm(
-"¿Seguro que quieres terminar la partida?"
-);
+  playEndSound();
 
-if(!confirmar){
-
-return;
-
-}
-
-playEndSound();
-
-finishGame();
-
+  finishGame();
 }
 
 
@@ -2250,71 +2662,72 @@ finishGame();
 
 function finishGame(){
 
-if(!game.active){
+  if(!game.active){
+    return;
+  }
 
-return;
+  game.active=false;
 
-}
+  let title;
+  let icon;
 
-game.active=false;
+  if(game.me>=20){
 
-let title;
-let icon;
+    title="👑 ¡TÚ GANASTE!";
+    icon="🏆";
 
-if(game.me>=20){
+  }else if(game.ai>=20){
 
-title="👑 ¡TÚ GANASTE!";
+    title="🤖 LA IA GANÓ";
+    icon="🤖";
 
-icon="🏆";
+  }else{
 
-}else if(game.ai>=20){
+    title="🎮 PARTIDA TERMINADA";
+    icon="🛑";
+  }
 
-title="🤖 LA IA GANÓ";
+  document
+    .getElementById("finishIcon")
+    .textContent=
+      icon;
 
-icon="🤖";
+  document
+    .getElementById("finishTitle")
+    .textContent=
+      title;
 
-}else{
+  document
+    .getElementById("finishText")
+    .innerHTML=
+      "<b>"+
+      escapeHtml(game.name)+
+      "</b>: "+
+      game.me+
+      " puntos · <b>IA</b>: "+
+      game.ai+
+      " puntos<br>"+
+      "Rondas jugadas: "+
+      game.round+
+      " · Racha máxima: "+
+      game.best;
 
-title="🎮 PARTIDA TERMINADA";
+  document
+    .getElementById("gameArea")
+    .classList
+    .add("hidden");
 
-icon="🎮";
+  document
+    .getElementById("finishedCard")
+    .classList
+    .remove("hidden");
 
-}
+  saveHistory();
 
-document
-.getElementById("finishIcon")
-.textContent=icon;
-
-document
-.getElementById("finishTitle")
-.textContent=title;
-
-document
-.getElementById("finishText")
-.innerHTML=
-
-"<b>"+
-escapeHtml(game.name)+
-"</b>: "+
-game.me+
-" puntos · <b>IA</b>: "+
-game.ai+
-" puntos<br>"+
-"Rondas jugadas: "+
-game.round+
-" · Racha máxima: "+
-game.best;
-
-document
-.getElementById("gameArea")
-.classList.add("hidden");
-
-document
-.getElementById("finishedCard")
-.classList.remove("hidden");
-
-saveHistory();
-
+  scrollToElement(
+    "finishedCard",
+    "start"
+  );
 }
 
 
@@ -2324,25 +2737,27 @@ saveHistory();
 
 function resetToStart(){
 
-document
-.getElementById("gameArea")
-.classList.add("hidden");
+  document
+    .getElementById("gameArea")
+    .classList
+    .add("hidden");
 
-document
-.getElementById("finishedCard")
-.classList.add("hidden");
+  document
+    .getElementById("finishedCard")
+    .classList
+    .add("hidden");
 
-document
-.getElementById("startCard")
-.classList.remove("hidden");
+  document
+    .getElementById("startCard")
+    .classList
+    .remove("hidden");
 
-game.active=false;
+  game.active=false;
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 
@@ -2352,38 +2767,44 @@ behavior:"smooth"
 
 function saveHistory(){
 
-const h=
-JSON.parse(
-localStorage.getItem(
-"elige_pierde_history"
-)||"[]"
-);
+  if(game.saved){
+    return;
+  }
 
-h.unshift({
+  game.saved=true;
 
-name:game.name,
+  const h=
+    JSON.parse(
+      localStorage.getItem(
+        "elige_pierde_history"
+      ) ||
+      "[]"
+    );
 
-me:game.me,
+  h.unshift({
 
-ai:game.ai,
+    name:game.name,
 
-rounds:game.round,
+    me:game.me,
 
-best:game.best,
+    ai:game.ai,
 
-date:
-new Date()
-.toLocaleString("es-CO")
+    rounds:game.round,
 
-});
+    best:game.best,
 
-localStorage.setItem(
-"elige_pierde_history",
-JSON.stringify(
-h.slice(0,30)
-)
-);
+    date:
+      new Date()
+        .toLocaleString("es-CO")
 
+  });
+
+  localStorage.setItem(
+    "elige_pierde_history",
+    JSON.stringify(
+      h.slice(0,30)
+    )
+  );
 }
 
 
@@ -2393,76 +2814,64 @@ h.slice(0,30)
 
 function renderHistory(){
 
-const h=
-JSON.parse(
-localStorage.getItem(
-"elige_pierde_history"
-)||"[]"
-);
+  const h=
+    JSON.parse(
+      localStorage.getItem(
+        "elige_pierde_history"
+      ) ||
+      "[]"
+    );
 
-const el=
-document.getElementById(
-"historyTable"
-);
+  const el=
+    document.getElementById(
+      "historyTable"
+    );
 
-if(!h.length){
+  if(!h.length){
 
-el.innerHTML=
-'<div class="empty">'+
-'Todavía no hay partidas guardadas.'+
-'</div>';
+    el.innerHTML=
+      '<div class="empty">'+
+      'Todavía no hay partidas guardadas.'+
+      '</div>';
 
-return;
+    return;
+  }
 
-}
+  el.innerHTML=
+    '<div style="overflow:auto">'+
 
-el.innerHTML=
+    '<table>'+
 
-'<div style="overflow:auto">'+
+    '<thead>'+
+    '<tr>'+
+    '<th>Jugador</th>'+
+    '<th>Resultado</th>'+
+    '<th>Rondas</th>'+
+    '<th>Racha</th>'+
+    '<th>Fecha</th>'+
+    '</tr>'+
+    '</thead>'+
 
-'<table>'+
+    '<tbody>'+
 
-'<thead>'+
+    h.map(
+      x=>
 
-'<tr>'+
+      `<tr>
+        <td>${escapeHtml(x.name)}</td>
+        <td>🧑 ${x.me} — 🤖 ${x.ai}</td>
+        <td>${x.rounds}</td>
+        <td>🔥 ${x.best}</td>
+        <td>${escapeHtml(x.date)}</td>
+      </tr>`
 
-'<th>Jugador</th>'+
+    ).join("")+
 
-'<th>Resultado</th>'+
+    '</tbody>'+
 
-'<th>Rondas</th>'+
+    '</table>'+
 
-'<th>Racha</th>'+
-
-'<th>Fecha</th>'+
-
-'</tr>'+
-
-'</thead>'+
-
-'<tbody>'+
-
-h.map(
-x=>
-
-`<tr>
-<td>${escapeHtml(x.name)}</td>
-<td>${x.me} — ${x.ai}</td>
-<td>${x.rounds}</td>
-<td>🔥 ${x.best}</td>
-<td>${escapeHtml(x.date)}</td>
-</tr>`
-
-).join("")
-
-+
-
-'</tbody>'+
-
-'</table>'+
-
-'</div>';
-
+    '</div>';
 }
 
 
@@ -2472,20 +2881,18 @@ x=>
 
 function clearHistory(){
 
-if(
-confirm(
-"¿Borrar todo el historial de este navegador?"
-)
-){
+  if(
+    confirm(
+      "¿Borrar todo el historial de este navegador?"
+    )
+  ){
 
-localStorage.removeItem(
-"elige_pierde_history"
-);
+    localStorage.removeItem(
+      "elige_pierde_history"
+    );
 
-renderHistory();
-
-}
-
+    renderHistory();
+  }
 }
 
 
@@ -2495,19 +2902,19 @@ renderHistory();
 
 function escapeHtml(s){
 
-return String(s).replace(
-/[&<>"']/g,
-m=>({
+  return String(s).replace(
+    /[&<>"']/g,
 
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
+    m=>({
 
-}[m])
-);
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
 
+    }[m])
+  );
 }
 
 
