@@ -2,2051 +2,331 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050808">
-
-<title>ELIGE O PIERDE — v6.0.2</title>
-
+<meta name="description" content="ELIGE O PIERDE — IA VS HUMANO. Versión 6.8.9 BETA.">
+<title>ELIGE O PIERDE — v6.8.9 BETA</title>
 <style>
 :root{
   --bg:#050808;
   --panel:#0b1111;
   --panel2:#101919;
+  --panel3:#07100f;
   --text:#eafff9;
   --muted:#8da7a2;
   --neon:#00ffcc;
   --neon2:#00bfa0;
   --danger:#ff4d6d;
   --gold:#ffd166;
+  --blue:#64b5ff;
+  --purple:#a87cff;
   --line:#19302d;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-  scroll-padding-top:12px;
-}
-
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      #08352f 0,
-      #050808 42%,
-      #020303 100%
-    );
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-button,
-input,
-textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:disabled{
-  cursor:not-allowed;
-}
-
-.container{
-  width:min(1100px,92%);
-  margin:auto;
-}
-
-header{
-  text-align:center;
-  padding:42px 0 20px;
-}
-
-.logo{
-  font-size:clamp(32px,7vw,62px);
-  font-weight:900;
-  letter-spacing:2px;
-  text-shadow:
-    0 0 8px var(--neon),
-    0 0 25px #00ffcc66;
-  margin:0;
-}
-
-.subtitle{
-  color:var(--muted);
-  margin:8px 0 0;
-}
-
-.version{
-  display:inline-block;
-  margin-top:14px;
-  padding:6px 12px;
-  border:1px solid var(--neon);
-  border-radius:99px;
-  color:var(--neon);
-  font-size:12px;
-  font-weight:800;
-}
-
-.tabs{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:18px 0;
-}
-
-.tab{
-  flex:1;
-  min-width:130px;
-  background:#0b1111;
-  border:1px solid var(--line);
-  color:var(--muted);
-  border-radius:14px;
-  padding:12px 15px;
-  font-weight:800;
-  transition:.2s;
-}
-
-.tab:hover{
-  border-color:var(--neon);
-  color:var(--neon);
-}
-
-.tab.active{
-  background:var(--neon);
-  color:#00110d;
-  border-color:var(--neon);
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.card{
-  background:linear-gradient(145deg,#0d1514,#070b0b);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:24px;
-  margin:14px 0;
-  box-shadow:0 12px 45px #0008;
-}
-
-.hero{
-  text-align:center;
-  padding:32px 20px;
-}
-
-.hero h2{
-  font-size:clamp(25px,5vw,42px);
-  margin:5px 0 10px;
-}
-
-.hero p{
-  color:var(--muted);
-  max-width:680px;
-  margin:0 auto 22px;
-  line-height:1.6;
-}
-
-.primary,
-.secondary,
-.danger,
-.sound-button{
-  border-radius:14px;
-  padding:13px 20px;
-  font-weight:900;
-  border:1px solid transparent;
-  transition:.2s;
-}
-
-.primary{
-  background:var(--neon);
-  color:#00110d;
-}
-
-.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 25px #00ffcc55;
-}
-
-.secondary{
-  background:#101919;
-  color:var(--neon);
-  border-color:var(--neon);
-}
-
-.secondary:hover{
-  background:#06332d;
-}
-
-.danger{
-  background:#261016;
-  color:#ff8299;
-  border-color:#6b2031;
-}
-
-.danger:hover{
-  background:#3b141d;
-}
-
-.sound-button{
-  background:#101919;
-  color:var(--gold);
-  border-color:var(--gold);
-}
-
-.sound-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px #ffd16633;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.setup{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:12px;
-  align-items:end;
-}
-
-label{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  font-weight:800;
-  margin-bottom:7px;
-}
-
-input{
-  width:100%;
-  background:#050909;
-  border:1px solid var(--line);
-  color:var(--text);
-  border-radius:12px;
-  padding:13px;
-  outline:none;
-}
-
-input:focus{
-  border-color:var(--neon);
-  box-shadow:0 0 0 3px #00ffcc14;
-}
-
-/* =========================
-   SONIDO
-========================= */
-
-.sound-control{
-  margin-top:18px;
-  text-align:center;
-}
-
-/* =========================
-   COLABORADORES
-========================= */
-
-.collaborators{
-  text-align:center;
-  margin-top:20px;
-}
-
-.collaborators h2{
-  margin-top:0;
-}
-
-.collaborators-description{
-  color:var(--muted);
-  margin-bottom:22px;
-}
-
-.collab-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.collab{
-  background:#080f0e;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:20px 14px;
-  transition:.2s;
-}
-
-.collab:hover{
-  border-color:var(--neon);
-  transform:translateY(-3px);
-}
-
-.collab-icon{
-  font-size:38px;
-  margin-bottom:8px;
-}
-
-.collab h3{
-  margin:5px 0;
-  color:var(--neon);
-}
-
-.collab p{
-  color:var(--muted);
-  font-size:13px;
-  margin:5px 0;
-}
-
-/* =========================
-   TABLERO
-========================= */
-
-.scoreboard{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:center;
-}
-
-.score{
-  padding:18px;
-  border-radius:18px;
-  background:#08100f;
-  border:1px solid var(--line);
-  text-align:center;
-}
-
-.score.ai{
-  border-color:#315a53;
-}
-
-.score.me{
-  border-color:var(--neon);
-}
-
-.score small{
-  display:block;
-  color:var(--muted);
-  font-weight:800;
-}
-
-.score strong{
-  display:block;
-  font-size:42px;
-  margin-top:3px;
-}
-
-.vs{
-  font-weight:1000;
-  color:var(--muted);
-}
-
-.progress{
-  height:8px;
-  background:#16211f;
-  border-radius:99px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  width:0;
-  background:var(--neon);
-  transition:.5s;
-}
-
-.roundbar{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  color:var(--muted);
-  font-weight:800;
-}
-
-.roundbar strong{
-  color:var(--text);
-}
-
-/* =========================
-   ESCENARIO
-========================= */
-
-.scenario h3{
-  margin:0 0 8px;
-  color:var(--neon);
-}
-
-.scenario-text{
-  font-size:20px;
-  line-height:1.5;
-  margin:0;
-}
-
-.options{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:20px;
-}
-
-.option{
-  text-align:left;
-  background:#0b1211;
-  border:1px solid var(--line);
-  color:var(--text);
-  border-radius:16px;
-  padding:16px;
-  min-height:72px;
-  transition:.2s;
-}
-
-.option:hover{
-  border-color:var(--neon);
-  transform:translateY(-2px);
-}
-
-.option.selected{
-  border-color:var(--neon);
-  background:#06332d;
-  box-shadow:0 0 20px #00ffcc22;
-}
-
-.option.ai-choice{
-  border-color:var(--gold);
-  background:#2a2412;
-}
-
-.option:disabled{
-  cursor:not-allowed;
-}
-
-/* =========================
-   IA
-========================= */
-
-.ai-box{
-  margin-top:18px;
-  padding:17px;
-  border-radius:16px;
-  border:1px solid #315a53;
-  background:#07100f;
-}
-
-.ai-box .tag{
-  color:var(--neon);
-  font-size:12px;
-  font-weight:900;
-}
-
-.ai-choice-text{
-  font-weight:900;
-  font-size:18px;
-  margin:7px 0;
-}
-
-.reason{
-  color:var(--muted);
-  line-height:1.5;
-}
-
-/* =========================
-   BOTONES
-========================= */
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:18px;
-}
-
-.judge{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.judge button{
-  padding:14px;
-  border-radius:14px;
-  font-weight:900;
-}
-
-.judge-ai{
-  background:#251f0b;
-  color:var(--gold);
-  border:1px solid #7d6820;
-}
-
-.judge-me{
-  background:#06332d;
-  color:var(--neon);
-  border:1px solid var(--neon);
-}
-
-/* =========================
-   MENSAJES
-========================= */
-
-.message{
-  padding:14px;
-  border-radius:14px;
-  background:#07100f;
-  border:1px solid var(--line);
-  color:var(--muted);
-  line-height:1.5;
-}
-
-/* =========================
-   ESTADÍSTICAS
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.stat{
-  padding:16px;
-  background:#080e0d;
-  border:1px solid var(--line);
-  border-radius:16px;
-  text-align:center;
-}
-
-.stat b{
-  display:block;
-  font-size:25px;
-  color:var(--neon);
-}
-
-/* =========================
-   TABLA
-========================= */
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,
-td{
-  text-align:left;
-  padding:12px;
-  border-bottom:1px solid var(--line);
-}
-
-th{
-  color:var(--neon);
-  font-size:13px;
-}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:25px;
-}
-
-/* =========================
-   REGLAS
-========================= */
-
-.rule{
-  padding:15px;
-  border-left:3px solid var(--neon);
-  background:#07100f;
-  margin:10px 0;
-  border-radius:0 12px 12px 0;
-}
-
-/* =========================
-   PIE
-========================= */
-
-footer{
-  text-align:center;
-  color:#61736f;
-  padding:35px 0 45px;
-  font-size:13px;
-}
-
-/* =========================
-   MÓVIL
-========================= */
-
-@media(max-width:700px){
-
-  .container{
-    width:96%;
-  }
-
-  header{
-    padding:25px 0 15px;
-  }
-
-  .logo{
-    font-size:clamp(30px,9vw,45px);
-    line-height:1.05;
-  }
-
-  .subtitle{
-    font-size:14px;
-  }
-
-  .tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
-  }
-
-  .tab{
-    min-width:0;
-    padding:11px 8px;
-    font-size:13px;
-  }
-
-  .setup{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-
-  .setup > div,
-  .setup > button{
-    width:100%;
-  }
-
-  .setup button{
-    min-height:50px;
-  }
-
-  .card{
-    padding:16px;
-    border-radius:18px;
-  }
-
-  .hero{
-    padding:24px 14px;
-  }
-
-  .scoreboard{
-    grid-template-columns:1fr 28px 1fr;
-    gap:7px;
-  }
-
-  .score{
-    padding:13px 7px;
-  }
-
-  .score strong{
-    font-size:30px;
-  }
-
-  .score small{
-    font-size:11px;
-  }
-
-  .vs{
-    font-size:12px;
-  }
-
-  .roundbar{
-    font-size:12px;
-  }
-
-  .scenario-text{
-    font-size:17px;
-  }
-
-  .options{
-    grid-template-columns:1fr;
-    gap:9px;
-  }
-
-  .option{
-    width:100%;
-    min-height:64px;
-    padding:14px;
-    font-size:15px;
-  }
-
-  .actions{
-    flex-direction:column;
-  }
-
-  .actions button{
-    width:100%;
-    min-height:50px;
-  }
-
-  .judge{
-    grid-template-columns:1fr;
-  }
-
-  .judge button{
-    min-height:52px;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .collab-grid{
-    grid-template-columns:1fr;
-  }
-
-  .collab{
-    padding:17px 12px;
-  }
-
-  .collab a,
-  .collab button{
-    width:100%;
-  }
-
-  table{
-    min-width:600px;
-  }
-
-  footer{
-    padding:25px 0 35px;
-  }
-}
-
-@media(max-width:360px){
-
-  .container{
-    width:97%;
-  }
-
-  .tab{
-    font-size:12px;
-    padding:10px 5px;
-  }
-
-  .score strong{
-    font-size:26px;
-  }
-
-  .roundbar{
-    gap:5px;
-    font-size:11px;
-  }
-
-  .scenario-text{
-    font-size:16px;
-  }
-
-  .option{
-    font-size:14px;
-  }
-}
+  --shadow:0 14px 50px rgba(0,0,0,.35);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 50% -15%,#0a3b35 0,#050808 38%,#020303 100%)}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.52}
+a{color:var(--neon);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{width:min(1120px,94%);margin:auto}
+.hidden{display:none!important}
+
+/* HEADER */
+header{text-align:center;padding:38px 0 18px}
+.logo{margin:0;font-size:clamp(34px,7vw,64px);font-weight:1000;letter-spacing:2px;text-shadow:0 0 10px var(--neon),0 0 28px rgba(0,255,204,.25)}
+.subtitle{margin:8px 0 0;color:var(--muted)}
+.version{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:7px 13px;border:1px solid var(--neon);border-radius:99px;color:var(--neon);font-size:12px;font-weight:900;background:rgba(0,255,204,.05)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(255,209,102,.8)}
+
+/* NAV */
+.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:16px 0 22px}
+.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:14px;padding:12px 10px;font-weight:900;transition:.2s}
+.tab:hover{border-color:var(--neon);color:var(--neon);transform:translateY(-1px)}
+.tab.active{background:var(--neon);border-color:var(--neon);color:#00110d;box-shadow:0 0 20px rgba(0,255,204,.16)}
+.page{display:none;animation:fade .22s ease}.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,rgba(13,21,20,.98),rgba(6,10,10,.98));border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:14px 0;box-shadow:var(--shadow)}
+.hero{text-align:center;padding:34px 22px}
+.hero h2{margin:5px 0 10px;font-size:clamp(26px,5vw,44px)}
+.hero p{max-width:760px;margin:0 auto 22px;color:var(--muted);line-height:1.65}
+.setup{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;max-width:760px;margin:auto}
+label{display:block;margin:0 0 7px;color:var(--muted);font-size:13px;font-weight:900}
+input{width:100%;background:#050909;border:1px solid var(--line);color:var(--text);border-radius:13px;padding:13px;outline:none}
+input:focus{border-color:var(--neon);box-shadow:0 0 0 3px rgba(0,255,204,.08)}
+
+/* BUTTONS */
+.primary,.secondary,.danger,.gold,.blue,.ghost,.sound-button{border-radius:13px;padding:12px 18px;font-weight:900;border:1px solid transparent;transition:.2s}
+.primary{background:var(--neon);color:#00110d}.primary:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(0,255,204,.2)}
+.secondary{background:#101919;color:var(--neon);border-color:var(--neon)}.secondary:hover{background:#06332d}
+.danger{background:#261016;color:#ff8299;border-color:#6b2031}.danger:hover{background:#3b141d}
+.gold{background:#241f0a;color:var(--gold);border-color:#7d6820}.gold:hover{background:#332b0e}
+.blue{background:#0e1d2c;color:var(--blue);border-color:#315579}.blue:hover{background:#13283d}
+.ghost{background:transparent;color:var(--muted);border-color:var(--line)}.ghost:hover{color:var(--text);border-color:var(--neon2)}
+.sound-button{background:#101919;color:var(--gold);border-color:var(--gold)}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.profile-box{background:var(--panel3);border:1px solid var(--line);border-radius:18px;padding:18px}
+.profile-row{display:flex;justify-content:space-between;gap:15px;align-items:center}.profile-row+.profile-row{margin-top:12px}
+.profile-rank{font-size:20px;font-weight:1000;color:var(--neon)}
+.xpbar{height:9px;background:#16211f;border-radius:99px;overflow:hidden;margin-top:8px}.xpbar span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--neon),var(--blue));transition:.45s}
+.mini-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.mini{padding:12px;text-align:center;border:1px solid var(--line);border-radius:14px;background:#080f0e}.mini small{display:block;color:var(--muted)}.mini b{display:block;margin-top:3px;font-size:21px;color:var(--neon)}
+
+/* BOARD */
+.scoreboard{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+.score{padding:18px;border-radius:18px;background:#08100f;border:1px solid var(--line);text-align:center}.score.ai{border-color:#315a53}.score.me{border-color:var(--neon)}
+.score small{display:block;color:var(--muted);font-weight:900}.score strong{display:block;font-size:44px;line-height:1.1;margin-top:3px}.vs{font-weight:1000;color:var(--muted)}
+.progress{height:8px;margin-top:10px;background:#16211f;border-radius:99px;overflow:hidden}.progress span{display:block;width:0;height:100%;background:var(--neon);transition:.45s}
+.roundbar{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-weight:800;margin-top:14px}.roundbar strong{color:var(--text)}
+
+/* GAME */
+.scenario h3{margin:0 0 8px;color:var(--neon)}
+.scenario-text{margin:0;font-size:20px;line-height:1.55}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.option{text-align:left;background:#0b1211;border:1px solid var(--line);color:var(--text);border-radius:16px;padding:16px;min-height:74px;transition:.2s}.option:hover{border-color:var(--neon);transform:translateY(-2px)}.option.selected{border-color:var(--neon);background:#06332d;box-shadow:0 0 20px rgba(0,255,204,.12)}.option.ai-choice{border-color:var(--gold);background:#2a2412}
+.ai-box{margin-top:18px;padding:17px;border-radius:16px;border:1px solid #315a53;background:#07100f}.ai-box .tag{color:var(--neon);font-size:12px;font-weight:900}.ai-choice-text{font-weight:900;font-size:18px;margin:7px 0}.reason{color:var(--muted);line-height:1.5}
+.message{padding:14px;border-radius:14px;background:#07100f;border:1px solid var(--line);color:var(--muted);line-height:1.5}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.judge{display:grid;grid-template-columns:1fr 1fr;gap:10px}.judge button{padding:14px;border-radius:14px;font-weight:900}.judge-ai{background:#251f0b;color:var(--gold);border:1px solid #7d6820}.judge-me{background:#06332d;color:var(--neon);border:1px solid var(--neon)}
+
+/* STATS + EXTRA */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:16px;background:#080e0d;border:1px solid var(--line);border-radius:16px;text-align:center}.stat b{display:block;font-size:26px;color:var(--neon)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.section-head h2,.section-head h3{margin:0}.badge{display:inline-flex;padding:6px 9px;border-radius:99px;font-size:11px;font-weight:900;border:1px solid var(--line);color:var(--muted)}
+
+/* ACHIEVEMENTS */
+.achievement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.achievement{padding:15px;border:1px solid var(--line);border-radius:15px;background:#080e0d}.achievement.locked{opacity:.5}.achievement .icon{font-size:28px}.achievement strong{display:block;margin-top:6px}.achievement small{display:block;color:var(--muted);margin-top:3px}
+
+/* HISTORY */
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--neon);font-size:13px}.empty{text-align:center;color:var(--muted);padding:25px}
+.table-wrap{overflow:auto}.history-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+/* VERSION / RULE */
+.rule{padding:15px;border-left:3px solid var(--neon);background:#07100f;margin:10px 0;border-radius:0 12px 12px 0}.version-card{background:#07100f;border:1px solid var(--line);border-radius:18px;padding:18px;margin:12px 0}.version-card h3{color:var(--neon);margin:0 0 8px}.version-card p,.version-card li{color:var(--muted);line-height:1.55}.version-card ul{margin:12px 0 0 20px}
+
+/* FOOTER */
+footer{text-align:center;color:#61736f;padding:34px 0 48px;font-size:13px}.footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:10px}
+
+/* TOAST */
+.toast{position:fixed;left:50%;bottom:24px;z-index:9999;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(92vw,520px);padding:12px 16px;border-radius:12px;background:#07100f;color:var(--text);border:1px solid var(--neon);box-shadow:0 10px 35px rgba(0,0,0,.4);transition:.22s;text-align:center;font-weight:800}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* MOBILE */
+@media(max-width:820px){.tabs{grid-template-columns:repeat(4,1fr)}.profile-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.container{width:96%}.tabs{grid-template-columns:1fr 1fr}.setup{grid-template-columns:1fr}.scoreboard{grid-template-columns:1fr 32px 1fr}.score strong{font-size:34px}.options,.judge{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.achievement-grid{grid-template-columns:1fr}.card{padding:18px}.scenario-text{font-size:17px}.actions{flex-direction:column}.actions button,.setup button{width:100%;min-height:50px}.mini-stat{grid-template-columns:1fr 1fr 1fr}.roundbar{font-size:12px;flex-wrap:wrap}}
+@media(max-width:380px){.tabs{font-size:12px}.mini-stat{grid-template-columns:1fr}.roundbar{font-size:11px}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <header>
-
   <h1 class="logo">🎮 ELIGE O PIERDE</h1>
-
-  <p class="subtitle">
-    IA VS HUMANO · Ahora se juega directamente aquí
-  </p>
-
-  <span class="version">
-    VERSIÓN v6.0.2 — EDICIÓN CLÁSICA MEJORADA
-  </span>
-
+  <p class="subtitle">IA VS HUMANO · La evolución de la serie 6.x</p>
+  <span class="version"><span class="status-dot"></span> VERSIÓN 6.8.9 — BETA</span>
 </header>
 
 <nav class="tabs">
-
-  <button class="tab active" onclick="showPage('juego',this)">
-    🎮 Juego
-  </button>
-
-  <button class="tab" onclick="showPage('reglas',this)">
-    📜 Reglas
-  </button>
-
-  <button class="tab" onclick="showPage('historial',this)">
-    🏆 Historial
-  </button>
-
-  <button class="tab" onclick="showPage('versiones',this)">
-    📜 Versiones
-  </button>
-
-  <button class="tab" onclick="showPage('licencia',this)">
-    📄 Licencia
-  </button>
-
-  <button class="tab" onclick="showPage('sugerencias',this)">
-    💡 Sugerencias
-  </button>
-
+  <button class="tab active" onclick="showPage('juego',this)">🎮 Juego</button>
+  <button class="tab" onclick="showPage('reglas',this)">📜 Reglas</button>
+  <button class="tab" onclick="showPage('historial',this)">🏆 Historial</button>
+  <button class="tab" onclick="showPage('progreso',this)">⚡ Progreso</button>
+  <button class="tab" onclick="showPage('versiones',this)">📋 Versiones</button>
+  <button class="tab" onclick="showPage('licencia',this)">📄 Licencia</button>
+  <button class="tab" onclick="showPage('sugerencias',this)">💡 Sugerencias</button>
 </nav>
 
 <main>
 
-<!-- =====================================================
-     JUEGO
-===================================================== -->
-
 <section id="juego" class="page active">
-
-  <!-- INICIO -->
   <div id="startCard" class="card hero">
-
-    <div style="font-size:48px">
-      ⚡
-    </div>
-
-    <h2>
-      ¿TE ATREVES A ELEGIR?
-    </h2>
-
-    <p>
-      Juega una partida completa contra la IA sin salir de esta página.
-      La IA crea el escenario, elige una opción y tú debes tomar tu propia decisión.
-    </p>
-
+    <div style="font-size:50px">⚡</div>
+    <h2>¿TE ATREVES A ELEGIR?</h2>
+    <p>La experiencia clásica de ELIGE O PIERDE, reconstruida para una nueva etapa: partidas locales, progreso persistente, rachas, logros e historial.</p>
     <div class="setup">
-
       <div style="text-align:left">
-
-        <label for="playerName">
-          TU NOMBRE
-        </label>
-
-        <input
-          id="playerName"
-          maxlength="18"
-          placeholder="Ej: nruto"
-          value=""
-          autocomplete="nickname"
-        >
-
+        <label for="playerName">TU NOMBRE</label>
+        <input id="playerName" maxlength="18" placeholder="Ej: nruto" autocomplete="nickname">
       </div>
-
-      <button class="primary" onclick="startGame()">
-        🚀 EMPEZAR
-      </button>
-
+      <button class="primary" onclick="startGame()">🚀 EMPEZAR PARTIDA</button>
     </div>
-
-    <div class="sound-control">
-
-      <button
-        id="soundBtn"
-        class="sound-button"
-        onclick="toggleSound()"
-      >
-        🔊 Sonido: ON
-      </button>
-
+    <div class="actions" style="justify-content:center">
+      <button id="resumeBtn" class="secondary hidden" onclick="resumeSavedGame()">↩️ CONTINUAR PARTIDA</button>
+      <button id="soundBtn" class="sound-button" onclick="toggleSound()">🔊 Sonido: ON</button>
     </div>
-
+    <div id="resumeInfo" class="message hidden" style="margin-top:15px"></div>
   </div>
 
-
-  <!-- ===================================================
-       JUEGO: VA ANTES DE COLABORADORES Y SEDES
-  ==================================================== -->
+  <div id="profilePanel" class="card hidden">
+    <div class="profile-grid">
+      <div class="profile-box">
+        <div class="profile-row"><span class="muted">Jugador</span><strong id="profileName">Jugador</strong></div>
+        <div class="profile-row"><span class="muted">Rango</span><strong id="profileRank" class="profile-rank">Novato</strong></div>
+        <div style="margin-top:12px"><div class="profile-row"><span class="muted">XP</span><strong id="profileXp">0</strong></div><div class="xpbar"><span id="profileXpBar"></span></div></div>
+      </div>
+      <div class="profile-box">
+        <div class="profile-row"><span class="muted">Logros</span><strong id="profileAchievements">0/6</strong></div>
+        <div class="profile-row"><span class="muted">Partidas</span><strong id="profileGames">0</strong></div>
+        <div class="profile-row"><span class="muted">Victorias</span><strong id="profileWins">0</strong></div>
+      </div>
+    </div>
+  </div>
 
   <div id="gameArea" class="hidden">
-
     <div class="card">
-
       <div class="scoreboard">
-
-        <div class="score ai">
-
-          <small>
-            🤖 IA
-          </small>
-
-          <strong id="aiScore">
-            0
-          </strong>
-
-          <div class="progress">
-            <span id="aiProgress"></span>
-          </div>
-
-        </div>
-
-        <div class="vs">
-          VS
-        </div>
-
-        <div class="score me">
-
-          <small>
-            🧑 <span id="playerLabel">TÚ</span>
-          </small>
-
-          <strong id="playerScore">
-            0
-          </strong>
-
-          <div class="progress">
-            <span id="playerProgress"></span>
-          </div>
-
-        </div>
-
+        <div class="score ai"><small>🤖 IA</small><strong id="aiScore">0</strong><div class="progress"><span id="aiProgress"></span></div></div>
+        <div class="vs">VS</div>
+        <div class="score me"><small>🧑 <span id="playerLabel">TÚ</span></small><strong id="playerScore">0</strong><div class="progress"><span id="playerProgress"></span></div></div>
       </div>
-
-      <div class="roundbar" style="margin-top:16px">
-
-        <span>
-          Ronda <strong id="roundNumber">1</strong>
-        </span>
-
-        <span>
-          Meta: <strong>20</strong>
-        </span>
-
-        <span>
-          🔥 Racha: <strong id="streak">0</strong>
-        </span>
-
+      <div class="roundbar">
+        <span>Ronda <strong id="roundNumber">1</strong></span>
+        <span>Meta: <strong>20</strong></span>
+        <span>🔥 Racha: <strong id="streak">0</strong></span>
       </div>
-
     </div>
-
 
     <div class="card scenario" id="scenarioCard">
-
-      <h3 id="phaseTitle">
-        FASE 1 — CREACIÓN
-      </h3>
-
-      <p
-        class="scenario-text"
-        id="scenarioText"
-      ></p>
-
-      <div
-        class="options"
-        id="options"
-      ></div>
-
-
-      <!-- IA -->
-
-      <div
-        id="aiBox"
-        class="ai-box hidden"
-      >
-
-        <div class="tag">
-          🤖 DECISIÓN DE LA IA
-        </div>
-
-        <div
-          class="ai-choice-text"
-          id="aiChoice"
-        ></div>
-
-        <div
-          class="reason"
-          id="aiReason"
-        ></div>
-
+      <div class="section-head"><div><h3 id="phaseTitle">FASE 1 — CREACIÓN</h3><span id="roundHint" class="badge">DECIDE CON CUIDADO</span></div><span class="badge">6.8.9 BETA</span></div>
+      <p class="scenario-text" id="scenarioText"></p>
+      <div class="options" id="options"></div>
+      <div id="aiBox" class="ai-box hidden">
+        <div class="tag">🤖 DECISIÓN DE LA IA</div>
+        <div class="ai-choice-text" id="aiChoice"></div>
+        <div class="reason" id="aiReason"></div>
       </div>
-
-
-      <!-- HUMANO -->
-
       <div id="playerBox" class="hidden">
-
-        <div
-          class="message"
-          style="margin-top:18px"
-        >
-
-          Ahora es tu turno.
-          Elige <strong>SOLO UNA</strong>
-          opción y después podrás juzgar quién merece el punto.
-
-        </div>
-
-        <div class="actions">
-
-          <button
-            class="secondary"
-            id="confirmChoice"
-            onclick="confirmPlayerChoice()"
-            disabled
-          >
-            ✅ Confirmar elección
-          </button>
-
-        </div>
-
+        <div class="message" style="margin-top:18px">Ahora es tu turno. Elige <strong>SOLO UNA</strong> opción y confírmala.</div>
+        <div id="selectedChoice" class="message hidden" style="margin-top:10px;border-color:var(--neon)"></div>
+        <div class="actions"><button class="secondary" id="confirmChoice" onclick="confirmPlayerChoice()" disabled>✅ Confirmar elección</button></div>
       </div>
-
-
-      <!-- JUEZ -->
-
       <div id="judgeBox" class="hidden">
-
-        <div
-          class="message"
-          style="margin-top:18px"
-        >
-
-          <strong>
-            ⚖️ JUEZ HUMANO:
-          </strong>
-
-          ¿Quién cumplió mejor las reglas de esta ronda?
-
-        </div>
-
-        <div
-          class="judge"
-          style="margin-top:10px"
-        >
-
-          <button
-            class="judge-ai"
-            onclick="awardPoint('ai')"
-          >
-            🤖 Punto para IA
-          </button>
-
-          <button
-            class="judge-me"
-            onclick="awardPoint('me')"
-          >
-            🧑 Punto para mí
-          </button>
-
-        </div>
-
+        <div class="message" style="margin-top:18px"><strong>⚖️ JUEZ HUMANO:</strong> ¿Quién cumplió mejor las reglas de esta ronda?</div>
+        <div class="judge" style="margin-top:10px"><button id="judgeAiBtn" class="judge-ai" onclick="awardPoint('ai')">🤖 Punto para IA</button><button id="judgeMeBtn" class="judge-me" onclick="awardPoint('me')">🧑 Punto para mí</button></div>
       </div>
-
-
-      <div
-        id="roundResult"
-        class="message hidden"
-        style="margin-top:18px"
-      ></div>
-
-
+      <div id="roundResult" class="message hidden" style="margin-top:18px"></div>
       <div class="actions">
-
-        <button
-          class="primary hidden"
-          id="nextRound"
-          onclick="nextRound()"
-        >
-          ➡️ SIGUIENTE RONDA
-        </button>
-
-        <button
-          type="button"
-          class="danger"
-          id="endGameBtn"
-          onclick="endGame()"
-        >
-          🛑 Terminar partida
-        </button>
-
+        <button class="primary hidden" id="nextRound" onclick="nextRound()">➡️ SIGUIENTE RONDA</button>
+        <button type="button" class="danger" id="endGameBtn" onclick="endGame()">🛑 Terminar partida</button>
       </div>
-
     </div>
-
-
-    <!-- ESTADÍSTICAS -->
 
     <div class="card">
-
-      <h3>
-        📊 Estadísticas de la partida
-      </h3>
-
-      <div class="stats">
-
-        <div class="stat">
-
-          <span>
-            Rondas
-          </span>
-
-          <b id="statRounds">
-            0
-          </b>
-
-        </div>
-
-        <div class="stat">
-
-          <span>
-            Victorias tuyas
-          </span>
-
-          <b id="statWins">
-            0
-          </b>
-
-        </div>
-
-        <div class="stat">
-
-          <span>
-            Racha máxima
-          </span>
-
-          <b id="statBestStreak">
-            0
-          </b>
-
-        </div>
-
+      <div class="section-head"><h3>📊 Estadísticas de la partida</h3><span id="saveStatus" class="badge">AUTO-GUARDADO</span></div>
+      <div class="stats" style="margin-top:12px">
+        <div class="stat"><span>Rondas</span><b id="statRounds">0</b></div>
+        <div class="stat"><span>Victorias tuyas</span><b id="statWins">0</b></div>
+        <div class="stat"><span>Racha máxima</span><b id="statBestStreak">0</b></div>
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- RESULTADO -->
-
-  <div
-    id="finishedCard"
-    class="card hero hidden"
-  >
-
-    <div
-      style="font-size:55px"
-      id="finishIcon"
-    >
-      🏆
-    </div>
-
-    <h2 id="finishTitle">
-      PARTIDA TERMINADA
-    </h2>
-
+  <div id="finishedCard" class="card hero hidden">
+    <div style="font-size:58px" id="finishIcon">🏆</div>
+    <h2 id="finishTitle">PARTIDA TERMINADA</h2>
     <p id="finishText"></p>
-
-    <button
-      class="primary"
-      onclick="resetToStart()"
-    >
-      🔄 NUEVA PARTIDA
-    </button>
-
+    <div class="actions" style="justify-content:center">
+      <button class="primary" onclick="resetToStart()">🔄 NUEVA PARTIDA</button>
+      <button class="secondary" onclick="showPage('historial',document.querySelectorAll('.tab')[2])">🏆 VER HISTORIAL</button>
+    </div>
   </div>
-
-
-  <!-- ===================================================
-       COLABORADORES ABAJO DEL JUEGO
-  ==================================================== -->
 
   <div class="card collaborators">
-
-    <h2>
-      👥 Colaboradores
-    </h2>
-
-    <p class="collaborators-description">
-      Personas y herramientas que ayudan al desarrollo de
-      <b>ELIGE O PIERDE</b>.
-    </p>
-
-    <div class="collab-grid">
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          👑
-        </div>
-
-        <h3>
-          nruto
-        </h3>
-
-        <p>
-          Creador de ELIGE O PIERDE
-        </p>
-
-      </div>
-
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          🤖
-        </div>
-
-        <h3>
-          ChatGPT
-        </h3>
-
-        <p>
-          Asistencia en desarrollo y programación
-        </p>
-
-      </div>
-
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          💻
-        </div>
-
-        <h3>
-          GitHub
-        </h3>
-
-        <p>
-          Plataforma utilizada para publicar el proyecto
-        </p>
-
-      </div>
-
+    <h2>👥 Colaboradores</h2>
+    <p class="collaborators-description">Personas y herramientas que ayudan al desarrollo de <b>ELIGE O PIERDE</b>.</p>
+    <div class="profile-grid">
+      <div class="collab"><div class="collab-icon">👑</div><h3>nruto</h3><p>Creador del proyecto.</p></div>
+      <div class="collab"><div class="collab-icon">🤖</div><h3>ChatGPT</h3><p>Asistencia en desarrollo y programación.</p></div>
     </div>
-
-
-    <!-- SEDES -->
-
-    <div
-      style="
-        margin-top:25px;
-        padding-top:22px;
-        border-top:1px solid var(--line);
-      "
-    >
-
-      <h2>
-        🌐 Sedes de ELIGE O PIERDE
-      </h2>
-
-      <p class="collaborators-description">
-        También puedes acceder a las diferentes sedes del proyecto.
-      </p>
-
-
-      <!-- SEGUNDA SEDE -->
-
-      <div
-        class="collab"
-        style="margin-bottom:12px"
-      >
-
-        <div class="collab-icon">
-          🏢
-        </div>
-
-        <h3>
-          Segunda sede
-        </h3>
-
-        <p>
-          Otra versión publicada de ELIGE O PIERDE.
-        </p>
-
-        <a
-          href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="secondary"
-          style="
-            display:inline-block;
-            text-decoration:none;
-            margin-top:10px;
-          "
-        >
-          🔗 Abrir segunda sede
-        </a>
-
+    <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--line)">
+      <h3>🌐 Sedes</h3>
+      <div class="actions">
+        <a class="secondary" href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/" target="_blank" rel="noopener noreferrer">🔗 Segunda sede</a>
+        <a class="secondary" href="https://sites.google.com/nuevaciencia.edu.co/elige-o-pierdes/inicio?authuser=0&pli=1" target="_blank" rel="noopener noreferrer">🛠️ Mantenimiento</a>
+        <button class="ghost" onclick="showSiteMessage()">🌎 Tercera sede · Próximamente</button>
       </div>
-
-
-      <!-- TERCERA SEDE -->
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          🌎
-        </div>
-
-        <h3>
-          Tercera sede
-        </h3>
-
-        <p>
-        <!-- SEDE DE MANTENIMIENTO -->
-
-<div class="collab">
-
-  <div class="collab-icon">
-    🛠️
+    </div>
   </div>
-
-  <h3>
-    Sede de mantenimiento
-  </h3>
-
-  <p>
-    Sitio utilizado para el mantenimiento y gestión de
-    ELIGE O PIERDE.
-  </p>
-
-  <a
-    href="https://sites.google.com/nuevaciencia.edu.co/elige-o-pierdes/inicio?authuser=0&pli=1"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="secondary"
-    style="
-      display:inline-block;
-      text-decoration:none;
-      margin-top:10px;
-    "
-  >
-    🛠️ Abrir sede de mantenimiento
-  </a>
-
-</div>
-
-
-<!-- =====================================================
-     REGLAS
-===================================================== -->
+</section>
 
 <section id="reglas" class="page">
+  <div class="card"><h2>📜 REGLAS OFICIALES — 6.8.9 BETA</h2>
+    <div class="rule"><b>1. Objetivo:</b> llegar a 20 puntos.</div>
+    <div class="rule"><b>2. Creación:</b> la partida presenta un escenario con 2–4 opciones.</div>
+    <div class="rule"><b>3. Decisión de la IA:</b> la IA escoge exactamente una opción y explica por qué.</div>
+    <div class="rule"><b>4. Turno humano:</b> el jugador escoge exactamente una opción.</div>
+    <div class="rule"><b>5. Juez:</b> después de ambas elecciones, el jugador decide quién recibe el punto.</div>
+    <div class="rule"><b>6. Racha:</b> cada punto consecutivo del jugador aumenta la racha; una derrota la reinicia.</div>
+    <div class="rule"><b>7. Final:</b> gana quien llegue primero a 20, o la partida puede terminar manualmente.</div>
+    <div class="rule"><b>8. Persistencia:</b> la partida actual se guarda localmente para poder reanudarla después.</div>
+  </div>
+</section>
 
+<section id="historial" class="page">
   <div class="card">
-
-    <h2>
-      📜 REGLAS OFICIALES — v6.0.2
-    </h2>
-
-    <div class="rule">
-      <b>1. Objetivo:</b>
-      llegar a 20 puntos.
-    </div>
-
-    <div class="rule">
-      <b>2. Creación:</b>
-      la IA crea un escenario con 2–4 opciones claras,
-      diferentes y cerradas.
-    </div>
-
-    <div class="rule">
-      <b>3. Decisión:</b>
-      la IA debe elegir SOLO UNA opción
-      y justificarla.
-    </div>
-
-    <div class="rule">
-      <b>4. Turno humano:</b>
-      después de la decisión de la IA,
-      el jugador elige SOLO UNA opción.
-    </div>
-
-    <div class="rule">
-      <b>5. Prohibiciones:</b>
-      no usar “depende”, no evadir la elección,
-      no dar múltiples opciones y no cambiar el escenario.
-    </div>
-
-    <div class="rule">
-      <b>6. Punto:</b>
-      el jugador actúa como juez y decide quién gana el punto.
-    </div>
-
-    <div class="rule">
-      <b>7. Racha:</b>
-      cada punto consecutivo del jugador aumenta su racha.
-    </div>
-
-    <div class="rule">
-      <b>8. Final:</b>
-      la partida termina cuando IA o jugador llega a 20 puntos,
-      o cuando el jugador la termina manualmente.
-    </div>
-
+    <div class="section-head"><div><h2>🏆 Historial</h2><p class="muted">Tus últimas 30 partidas se guardan en este navegador.</p></div><span class="badge" id="historyCount">0 partidas</span></div>
+    <div id="historyTable"><div class="empty">Todavía no hay partidas guardadas.</div></div>
+    <div class="history-actions"><button class="secondary" onclick="exportHistory()">📤 Exportar historial</button><button class="blue" onclick="document.getElementById('importHistoryInput').click()">📥 Importar historial</button><button class="danger" onclick="clearHistory()">🗑️ Borrar historial</button><input id="importHistoryInput" type="file" accept="application/json,.json" class="hidden" onchange="importHistory(event)"></div>
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     VERSIONES
-========================================================= -->
-
-<section id="versiones">
-
-  <h2>📋 VERSIONES</h2>
-
-  <!-- =====================================================
-       v1.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🎮 Versión 1.0.0</h3>
-
-    <p>
-      Primera versión de <strong>ELIGE O PIERDE</strong>.
-    </p>
-
-    <ul>
-      <li>🎯 Sistema principal de decisiones.</li>
-      <li>🤖 Sistema de elección de la IA.</li>
-      <li>🏆 Sistema básico de puntos.</li>
-      <li>🎮 Primeros escenarios.</li>
-    </ul>
-
+<section id="progreso" class="page">
+  <div class="card"><div class="section-head"><div><h2>⚡ PROGRESO DEL JUGADOR</h2><p class="muted">Un sistema permanente de progresión para preparar la evolución del sitio hacia la app.</p></div><span class="badge">BETA</span></div>
+    <div class="profile-grid" style="margin-top:14px">
+      <div class="profile-box"><div class="profile-row"><span class="muted">Rango actual</span><strong id="progressRank" class="profile-rank">Novato</strong></div><div class="profile-row"><span class="muted">XP total</span><strong id="progressXp">0</strong></div><div style="margin-top:12px"><div class="xpbar"><span id="progressXpBar"></span></div></div></div>
+      <div class="profile-box"><div class="profile-row"><span class="muted">Partidas</span><strong id="progressGames">0</strong></div><div class="profile-row"><span class="muted">Victorias</span><strong id="progressWins">0</strong></div><div class="profile-row"><span class="muted">Mejor racha</span><strong id="progressStreak">0</strong></div></div>
+    </div>
   </div>
-
-
-  <!-- =====================================================
-       v1.1.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>⚡ Versión 1.1.0</h3>
-
-    <p>
-      Primera actualización importante del juego.
-    </p>
-
-    <ul>
-      <li>🎮 Nuevos escenarios.</li>
-      <li>🧠 Mejoras en las decisiones de la IA.</li>
-      <li>📊 Mejoras en el sistema de puntos.</li>
-      <li>🛠️ Correcciones de errores.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v1.2.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 1.2.0</h3>
-
-    <p>
-      Actualización con mejoras generales de juego.
-    </p>
-
-    <ul>
-      <li>🎮 Más situaciones para elegir.</li>
-      <li>🤖 Mejoras del sistema de IA.</li>
-      <li>📈 Mejor control de puntuaciones.</li>
-      <li>🛠️ Correcciones y mejoras internas.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v1.2.1
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔧 Versión 1.2.1</h3>
-
-    <p>
-      Actualización de mantenimiento.
-    </p>
-
-    <ul>
-      <li>🐛 Corrección de errores.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🎮 Ajustes del sistema de juego.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v2.00.2
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔥 Versión 2.00.2</h3>
-
-    <p>
-      Nueva etapa del desarrollo de ELIGE O PIERDE.
-    </p>
-
-    <ul>
-      <li>🎮 Mejoras importantes del juego.</li>
-      <li>🤖 Mejoras del sistema de IA.</li>
-      <li>📊 Mejoras de puntuación.</li>
-      <li>🛠️ Correcciones generales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v3.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 3.0.0</h3>
-
-    <p>
-      Gran actualización del proyecto.
-    </p>
-
-    <ul>
-      <li>🎮 Nueva experiencia de juego.</li>
-      <li>🤖 Mejoras importantes de la IA.</li>
-      <li>📊 Sistema de progreso mejorado.</li>
-      <li>🏆 Mejoras en los rangos.</li>
-      <li>🛠️ Correcciones generales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v5.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>💥 Versión 5.0.0 — Abril 2026</h3>
-
-    <p>
-      Gran evolución de <strong>ELIGE O PIERDE</strong>.
-    </p>
-
-    <ul>
-      <li>🤖 Integración con sistemas de IA.</li>
-      <li>🎮 Nuevos escenarios.</li>
-      <li>🏆 Sistema de objetivos.</li>
-      <li>📈 Mejoras de progreso.</li>
-      <li>🔥 Sistema de rachas.</li>
-      <li>🧠 Mejoras en las decisiones.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🌌 Versión 6.0.0 — Agosto 2026</h3>
-
-    <p>
-      <strong>GRAN ACTUALIZACIÓN</strong>
-    </p>
-
-    <ul>
-      <li>🎮 Ahora se juega directamente en la página.</li>
-      <li>🤖 Sistema IA VS HUMANO.</li>
-      <li>🧠 Nuevas decisiones generadas durante la partida.</li>
-      <li>🏆 Objetivo de 20 puntos.</li>
-      <li>🔥 Sistema de rachas.</li>
-      <li>📊 Barra de progreso.</li>
-      <li>📜 Historial local de partidas.</li>
-      <li>👤 Sistema de nombre del jugador.</li>
-      <li>📱 Interfaz mejorada.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.2.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>⚡ Versión 6.2.0</h3>
-
-    <p>
-      Actualización de mejoras y estabilidad.
-    </p>
-
-    <ul>
-      <li>🛠️ Correcciones internas.</li>
-      <li>⚡ Mejoras de rendimiento.</li>
-      <li>🎮 Ajustes del sistema de juego.</li>
-      <li>📊 Mejoras visuales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.2.1
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔧 Versión 6.0.2</h3>
-
-    <p>
-      Actualización de mantenimiento.
-    </p>
-
-    <ul>
-      <li>🐛 Corrección de errores.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🎮 Ajustes menores del juego.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v7.0.1 ALFA
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>⭐ Versión 6.0.1 — Edición clásica</h3>
-
-    <ul>
-      <li>🎮 Partida jugable directamente en la página.</li>
-      <li>🤖 Sistema IA VS HUMANO.</li>
-      <li>🔥 Rachas y estadísticas.</li>
-      <li>📊 Marcador en tiempo real.</li>
-      <li>📜 Historial local.</li>
-    </ul>
-
-  </div>
-
-
-  <div class="version-card">
-
-    <h3>🏆 Versión 6.0.2 — Edición clásica mejorada</h3>
-
-    <ul>
-      <li>🔊 Sonido opcional guardado en el navegador.</li>
-      <li>🧭 Navegación y desplazamiento inteligente.</li>
-      <li>🚫 Evita repetir inmediatamente el mismo escenario.</li>
-      <li>💾 Historial protegido contra guardados duplicados.</li>
-      <li>🛑 Botón de terminar partida con confirmación.</li>
-      <li>🔄 Reinicio limpio para una nueva partida.</li>
-      <li>📱 Interfaz responsive para móvil.</li>
-      <li>🧹 Eliminación de bloques Markdown que rompían JavaScript.</li>
-    </ul>
-
-  </div>
-
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 7.0.1 — Septiembre 2026</h3>
-
-    <p>
-      <strong>NUEVA ACTUALIZACIÓN — ALFA</strong>
-    </p>
-
-    <p>
-      ELIGE O PIERDE entra en una nueva etapa de desarrollo,
-      enfocada en ampliar el contenido del juego, mejorar
-      la estabilidad y preparar futuras funciones.
-    </p>
-
-    <ul>
-      <li>🎮 Nuevos escenarios para las partidas.</li>
-      <li>🧠 Nuevas situaciones y decisiones.</li>
-      <li>🎯 Mayor variedad de situaciones.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🛠️ Correcciones de errores.</li>
-      <li>📊 Mejoras internas del sistema de juego.</li>
-      <li>📱 Preparación de la aplicación Android.</li>
-      <li>🔗 Preparación de la integración Android + Web.</li>
-      <li>🚀 Preparación de futuras funciones.</li>
-    </ul>
-
-    <p>
-      <strong>Estado:</strong> 🟡 EN DESARROLLO
-    </p>
-
-    <p>
-      <strong>App Android:</strong> 🔒 PRÓXIMAMENTE
-    </p>
-
-    <p>
-      <strong>Rama oficial actual:</strong> 6.0.2 clásica mejorada
-    </p>
-
-    <p>
-      <strong>Próximo objetivo:</strong>
-      continuar ampliando el juego y avanzar con la integración
-      entre Android y la versión web.
-    </p>
-
-  </div>
-
-
-  <!-- =====================================================
-       RAMA OFICIAL
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🏆 Rama oficial actual</h3>
-
-    <p>
-      <strong>6.0.2 clásica mejorada</strong>
-    </p>
-
-    <p>
-      Esta es actualmente la rama oficial de desarrollo
-      de ELIGE O PIERDE.
-    </p>
-
-  </div>
-
+  <div class="card"><h3>🏅 Logros</h3><div id="achievementGrid" class="achievement-grid" style="margin-top:12px"></div></div>
 </section>
 
-
-
-<!-- =====================================================
-     LICENCIA
-===================================================== -->
+<section id="versiones" class="page">
+  <h2>📋 HISTORIAL DE VERSIONES</h2>
+  <div class="version-card"><h3>🎮 1.0.0</h3><p>Base conceptual de ELIGE O PIERDE.</p></div>
+  <div class="version-card"><h3>⚡ 1.1.0</h3><p>Primeras mejoras de tablero y decisiones.</p></div>
+  <div class="version-card"><h3>🟣 1.2.0 / 1.2.1</h3><p>Organización por pestañas, publicación del código y mejoras generales.</p></div>
+  <div class="version-card"><h3>🔥 2.00.2</h3><p>Rama mayor con estructura de sitio más estable.</p></div>
+  <div class="version-card"><h3>🚀 3.0.0</h3><p>Rediseño visual y mejoras para móviles.</p></div>
+  <div class="version-card"><h3>🏆 5.0.0 · Abril 2026</h3><p>Rangos, rachas y una experiencia más competitiva.</p></div>
+  <div class="version-card"><h3>🌌 6.0.0 · Agosto 2026</h3><p>La gran transformación: el juego pasa a ejecutarse directamente en la web con IA vs humano, tablero, juez, rachas, estadísticas e historial.</p></div>
+  <div class="version-card"><h3>⚡ 6.2.x</h3><p>Maduración del motor 6.x, sonido, desplazamiento inteligente, historial y correcciones internas.</p></div>
+  <div class="version-card"><h3>🚀 6.8.9 BETA · Septiembre 2026</h3><p><strong>Nueva etapa mayor.</strong> Se conserva la base clásica y se añaden persistencia de sesión, perfil, XP, rangos, logros, exportación/importación del historial, controles de teclado, prevención de dobles acciones, guardado seguro y una arquitectura preparada para futuras versiones de app.</p><ul><li>🎮 Motor clásico 6.x conservado.</li><li>💾 Reanudación de partidas.</li><li>⚡ Progreso permanente.</li><li>🏅 Logros.</li><li>📤 Portabilidad del historial.</li><li>🛡️ Mayor estabilidad.</li></ul></div>
+  <div class="card" style="text-align:center"><div style="font-size:40px">🏆</div><h3>Rama oficial actual: 6.8.9 BETA</h3><p class="muted">Esta versión es una candidata de consolidación antes de seguir con el salto hacia la app.</p></div>
+</section>
 
 <section id="licencia" class="page">
-
-  <div class="card">
-
-    <h2>
-      📄 Licencia
-    </h2>
-
-    <p>
-      <b>
-        ELIGE O PIERDE — Versión 6.0.2
-      </b>
-    </p>
-
-    <p>
-      © 2026 Nicolas Mendoza / nruto.
-      Proyecto conceptual, reglas y diseño:
-      Nicolas Paco.
-    </p>
-
-    <p>
-      Distribuido con fines educativos y de entretenimiento.
-      No se permite redistribuir o vender sin permiso del autor.
-    </p>
-
-  </div>
-
+  <div class="card"><h2>📄 Licencia</h2><p><b>ELIGE O PIERDE — Versión 6.8.9 BETA</b></p><p>© 2026 Nicolas Mendoza / nruto. Proyecto conceptual, reglas y diseño: Nicolas Paco.</p><p>Distribuido con fines educativos y de entretenimiento. No se permite redistribuir o vender sin permiso del autor.</p></div>
 </section>
 
-
-<!-- =====================================================
-     SUGERENCIAS
-===================================================== -->
-
 <section id="sugerencias" class="page">
-
-  <div class="card">
-
-    <h2>
-      💡 Sugerencias
-    </h2>
-
-    <p style="color:var(--muted)">
-      Puedes enviar tus ideas y sugerencias para futuras versiones.
-    </p>
-
-    <a
-      class="secondary"
-      style="display:inline-block;text-decoration:none"
-      href="https://docs.google.com/forms/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Abrir Google Forms ↗
-    </a>
-
-  </div>
-
+  <div class="card"><h2>💡 Sugerencias</h2><p class="muted">Puedes enviar ideas, errores y propuestas para las siguientes versiones.</p><a class="secondary" style="display:inline-block" href="https://docs.google.com/forms/" target="_blank" rel="noopener noreferrer">Abrir Google Forms ↗</a></div>
 </section>
 
 </main>
 
-
 <footer>
-
-  🎮 <b>ELIGE O PIERDE</b>
-
-  <br>
-
-  Creado por nruto — Bogotá, 2026
-  ·
-  Versión 6.0.2
-
+  🎮 <b>ELIGE O PIERDE</b><br>Creado por nruto — Bogotá, 2026 · v6.8.9 BETA
+  <div class="footer-links"><a href="https://github.com/narutoqqq844-droid/Elije-o-Pierdes-" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/" target="_blank" rel="noopener noreferrer">Segunda sede</a></div>
 </footer>
-
 </div>
 
+<div id="toast" class="toast"></div>
 
 <script>
-/* =========================================================
-   SONIDO
-========================================================= */
+const VERSION="6.8.9-BETA";
+const HISTORY_KEY="elige_pierde_history";
+const PROFILE_KEY="elige_pierde_profile_v689";
+const SESSION_KEY="elige_pierde_session_v689";
+const SOUND_KEY="elige_sound";
 
-let soundEnabled =
-  localStorage.getItem("elige_sound") !== "off";
-
+let soundEnabled=localStorage.getItem(SOUND_KEY)!=="off";
 let audioContext=null;
 
-function updateSoundButton(){
-
-  const btn=
-    document.getElementById("soundBtn");
-
-  if(!btn)return;
-
-  btn.textContent=
-    soundEnabled
-      ? "🔊 Sonido: ON"
-      : "🔇 Sonido: OFF";
-}
-
-function initAudio(){
-
-  if(!audioContext){
-
-    const AudioCtx=
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(AudioCtx){
-      audioContext=new AudioCtx();
-    }
-  }
-
-  if(
-    audioContext &&
-    audioContext.state==="suspended"
-  ){
-    audioContext.resume();
-  }
-}
-
-function playSound(
-  frequency=440,
-  duration=.12,
-  type="sine",
-  volume=.035
-){
-
-  if(!soundEnabled)return;
-
-  try{
-
-    initAudio();
-
-    if(!audioContext)return;
-
-    const oscillator=
-      audioContext.createOscillator();
-
-    const gain=
-      audioContext.createGain();
-
-    oscillator.type=type;
-    oscillator.frequency.value=frequency;
-
-    gain.gain.setValueAtTime(
-      volume,
-      audioContext.currentTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      audioContext.currentTime+duration
-    );
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    oscillator.start();
-
-    oscillator.stop(
-      audioContext.currentTime+duration
-    );
-
-  }catch(error){
-
-    console.log(
-      "Audio no disponible:",
-      error
-    );
-  }
-}
-
-function playStartSound(){
-
-  playSound(440,.1);
-
-  setTimeout(
-    ()=>playSound(660,.1),
-    100
-  );
-
-  setTimeout(
-    ()=>playSound(880,.16),
-    200
-  );
-}
-
-function playWinSound(){
-
-  playSound(523,.1);
-
-  setTimeout(
-    ()=>playSound(659,.1),
-    100
-  );
-
-  setTimeout(
-    ()=>playSound(784,.2),
-    200
-  );
-}
-
-function playLoseSound(){
-
-  playSound(
-    330,
-    .15,
-    "sawtooth"
-  );
-
-  setTimeout(
-    ()=>playSound(
-      220,
-      .25,
-      "sawtooth"
-    ),
-    150
-  );
-}
-
-function playSelectSound(){
-
-  playSound(
-    600,
-    .08,
-    "square",
-    .025
-  );
-}
-
-function playNextSound(){
-
-  playSound(
-    700,
-    .08
-  );
-}
-
-function playEndSound(){
-
-  playSound(
-    300,
-    .12
-  );
-
-  setTimeout(
-    ()=>playSound(
-      200,
-      .25
-    ),
-    120
-  );
-}
-
-function toggleSound(){
-
-  soundEnabled=!soundEnabled;
-
-  localStorage.setItem(
-    "elige_sound",
-    soundEnabled
-      ? "on"
-      : "off"
-  );
-
-  updateSoundButton();
-
-  if(soundEnabled){
-
-    initAudio();
-
-    playSound(
-      700,
-      .12
-    );
-  }
-}
-
-
-
-
-
-/* =========================================================
-   ESTADO DEL JUEGO
-========================================================= */
-
-let game={
-  active:false,
-  name:"Jugador",
-  ai:0,
-  me:0,
-  round:0,
-  streak:0,
-  best:0,
-  wins:0,
-  scenario:null,
-  selected:null,
-  aiIndex:null,
-  judged:false,
-  saved:false
-};
-
-/* =========================================================
-   ESCENARIOS v7.0.1 ALFA
-========================================================= */
+let profile=loadProfile();
+let game=defaultGame();
 
 const scenarios = [
 
@@ -2676,870 +956,82 @@ const scenarios = [
 
 ];
 
-/* =========================================================
-   SCROLL INTELIGENTE
-========================================================= */
 
 
-
-/* =========================================================
-   SCROLL INTELIGENTE
-========================================================= */
-
-function scrollToElement(
-  id,
-  block="start"
-){
-
-  const element=
-    document.getElementById(id);
-
-  if(!element)return;
-
-  setTimeout(()=>{
-
-    element.scrollIntoView({
-      behavior:"smooth",
-      block:block
-    });
-
-  },80);
-}
-
-
-/* =========================================================
-   NAVEGACIÓN
-========================================================= */
-
-function showPage(id,btn){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
-
-  const page=
-    document.getElementById(id);
-
-  if(page){
-    page.classList.add("active");
-  }
-
-  document
-    .querySelectorAll(".tab")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
-
-  if(btn){
-    btn.classList.add("active");
-  }
-
-  if(id==="historial"){
-    renderHistory();
-  }
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* =========================================================
-   INICIAR PARTIDA
-========================================================= */
-
-function startGame(){
-
-  initAudio();
-
-  playStartSound();
-
-  game={
-
-    active:true,
-
-    name:
-      document
-        .getElementById("playerName")
-        .value
-        .trim() ||
-      "Jugador",
-
-    ai:0,
-    me:0,
-    round:0,
-    streak:0,
-    best:0,
-    wins:0,
-    scenario:null,
-    selected:null,
-    aiIndex:null,
-    judged:false,
-    saved:false
-  };
-
-  document
-    .getElementById("startCard")
-    .classList.add("hidden");
-
-  document
-    .getElementById("finishedCard")
-    .classList.add("hidden");
-
-  document
-    .getElementById("gameArea")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("playerLabel")
-    .textContent=
-      game.name.toUpperCase();
-
-  document
-    .getElementById("endGameBtn")
-    .disabled=false;
-
-  nextRound(true);
-
-  /* Llevar al usuario directamente al juego */
-  scrollToElement(
-    "gameArea",
-    "start"
-  );
-}
-
-
-/* =========================================================
-   SIGUIENTE RONDA
-========================================================= */
-
-function nextRound(
-  fromStart=false
-){
-
-  if(!game.active)return;
-
-  if(
-    game.ai>=20 ||
-    game.me>=20
-  ){
-
-    finishGame();
-    return;
-  }
-
-  if(!fromStart){
-    playNextSound();
-  }
-
-  game.round++;
-
-  game.selected=null;
-
-  game.judged=false;
-
-  /* Evitar repetir escenario inmediatamente */
-  let newScenario;
-
-  do{
-
-    newScenario=
-      scenarios[
-        Math.floor(
-          Math.random()*
-          scenarios.length
-        )
-      ];
-
-  }while(
-    scenarios.length>1 &&
-    game.scenario &&
-    newScenario===game.scenario
-  );
-
-  game.scenario=
-    newScenario;
-
-  const s=
-    game.scenario;
-
-  game.aiIndex=
-    Math.floor(
-      Math.random()*
-      s.o.length
-    );
-
-  document
-    .getElementById("roundNumber")
-    .textContent=
-      game.round;
-
-  document
-    .getElementById("scenarioText")
-    .textContent=
-      s.t;
-
-  document
-    .getElementById("phaseTitle")
-    .textContent=
-      "FASE 1 — CREACIÓN / FASE 2 — DECISIÓN";
-
-  const box=
-    document.getElementById("options");
-
-  box.innerHTML="";
-
-  s.o.forEach(
-    (x,i)=>{
-
-      const b=
-        document.createElement("button");
-
-      b.type="button";
-
-      b.className="option";
-
-      b.textContent=
-        (i+1)+". "+x;
-
-      b.onclick=()=>{
-        selectPlayer(i,b);
-      };
-
-      box.appendChild(b);
-
-    }
-  );
-
-  document
-    .getElementById("aiBox")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("aiChoice")
-    .textContent=
-      "“"+
-      s.o[game.aiIndex]+
-      "”";
-
-  document
-    .getElementById("aiReason")
-    .textContent=
-      "Razón: "+
-      s.r[game.aiIndex];
-
-  document
-    .getElementById("playerBox")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("judgeBox")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("roundResult")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("nextRound")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("nextRound")
-    .textContent=
-      "➡️ SIGUIENTE RONDA";
-
-  document
-    .getElementById("nextRound")
-    .onclick=
-      nextRound;
-
-  document
-    .getElementById("confirmChoice")
-    .disabled=true;
-
-  updateBoard();
-
-  /* Llevar al nuevo escenario,
-     nunca a top:0 de toda la página. */
-  scrollToElement(
-    "gameArea",
-    "start"
-  );
-}
-
-
-/* =========================================================
-   ELEGIR OPCIÓN
-========================================================= */
-
-function selectPlayer(i,b){
-
-  if(
-    !game.active ||
-    game.judged
-  ){
-    return;
-  }
-
-  game.selected=i;
-
-  document
-    .querySelectorAll(
-      "#options .option"
-    )
-    .forEach(
-      x=>x.classList.remove("selected")
-    );
-
-  b.classList.add("selected");
-
-  document
-    .getElementById("confirmChoice")
-    .disabled=false;
-
-  playSelectSound();
-}
-
-
-/* =========================================================
-   CONFIRMAR ELECCIÓN
-========================================================= */
-
-function confirmPlayerChoice(){
-
-  if(
-    !game.active ||
-    game.selected===null
-  ){
-    return;
-  }
-
-  document
-    .querySelectorAll(
-      "#options .option"
-    )
-    .forEach(
-      (b,i)=>{
-
-        b.disabled=true;
-
-        if(
-          i===game.aiIndex
-        ){
-          b.classList.add(
-            "ai-choice"
-          );
-        }
-
-      }
-    );
-
-  document
-    .getElementById("confirmChoice")
-    .disabled=true;
-
-  document
-    .getElementById("judgeBox")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("roundResult")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("roundResult")
-    .textContent=
-      "Tu elección: “"+
-      game.scenario.o[
-        game.selected
-      ]+
-      "”. Ahora decide quién merece el punto.";
-
-  /* Llevar directamente al juez */
-  scrollToElement(
-    "judgeBox",
-    "center"
-  );
-}
-
-
-/* =========================================================
-   DAR PUNTO
-========================================================= */
-
-function awardPoint(who){
-
-  if(
-    !game.active ||
-    game.judged
-  ){
-    return;
-  }
-
-  game.judged=true;
-
-  if(who==="me"){
-
-    game.me++;
-
-    game.streak++;
-
-    game.wins++;
-
-    game.best=
-      Math.max(
-        game.best,
-        game.streak
-      );
-
-    document
-      .getElementById("roundResult")
-      .innerHTML=
-        "🏆 <b>"+
-        escapeHtml(game.name)+
-        " gana el punto.</b> ¡Buena elección!";
-
-    playWinSound();
-
-  }else{
-
-    game.ai++;
-
-    game.streak=0;
-
-    document
-      .getElementById("roundResult")
-      .innerHTML=
-        "🤖 <b>La IA gana el punto.</b> Tu racha se reinicia.";
-
-    playLoseSound();
-  }
-
-  document
-    .getElementById("judgeBox")
-    .classList
-    .add("hidden");
-
-  updateBoard();
-
-  if(
-    game.ai>=20 ||
-    game.me>=20
-  ){
-
-    const next=
-      document.getElementById(
-        "nextRound"
-      );
-
-    next.textContent=
-      "🏁 Ver resultado";
-
-    next.onclick=
-      finishGame;
-
-    next.classList
-      .remove("hidden");
-
-    scrollToElement(
-      "roundResult",
-      "center"
-    );
-
-  }else{
-
-    const next=
-      document.getElementById(
-        "nextRound"
-      );
-
-    next.textContent=
-      "➡️ SIGUIENTE RONDA";
-
-    next.onclick=
-      nextRound;
-
-    next.classList
-      .remove("hidden");
-
-    /* Llevar al botón siguiente */
-    scrollToElement(
-      "nextRound",
-      "center"
-    );
-  }
-}
-
-
-/* =========================================================
-   TABLERO
-========================================================= */
-
-function updateBoard(){
-
-  document
-    .getElementById("aiScore")
-    .textContent=
-      game.ai;
-
-  document
-    .getElementById("playerScore")
-    .textContent=
-      game.me;
-
-  document
-    .getElementById("aiProgress")
-    .style.width=
-      Math.min(
-        game.ai/20*100,
-        100
-      )+
-      "%";
-
-  document
-    .getElementById("playerProgress")
-    .style.width=
-      Math.min(
-        game.me/20*100,
-        100
-      )+
-      "%";
-
-  document
-    .getElementById("streak")
-    .textContent=
-      game.streak;
-
-  document
-    .getElementById("statRounds")
-    .textContent=
-      game.round;
-
-  document
-    .getElementById("statWins")
-    .textContent=
-      game.wins;
-
-  document
-    .getElementById("statBestStreak")
-    .textContent=
-      game.best;
-}
-
-
-/* =========================================================
-   TERMINAR PARTIDA
-========================================================= */
-
-function endGame(){
-
-  if(!game.active){
-    return;
-  }
-
-  const confirmar=
-    confirm(
-      "¿Seguro que quieres terminar la partida?\n\n"+
-      "Tu resultado actual se guardará en el historial."
-    );
-
-  if(!confirmar){
-    return;
-  }
-
-  playEndSound();
-
-  finishGame();
-}
-
-
-/* =========================================================
-   FINALIZAR
-========================================================= */
-
-function finishGame(){
-
-  if(!game.active){
-    return;
-  }
-
-  game.active=false;
-
-  let title;
-  let icon;
-
-  if(game.me>=20){
-
-    title="👑 ¡TÚ GANASTE!";
-    icon="🏆";
-
-  }else if(game.ai>=20){
-
-    title="🤖 LA IA GANÓ";
-    icon="🤖";
-
-  }else{
-
-    title="🎮 PARTIDA TERMINADA";
-    icon="🛑";
-  }
-
-  document
-    .getElementById("finishIcon")
-    .textContent=
-      icon;
-
-  document
-    .getElementById("finishTitle")
-    .textContent=
-      title;
-
-  document
-    .getElementById("finishText")
-    .innerHTML=
-      "<b>"+
-      escapeHtml(game.name)+
-      "</b>: "+
-      game.me+
-      " puntos · <b>IA</b>: "+
-      game.ai+
-      " puntos<br>"+
-      "Rondas jugadas: "+
-      game.round+
-      " · Racha máxima: "+
-      game.best;
-
-  document
-    .getElementById("gameArea")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("finishedCard")
-    .classList
-    .remove("hidden");
-
-  saveHistory();
-
-  scrollToElement(
-    "finishedCard",
-    "start"
-  );
-}
-
-
-/* =========================================================
-   NUEVA PARTIDA
-========================================================= */
-
-function resetToStart(){
-
-  document
-    .getElementById("gameArea")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("finishedCard")
-    .classList
-    .add("hidden");
-
-  document
-    .getElementById("startCard")
-    .classList
-    .remove("hidden");
-
-  game.active=false;
-
-  const endBtn=document.getElementById("endGameBtn");
-  if(endBtn){
-    endBtn.disabled=false;
-  }
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* =========================================================
-   HISTORIAL
-========================================================= */
-
-function saveHistory(){
-
-  if(game.saved){
-    return;
-  }
-
-  game.saved=true;
-
-  const h=
-    JSON.parse(
-      localStorage.getItem(
-        "elige_pierde_history"
-      ) ||
-      "[]"
-    );
-
-  h.unshift({
-
-    name:game.name,
-
-    me:game.me,
-
-    ai:game.ai,
-
-    rounds:game.round,
-
-    best:game.best,
-
-    date:
-      new Date()
-        .toLocaleString("es-CO")
-
-  });
-
-  localStorage.setItem(
-    "elige_pierde_history",
-    JSON.stringify(
-      h.slice(0,30)
-    )
-  );
-}
-
-
-/* =========================================================
-   MOSTRAR HISTORIAL
-========================================================= */
-
-function renderHistory(){
-
-  const h=
-    JSON.parse(
-      localStorage.getItem(
-        "elige_pierde_history"
-      ) ||
-      "[]"
-    );
-
-  const el=
-    document.getElementById(
-      "historyTable"
-    );
-
-  if(!h.length){
-
-    el.innerHTML=
-      '<div class="empty">'+
-      'Todavía no hay partidas guardadas.'+
-      '</div>';
-
-    return;
-  }
-
-  el.innerHTML=
-    '<div style="overflow:auto">'+
-
-    '<table>'+
-
-    '<thead>'+
-    '<tr>'+
-    '<th>Jugador</th>'+
-    '<th>Resultado</th>'+
-    '<th>Rondas</th>'+
-    '<th>Racha</th>'+
-    '<th>Fecha</th>'+
-    '</tr>'+
-    '</thead>'+
-
-    '<tbody>'+
-
-    h.map(
-      x=>
-
-      `<tr>
-        <td>${escapeHtml(x.name)}</td>
-        <td>🧑 ${x.me} — 🤖 ${x.ai}</td>
-        <td>${x.rounds}</td>
-        <td>🔥 ${x.best}</td>
-        <td>${escapeHtml(x.date)}</td>
-      </tr>`
-
-    ).join("")+
-
-    '</tbody>'+
-
-    '</table>'+
-
-    '</div>';
-}
-
-
-/* =========================================================
-   BORRAR HISTORIAL
-========================================================= */
-
-function clearHistory(){
-
-  if(
-    confirm(
-      "¿Borrar todo el historial de este navegador?"
-    )
-  ){
-
-    localStorage.removeItem(
-      "elige_pierde_history"
-    );
-
-    renderHistory();
-  }
-}
-
-
-/* =========================================================
-   SEGURIDAD
-========================================================= */
-
-function escapeHtml(s){
-
-  return String(s).replace(
-    /[&<>"']/g,
-
-    m=>({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-
-    }[m])
-  );
-}
-
-
-/* =========================================================
-   INICIO
-========================================================= */
-
-updateSoundButton();
-
-renderHistory();
-
+const ACHIEVEMENTS=[
+  {id:"first",icon:"🎮",title:"Primera partida",desc:"Termina tu primera partida.",test:p=>p.games>=1},
+  {id:"win",icon:"🏆",title:"Primera victoria",desc:"Gana una partida llegando al objetivo.",test:p=>p.wins>=1},
+  {id:"streak3",icon:"🔥",title:"En racha",desc:"Consigue una racha de 3.",test:p=>p.bestStreak>=3},
+  {id:"streak5",icon:"⚡",title:"Imparable",desc:"Consigue una racha de 5.",test:p=>p.bestStreak>=5},
+  {id:"games10",icon:"🎯",title:"Veterano",desc:"Juega 10 partidas.",test:p=>p.games>=10},
+  {id:"master",icon:"👑",title:"Maestro",desc:"Alcanza 350 XP.",test:p=>p.xp>=350}
+];
+
+function defaultGame(){return {active:false,name:"Jugador",ai:0,me:0,round:0,streak:0,best:0,wins:0,scenario:null,selected:null,aiIndex:null,judged:false,saved:false,lastScenario:null};}
+function defaultProfile(){return {name:"Jugador",xp:0,games:0,wins:0,bestStreak:0,achievements:[]};}
+function safeGet(key,fallback){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(_){return fallback}}
+function safeSet(key,value){try{localStorage.setItem(key,value);return true}catch(_){return false}}
+function loadProfile(){try{const p=JSON.parse(safeGet(PROFILE_KEY,"null"));return p&&typeof p==="object"?{...defaultProfile(),...p}:defaultProfile()}catch(_){return defaultProfile()}}
+function saveProfile(){safeSet(PROFILE_KEY,JSON.stringify(profile))}
+function loadHistory(){try{const h=JSON.parse(safeGet(HISTORY_KEY,"[]"));return Array.isArray(h)?h:[]}catch(_){return []}}
+function saveHistoryArray(h){return safeSet(HISTORY_KEY,JSON.stringify(h.slice(0,30)))}
+
+function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove("show"),2400)}
+
+function initAudio(){try{if(!audioContext){const AudioCtx=window.AudioContext||window.webkitAudioContext;if(AudioCtx)audioContext=new AudioCtx()}if(audioContext&&audioContext.state==="suspended")audioContext.resume()}catch(_){}}
+function playSound(frequency=440,duration=.12,type="sine",volume=.035){if(!soundEnabled)return;try{initAudio();if(!audioContext)return;const o=audioContext.createOscillator(),g=audioContext.createGain();o.type=type;o.frequency.value=frequency;g.gain.setValueAtTime(volume,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+duration)}catch(_){}}
+function playStartSound(){playSound(440,.1);setTimeout(()=>playSound(660,.1),90);setTimeout(()=>playSound(880,.16),180)}
+function playWinSound(){playSound(523,.1);setTimeout(()=>playSound(659,.1),90);setTimeout(()=>playSound(784,.2),180)}
+function playLoseSound(){playSound(330,.15,"sawtooth");setTimeout(()=>playSound(220,.25,"sawtooth"),130)}
+function playSelectSound(){playSound(600,.07,"square",.025)}
+function playNextSound(){playSound(700,.07)}
+function playEndSound(){playSound(300,.12);setTimeout(()=>playSound(200,.25),110)}
+function updateSoundButton(){const b=document.getElementById("soundBtn");if(b)b.textContent=soundEnabled?"🔊 Sonido: ON":"🔇 Sonido: OFF"}
+function toggleSound(){soundEnabled=!soundEnabled;safeSet(SOUND_KEY,soundEnabled?"on":"off");updateSoundButton();if(soundEnabled){initAudio();playSound(700,.1)}}
+
+function showSiteMessage(){toast("La tercera sede todavía está en preparación.")}
+function showPage(id,btn){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const p=document.getElementById(id);if(p)p.classList.add("active");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(btn)btn.classList.add("active");if(id==="historial")renderHistory();if(id==="progreso")renderProgress();window.scrollTo({top:0,behavior:"smooth"})}
+
+function rankInfo(xp){if(xp>=350)return {name:"Maestro",color:"var(--gold)",min:350,max:Infinity};if(xp>=200)return {name:"Experto",color:"var(--purple)",min:200,max:350};if(xp>=100)return {name:"Estratega",color:"var(--blue)",min:100,max:200};if(xp>=50)return {name:"Explorador",color:"var(--neon)",min:50,max:100};return {name:"Novato",color:"var(--muted)",min:0,max:50}}
+function xpProgress(xp){const r=rankInfo(xp);if(r.max===Infinity)return 100;return Math.round(((xp-r.min)/(r.max-r.min))*100)}
+function addXp(amount){profile.xp+=Math.max(0,amount);checkAchievements();saveProfile();renderProfile()}
+function checkAchievements(){const before=profile.achievements.length;ACHIEVEMENTS.forEach(a=>{if(!profile.achievements.includes(a.id)&&a.test(profile))profile.achievements.push(a.id)});if(profile.achievements.length>before){saveProfile();toast("🏅 Nuevo logro desbloqueado")}}
+function renderProfile(){const rank=rankInfo(profile.xp);const pc=document.getElementById("profilePanel");if(pc&&!game.active)pc.classList.remove("hidden");for(const id of ["profileRank","progressRank"]){const e=document.getElementById(id);if(e){e.textContent=rank.name;e.style.color=rank.color}}for(const id of ["profileXp","progressXp"]){const e=document.getElementById(id);if(e)e.textContent=profile.xp}for(const id of ["profileXpBar","progressXpBar"]){const e=document.getElementById(id);if(e)e.style.width=xpProgress(profile.xp)+"%"}for(const id of ["profileGames","progressGames"]){const e=document.getElementById(id);if(e)e.textContent=profile.games}for(const id of ["profileWins","progressWins"]){const e=document.getElementById(id);if(e)e.textContent=profile.wins}const ps=document.getElementById("profileStreak");if(ps)ps.textContent=profile.bestStreak;const pa=document.getElementById("profileAchievements");if(pa)pa.textContent=profile.achievements.length+"/"+ACHIEVEMENTS.length;const pn=document.getElementById("profileName");if(pn)pn.textContent=profile.name}
+function renderProgress(){renderProfile();const grid=document.getElementById("achievementGrid");if(!grid)return;grid.innerHTML=ACHIEVEMENTS.map(a=>{const on=profile.achievements.includes(a.id);return `<div class="achievement ${on?"":"locked"}"><div class="icon">${a.icon}</div><strong>${a.title} ${on?"✅":"🔒"}</strong><small>${a.desc}</small></div>`}).join("")}
+
+function saveSession(){if(!game.active){safeSet(SESSION_KEY,"");return}const serial={...game,scenarioIndex:scenarios.indexOf(game.scenario),scenario:null};serial.scenarioIndex=serial.scenarioIndex<0?0:serial.scenarioIndex;safeSet(SESSION_KEY,JSON.stringify(serial));const st=document.getElementById("saveStatus");if(st)st.textContent="AUTO-GUARDADO ✓"}
+function loadSession(){try{const raw=safeGet(SESSION_KEY,"");if(!raw)return null;const s=JSON.parse(raw);if(!s||!s.active)return null;s.scenario=(typeof s.scenarioIndex==="number"&&scenarios[s.scenarioIndex])?scenarios[s.scenarioIndex]:null;if(!s.scenario)return null;return {...defaultGame(),...s,scenario:s.scenario}}catch(_){return null}}
+function clearSession(){safeSet(SESSION_KEY,"")}
+
+function startGame(){initAudio();playStartSound();const input=document.getElementById("playerName");const name=(input.value.trim()||"Jugador");profile.name=name;saveProfile();game={...defaultGame(),active:true,name,scenario:null};document.getElementById("startCard").classList.add("hidden");document.getElementById("profilePanel").classList.remove("hidden");document.getElementById("finishedCard").classList.add("hidden");document.getElementById("gameArea").classList.remove("hidden");document.getElementById("playerLabel").textContent=name.toUpperCase();document.getElementById("endGameBtn").disabled=false;nextRound(true);scrollToElement("gameArea","start")}
+function resumeSavedGame(){const saved=loadSession();if(!saved){toast("No hay una partida guardada.");updateResumeButton();return}game=saved;profile.name=game.name;saveProfile();document.getElementById("startCard").classList.add("hidden");document.getElementById("profilePanel").classList.remove("hidden");document.getElementById("finishedCard").classList.add("hidden");document.getElementById("gameArea").classList.remove("hidden");document.getElementById("playerLabel").textContent=game.name.toUpperCase();renderCurrentRound();updateBoard();toast("↩️ Partida reanudada");scrollToElement("gameArea","start")}
+
+function nextRound(fromStart=false){if(!game.active)return;if(game.ai>=20||game.me>=20){finishGame(false);return}if(!fromStart)playNextSound();game.round++;game.selected=null;game.judged=false;let next;do{next=scenarios[Math.floor(Math.random()*scenarios.length)]}while(scenarios.length>1&&next===game.lastScenario);game.lastScenario=next;game.scenario=next;game.aiIndex=Math.floor(Math.random()*next.o.length);renderCurrentRound();updateBoard();saveSession();scrollToElement("scenarioCard","start")}
+function renderCurrentRound(){const s=game.scenario;if(!s)return;document.getElementById("roundNumber").textContent=game.round;document.getElementById("scenarioText").textContent=s.t;document.getElementById("phaseTitle").textContent="FASE 1 — CREACIÓN / FASE 2 — DECISIÓN";const box=document.getElementById("options");box.innerHTML="";s.o.forEach((x,i)=>{const b=document.createElement("button");b.type="button";b.className="option";b.textContent=(i+1)+". "+x;b.onclick=()=>selectPlayer(i,b);box.appendChild(b)});document.getElementById("aiBox").classList.remove("hidden");document.getElementById("aiChoice").textContent='“'+s.o[game.aiIndex]+'”';document.getElementById("aiReason").textContent="Razón: "+s.r[game.aiIndex];document.getElementById("playerBox").classList.remove("hidden");document.getElementById("judgeBox").classList.add("hidden");document.getElementById("roundResult").classList.add("hidden");document.getElementById("nextRound").classList.add("hidden");document.getElementById("confirmChoice").disabled=true;document.getElementById("selectedChoice").classList.add("hidden");document.getElementById("judgeAiBtn").disabled=false;document.getElementById("judgeMeBtn").disabled=false}
+function selectPlayer(i,b){if(!game.active||game.judged)return;game.selected=i;document.querySelectorAll("#options .option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const sel=document.getElementById("selectedChoice");sel.textContent="Tu elección: “"+game.scenario.o[i]+"”";sel.classList.remove("hidden");document.getElementById("confirmChoice").disabled=false;playSelectSound()}
+function confirmPlayerChoice(){if(!game.active||game.selected===null||game.judged)return;document.querySelectorAll("#options .option").forEach((b,i)=>{b.disabled=true;if(i===game.aiIndex)b.classList.add("ai-choice")});document.getElementById("confirmChoice").disabled=true;document.getElementById("judgeBox").classList.remove("hidden");document.getElementById("roundResult").classList.remove("hidden");document.getElementById("roundResult").textContent='Tu elección: “'+game.scenario.o[game.selected]+'”. Ahora decide quién merece el punto.';saveSession();scrollToElement("judgeBox","center")}
+function awardPoint(who){if(!game.active||game.judged)return;if(who!=="ai"&&who!=="me")return;game.judged=true;document.getElementById("judgeAiBtn").disabled=true;document.getElementById("judgeMeBtn").disabled=true;if(who==="me"){game.me++;game.streak++;game.wins++;game.best=Math.max(game.best,game.streak);document.getElementById("roundResult").innerHTML='🏆 <b>'+escapeHtml(game.name)+' gana el punto.</b> ¡Buena elección!';playWinSound();addXp(10)}else{game.ai++;game.streak=0;document.getElementById("roundResult").innerHTML='🤖 <b>La IA gana el punto.</b> Tu racha se reinicia.';playLoseSound();addXp(2)}if(game.round>0)addXp(1);document.getElementById("judgeBox").classList.add("hidden");updateBoard();saveSession();const next=document.getElementById("nextRound");if(game.ai>=20||game.me>=20){next.textContent="🏁 Ver resultado";next.onclick=()=>finishGame(false)}else{next.textContent="➡️ SIGUIENTE RONDA";next.onclick=()=>nextRound(false)}next.classList.remove("hidden");scrollToElement("roundResult","center")}
+function updateBoard(){document.getElementById("aiScore").textContent=game.ai;document.getElementById("playerScore").textContent=game.me;document.getElementById("aiProgress").style.width=Math.min(game.ai/20*100,100)+"%";document.getElementById("playerProgress").style.width=Math.min(game.me/20*100,100)+"%";document.getElementById("streak").textContent=game.streak;document.getElementById("statRounds").textContent=game.round;document.getElementById("statWins").textContent=game.wins;document.getElementById("statBestStreak").textContent=game.best;renderProfile()}
+
+function endGame(){if(!game||!game.active)return;const yes=window.confirm("¿Seguro que quieres terminar la partida?\n\nTu resultado actual se guardará en el historial.");if(!yes)return;playEndSound();finishGame(true)}
+function finishGame(manual=false){if(!game||!game.active)return;game.active=false;const before=profile.games;profile.games++;profile.wins+=(game.me>game.ai?1:0);profile.bestStreak=Math.max(profile.bestStreak,game.best);profile.name=game.name;const xpBonus=game.me>=20?40:(game.me>game.ai?20:5);profile.xp+=xpBonus;checkAchievements();saveProfile();let title="",icon="";if(game.me>=20){title="👑 ¡TÚ GANASTE!";icon="🏆"}else if(game.ai>=20){title="🤖 LA IA GANÓ";icon="🤖"}else{title="🎮 PARTIDA TERMINADA";icon="🛑"}document.getElementById("finishIcon").textContent=icon;document.getElementById("finishTitle").textContent=title;const endText=manual?"Partida terminada manualmente.":"Partida finalizada.";document.getElementById("finishText").innerHTML='<b>'+escapeHtml(game.name)+'</b>: '+game.me+' puntos · <b>IA</b>: '+game.ai+' puntos<br>Rondas jugadas: '+game.round+' · Racha máxima: '+game.best+'<br><br>'+endText+'<br><small>+ '+xpBonus+' XP de finalización</small>';document.getElementById("gameArea").classList.add("hidden");document.getElementById("finishedCard").classList.remove("hidden");saveHistoryGame();clearSession();updateResumeButton();renderProfile();renderHistory();scrollToElement("finishedCard","start")}
+function resetToStart(){game=defaultGame();document.getElementById("gameArea").classList.add("hidden");document.getElementById("finishedCard").classList.add("hidden");document.getElementById("profilePanel").classList.remove("hidden");document.getElementById("startCard").classList.remove("hidden");document.getElementById("endGameBtn").disabled=false;document.getElementById("playerName").value=profile.name||"";window.scrollTo({top:0,behavior:"smooth"});updateResumeButton()}
+
+function saveHistoryGame(){if(game.saved)return;game.saved=true;const h=loadHistory();h.unshift({name:game.name,me:game.me,ai:game.ai,rounds:game.round,best:game.best,date:new Date().toLocaleString("es-CO")});saveHistoryArray(h)}
+function renderHistory(){const h=loadHistory();const el=document.getElementById("historyTable");const count=document.getElementById("historyCount");if(count)count.textContent=h.length+" partida"+(h.length===1?"":"s");if(!h.length){el.innerHTML='<div class="empty">Todavía no hay partidas guardadas.</div>';return}el.innerHTML='<div class="table-wrap"><table><thead><tr><th>Jugador</th><th>Resultado</th><th>Rondas</th><th>Racha</th><th>Fecha</th></tr></thead><tbody>'+h.map(x=>'<tr><td>'+escapeHtml(x.name||"Jugador")+'</td><td>🧑 '+Number(x.me||0)+' — 🤖 '+Number(x.ai||0)+'</td><td>'+Number(x.rounds||0)+'</td><td>🔥 '+Number(x.best||0)+'</td><td>'+escapeHtml(x.date||"-")+'</td></tr>').join("")+'</tbody></table></div>'}
+function clearHistory(){if(!window.confirm("¿Borrar todo el historial de este navegador?"))return;safeSet(HISTORY_KEY,"[]");renderHistory();toast("🗑️ Historial borrado")}
+function exportHistory(){const data={version:VERSION,exportedAt:new Date().toISOString(),history:loadHistory(),profile};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="elige-o-pierde-historial-v6.8.9.json";a.click();URL.revokeObjectURL(url);toast("📤 Historial exportado")}
+function importHistory(event){const file=event.target.files&&event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data||!Array.isArray(data.history))throw new Error("Formato inválido");const current=loadHistory();const merged=[...data.history,...current].slice(0,30);saveHistoryArray(merged);if(data.profile&&typeof data.profile==="object"){profile={...defaultProfile(),...data.profile};saveProfile()}renderHistory();renderProgress();toast("📥 Historial importado")}catch(_){toast("❌ El archivo no es válido")}};reader.readAsText(file);event.target.value=""}
+
+function updateResumeButton(){const saved=loadSession();const btn=document.getElementById("resumeBtn"),info=document.getElementById("resumeInfo");if(saved&&btn&&info){btn.classList.remove("hidden");info.classList.remove("hidden");info.textContent='Hay una partida guardada de '+saved.name+' · Ronda '+saved.round+' · '+saved.me+'–'+saved.ai+'.'}else{if(btn)btn.classList.add("hidden");if(info)info.classList.add("hidden")}}
+function scrollToElement(id,block="start"){const el=document.getElementById(id);if(!el)return;setTimeout(()=>el.scrollIntoView({behavior:"smooth",block}),50)}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+/* TECLADO */
+document.addEventListener("keydown",event=>{if(!game.active)return;const tag=document.activeElement&&document.activeElement.tagName;if(tag==="INPUT"||tag==="TEXTAREA")return;if(["1","2","3","4"].includes(event.key)){const idx=Number(event.key)-1;const btn=document.querySelectorAll("#options .option")[idx];if(btn&&!btn.disabled)btn.click()}else if(event.key==="Enter"){const c=document.getElementById("confirmChoice");if(c&&!c.disabled)c.click()}else if(event.key.toLowerCase()==="n"){const n=document.getElementById("nextRound");if(n&&!n.classList.contains("hidden"))n.click()}});
+
+function boot(){updateSoundButton();renderProfile();renderProgress();renderHistory();updateResumeButton();document.getElementById("playerName").value=profile.name&&profile.name!=="Jugador"?profile.name:""}
+boot();
 </script>
-
 </body>
 </html>
