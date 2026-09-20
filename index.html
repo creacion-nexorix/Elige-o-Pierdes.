@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050808">
 
-<title>ELIGE O PIERDE — v6.2.1</title>
+<title>ELIGE O PIERDE — v7.0.1 ALFA</title>
 
 <style>
 :root{
@@ -23,31 +23,25 @@
 
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html{
   scroll-behavior:smooth;
-  scroll-padding-top:12px;
 }
 
 body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      #08352f 0,
-      #050808 42%,
-      #020303 100%
-    );
-  color:var(--text);
   min-height:100vh;
-  overflow-x:hidden;
+  background:
+    radial-gradient(circle at top,#0c1716 0%,#050808 45%,#020404 100%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
 }
 
 button,
-input,
-textarea{
+input{
   font:inherit;
 }
 
@@ -55,704 +49,635 @@ button{
   cursor:pointer;
 }
 
-button:disabled{
-  cursor:not-allowed;
+.hidden{
+  display:none !important;
 }
 
 .container{
   width:min(1100px,92%);
-  margin:auto;
+  margin:0 auto;
 }
 
+/* HEADER */
 header{
-  text-align:center;
-  padding:42px 0 20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(14px);
+  background:rgba(5,8,8,.88);
+  border-bottom:1px solid var(--line);
 }
 
-.logo{
-  font-size:clamp(32px,7vw,62px);
-  font-weight:900;
-  letter-spacing:2px;
-  text-shadow:
-    0 0 8px var(--neon),
-    0 0 25px #00ffcc66;
-  margin:0;
+.header-inner{
+  min-height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
-.subtitle{
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+
+.brand h1{
+  font-size:clamp(1.2rem,3vw,1.8rem);
+  letter-spacing:1px;
+  text-shadow:0 0 15px rgba(0,255,204,.3);
+}
+
+.brand span{
   color:var(--muted);
-  margin:8px 0 0;
+  font-size:.82rem;
 }
 
-.version{
-  display:inline-block;
-  margin-top:14px;
-  padding:6px 12px;
-  border:1px solid var(--neon);
-  border-radius:99px;
+.version-badge{
+  border:1px solid var(--neon2);
   color:var(--neon);
-  font-size:12px;
-  font-weight:800;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.75rem;
+  white-space:nowrap;
+}
+
+/* NAV */
+nav{
+  border-top:1px solid rgba(25,48,45,.7);
 }
 
 .tabs{
   display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:18px 0;
+  gap:6px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  padding:8px 0;
 }
 
 .tab{
-  flex:1;
-  min-width:130px;
-  background:#0b1111;
-  border:1px solid var(--line);
+  background:transparent;
   color:var(--muted);
-  border-radius:14px;
-  padding:12px 15px;
-  font-weight:800;
+  border:1px solid transparent;
+  padding:9px 13px;
+  border-radius:10px;
+  white-space:nowrap;
   transition:.2s;
 }
 
 .tab:hover{
-  border-color:var(--neon);
-  color:var(--neon);
+  color:var(--text);
+  border-color:var(--line);
 }
 
 .tab.active{
-  background:var(--neon);
-  color:#00110d;
-  border-color:var(--neon);
+  color:var(--neon);
+  border-color:var(--neon2);
+  background:rgba(0,255,204,.07);
+}
+
+/* MAIN */
+main{
+  padding:30px 0 60px;
 }
 
 .page{
   display:none;
+  animation:fadeIn .25s ease;
 }
 
 .page.active{
   display:block;
 }
 
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
 .card{
-  background:linear-gradient(145deg,#0d1514,#070b0b);
+  background:linear-gradient(180deg,rgba(16,25,25,.97),rgba(8,14,14,.97));
   border:1px solid var(--line);
-  border-radius:22px;
-  padding:24px;
-  margin:14px 0;
-  box-shadow:0 12px 45px #0008;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+  margin-bottom:20px;
 }
 
-.hero{
-  text-align:center;
-  padding:32px 20px;
+.card h2,
+.card h3{
+  margin-bottom:12px;
 }
 
-.hero h2{
-  font-size:clamp(25px,5vw,42px);
-  margin:5px 0 10px;
-}
-
-.hero p{
+.muted{
   color:var(--muted);
-  max-width:680px;
-  margin:0 auto 22px;
-  line-height:1.6;
 }
 
-.primary,
-.secondary,
-.danger,
-.sound-button{
-  border-radius:14px;
-  padding:13px 20px;
-  font-weight:900;
-  border:1px solid transparent;
-  transition:.2s;
+/* START */
+.start-card{
+  max-width:700px;
+  margin:30px auto;
+  text-align:center;
 }
 
-.primary{
-  background:var(--neon);
-  color:#00110d;
+.start-card h2{
+  font-size:clamp(1.8rem,5vw,3rem);
 }
 
-.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 25px #00ffcc55;
+.start-description{
+  color:var(--muted);
+  margin:0 auto 25px;
+  max-width:560px;
 }
 
-.secondary{
-  background:#101919;
-  color:var(--neon);
-  border-color:var(--neon);
+.input-group{
+  margin-bottom:16px;
+  text-align:left;
 }
 
-.secondary:hover{
-  background:#06332d;
-}
-
-.danger{
-  background:#261016;
-  color:#ff8299;
-  border-color:#6b2031;
-}
-
-.danger:hover{
-  background:#3b141d;
-}
-
-.sound-button{
-  background:#101919;
-  color:var(--gold);
-  border-color:var(--gold);
-}
-
-.sound-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px #ffd16633;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.setup{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:12px;
-  align-items:end;
-}
-
-label{
+.input-group label{
   display:block;
-  color:var(--muted);
-  font-size:13px;
-  font-weight:800;
   margin-bottom:7px;
-}
-
-input{
-  width:100%;
-  background:#050909;
-  border:1px solid var(--line);
-  color:var(--text);
-  border-radius:12px;
-  padding:13px;
-  outline:none;
-}
-
-input:focus{
-  border-color:var(--neon);
-  box-shadow:0 0 0 3px #00ffcc14;
-}
-
-/* =========================
-   SONIDO
-========================= */
-
-.sound-control{
-  margin-top:18px;
-  text-align:center;
-}
-
-/* =========================
-   COLABORADORES
-========================= */
-
-.collaborators{
-  text-align:center;
-  margin-top:20px;
-}
-
-.collaborators h2{
-  margin-top:0;
-}
-
-.collaborators-description{
   color:var(--muted);
-  margin-bottom:22px;
+  font-size:.9rem;
 }
 
-.collab-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.collab{
-  background:#080f0e;
+.input-group input{
+  width:100%;
+  background:#071010;
+  color:var(--text);
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:20px 14px;
+  border-radius:12px;
+  padding:14px;
+  outline:none;
   transition:.2s;
 }
 
-.collab:hover{
+.input-group input:focus{
   border-color:var(--neon);
-  transform:translateY(-3px);
+  box-shadow:0 0 0 3px rgba(0,255,204,.08);
 }
 
-.collab-icon{
-  font-size:38px;
-  margin-bottom:8px;
+.start-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
 }
 
-.collab h3{
-  margin:5px 0;
-  color:var(--neon);
+/* BUTTONS */
+.btn{
+  border:1px solid var(--line);
+  background:#0b1514;
+  color:var(--text);
+  padding:11px 17px;
+  border-radius:12px;
+  transition:.2s;
+  font-weight:700;
 }
 
-.collab p{
+.btn:hover:not(:disabled){
+  transform:translateY(-1px);
+  border-color:var(--neon2);
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#00bfa0,#00ffcc);
+  color:#00110d;
+  border-color:var(--neon);
+  box-shadow:0 0 20px rgba(0,255,204,.16);
+}
+
+.btn.danger{
+  border-color:rgba(255,77,109,.65);
+  color:#ff8096;
+  background:rgba(255,77,109,.06);
+}
+
+.btn.gold{
+  border-color:rgba(255,209,102,.6);
+  color:var(--gold);
+}
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none !important;
+}
+
+.sound-toggle{
+  background:transparent;
   color:var(--muted);
-  font-size:13px;
-  margin:5px 0;
+  border:1px solid var(--line);
+  padding:10px 14px;
+  border-radius:10px;
 }
 
-/* =========================
-   TABLERO
-========================= */
-
+/* GAME */
 .scoreboard{
   display:grid;
   grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:center;
+  gap:15px;
+  align-items:stretch;
+  margin-bottom:20px;
 }
 
-.score{
-  padding:18px;
-  border-radius:18px;
-  background:#08100f;
+.score-box{
+  background:#071010;
   border:1px solid var(--line);
+  border-radius:18px;
+  padding:17px;
   text-align:center;
 }
 
+.score-box .label{
+  color:var(--muted);
+  font-size:.82rem;
+}
+
+.score{
+  font-size:clamp(2rem,6vw,3.5rem);
+  font-weight:900;
+  margin-top:2px;
+}
+
 .score.ai{
-  border-color:#315a53;
+  color:#ff7e95;
+  text-shadow:0 0 15px rgba(255,77,109,.15);
 }
 
-.score.me{
-  border-color:var(--neon);
+.score.player{
+  color:var(--neon);
+  text-shadow:0 0 15px rgba(0,255,204,.15);
 }
 
-.score small{
-  display:block;
-  color:var(--muted);
-  font-weight:800;
-}
-
-.score strong{
-  display:block;
-  font-size:42px;
-  margin-top:3px;
-}
-
-.vs{
-  font-weight:1000;
-  color:var(--muted);
-}
-
-.progress{
-  height:8px;
-  background:#16211f;
-  border-radius:99px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  width:0;
-  background:var(--neon);
-  transition:.5s;
-}
-
-.roundbar{
+.target-box{
+  min-width:95px;
   display:flex;
-  justify-content:space-between;
-  gap:10px;
+  flex-direction:column;
+  justify-content:center;
   align-items:center;
   color:var(--muted);
-  font-weight:800;
 }
 
-.roundbar strong{
-  color:var(--text);
+.target-box strong{
+  color:var(--gold);
+  font-size:1.45rem;
 }
 
-/* =========================
-   ESCENARIO
-========================= */
+.streak{
+  margin-top:6px;
+  color:var(--gold);
+  font-size:.9rem;
+}
 
-.scenario h3{
-  margin:0 0 8px;
+/* GAME CARD */
+.game-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:16px;
+}
+
+.phase{
   color:var(--neon);
+  font-size:.8rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
 }
 
-.scenario-text{
-  font-size:20px;
-  line-height:1.5;
-  margin:0;
+.round-number{
+  color:var(--muted);
+  font-size:.85rem;
+}
+
+.scenario{
+  font-size:clamp(1.15rem,2vw,1.45rem);
+  font-weight:700;
+  margin:15px 0 20px;
 }
 
 .options{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
-  margin-top:20px;
 }
 
-.option{
+.option-btn{
   text-align:left;
-  background:#0b1211;
+  background:#071010;
   border:1px solid var(--line);
   color:var(--text);
-  border-radius:16px;
   padding:16px;
-  min-height:72px;
+  border-radius:14px;
   transition:.2s;
+  min-height:70px;
 }
 
-.option:hover{
+.option-btn:hover:not(:disabled){
+  border-color:var(--neon2);
+  background:#0a1817;
+  transform:translateY(-1px);
+}
+
+.option-btn.selected{
   border-color:var(--neon);
-  transform:translateY(-2px);
+  box-shadow:0 0 0 2px rgba(0,255,204,.08);
+  background:rgba(0,255,204,.08);
 }
 
-.option.selected{
-  border-color:var(--neon);
-  background:#06332d;
-  box-shadow:0 0 20px #00ffcc22;
-}
-
-.option.ai-choice{
-  border-color:var(--gold);
-  background:#2a2412;
-}
-
-.option:disabled{
+.option-btn:disabled{
   cursor:not-allowed;
+  opacity:.55;
 }
 
-/* =========================
-   IA
-========================= */
-
-.ai-box{
+/* AI */
+.decision-box{
   margin-top:18px;
-  padding:17px;
-  border-radius:16px;
-  border:1px solid #315a53;
-  background:#07100f;
+  background:#071010;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:16px;
 }
 
-.ai-box .tag{
-  color:var(--neon);
-  font-size:12px;
-  font-weight:900;
+.decision-title{
+  color:var(--gold);
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:7px;
 }
 
-.ai-choice-text{
-  font-weight:900;
-  font-size:18px;
-  margin:7px 0;
+.decision-text{
+  font-weight:700;
 }
 
 .reason{
   color:var(--muted);
-  line-height:1.5;
+  margin-top:5px;
+  font-size:.92rem;
 }
 
-/* =========================
-   BOTONES
-========================= */
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+/* PLAYER */
+.player-panel{
   margin-top:18px;
+  border:1px solid rgba(0,255,204,.16);
+  background:rgba(0,255,204,.025);
+  border-radius:16px;
+  padding:18px;
+}
+
+.player-panel h3{
+  color:var(--neon);
+}
+
+.confirm-row{
+  display:flex;
+  justify-content:center;
+  margin-top:15px;
 }
 
 .judge{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 
 .judge button{
-  padding:14px;
-  border-radius:14px;
-  font-weight:900;
+  min-height:60px;
 }
 
-.judge-ai{
-  background:#251f0b;
-  color:var(--gold);
-  border:1px solid #7d6820;
-}
-
-.judge-me{
-  background:#06332d;
-  color:var(--neon);
-  border:1px solid var(--neon);
-}
-
-/* =========================
-   MENSAJES
-========================= */
-
-.message{
-  padding:14px;
-  border-radius:14px;
-  background:#07100f;
+.result-box{
+  margin-top:18px;
   border:1px solid var(--line);
-  color:var(--muted);
-  line-height:1.5;
-}
-
-/* =========================
-   ESTADÍSTICAS
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.stat{
-  padding:16px;
-  background:#080e0d;
-  border:1px solid var(--line);
-  border-radius:16px;
+  background:#071010;
+  border-radius:15px;
+  padding:17px;
   text-align:center;
 }
 
-.stat b{
+.result-title{
+  font-size:1.15rem;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.result-detail{
+  color:var(--muted);
+}
+
+.game-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:18px;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+
+.stat{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#071010;
+  padding:14px;
+  text-align:center;
+}
+
+.stat small{
+  color:var(--muted);
   display:block;
-  font-size:25px;
+}
+
+.stat strong{
+  font-size:1.3rem;
+  display:block;
+  margin-top:4px;
+}
+
+/* FINISH */
+.finish-card{
+  max-width:700px;
+  margin:25px auto;
+  text-align:center;
+}
+
+.finish-icon{
+  font-size:4.5rem;
+  margin-bottom:10px;
+}
+
+.finish-card h2{
+  font-size:clamp(1.8rem,5vw,2.8rem);
+}
+
+.finish-text{
+  color:var(--muted);
+  margin:15px 0 25px;
+}
+
+/* GENERAL SECTIONS */
+.section-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+
+.list{
+  padding-left:20px;
+}
+
+.list li{
+  margin:7px 0;
+}
+
+.rules{
+  display:grid;
+  gap:12px;
+}
+
+.rule{
+  border:1px solid var(--line);
+  background:#071010;
+  border-radius:14px;
+  padding:15px;
+}
+
+.rule strong{
   color:var(--neon);
 }
 
-/* =========================
-   TABLA
-========================= */
+/* HISTORY */
+.table-wrap{
+  overflow-x:auto;
+}
 
 table{
   width:100%;
   border-collapse:collapse;
+  min-width:650px;
 }
 
 th,
 td{
-  text-align:left;
-  padding:12px;
   border-bottom:1px solid var(--line);
+  padding:12px;
+  text-align:left;
 }
 
 th{
   color:var(--neon);
-  font-size:13px;
+  font-size:.85rem;
+}
+
+td{
+  color:#d6e7e3;
 }
 
 .empty{
   text-align:center;
-  color:var(--muted);
   padding:25px;
+  color:var(--muted);
 }
 
-/* =========================
-   REGLAS
-========================= */
-
-.rule{
-  padding:15px;
-  border-left:3px solid var(--neon);
-  background:#07100f;
-  margin:10px 0;
-  border-radius:0 12px 12px 0;
-}
-
-/* =========================
-   PIE
-========================= */
-
+/* FOOTER */
 footer{
-  text-align:center;
-  color:#61736f;
-  padding:35px 0 45px;
-  font-size:13px;
+  border-top:1px solid var(--line);
+  padding:28px 0 35px;
+  color:var(--muted);
 }
 
-/* =========================
-   MÓVIL
-========================= */
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
+}
 
-@media(max-width:700px){
+.footer-box h3{
+  color:var(--text);
+  margin-bottom:8px;
+}
 
-  .container{
-    width:96%;
-  }
+.footer-box a{
+  color:var(--neon);
+  text-decoration:none;
+}
 
-  header{
-    padding:25px 0 15px;
-  }
+.footer-box a:hover{
+  text-decoration:underline;
+}
 
-  .logo{
-    font-size:clamp(30px,9vw,45px);
-    line-height:1.05;
-  }
-
-  .subtitle{
-    font-size:14px;
-  }
-
-  .tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
-  }
-
-  .tab{
-    min-width:0;
-    padding:11px 8px;
-    font-size:13px;
-  }
-
-  .setup{
-    display:flex;
+/* RESPONSIVE */
+@media(max-width:760px){
+  .header-inner{
     flex-direction:column;
-    gap:12px;
-  }
-
-  .setup > div,
-  .setup > button{
-    width:100%;
-  }
-
-  .setup button{
-    min-height:50px;
-  }
-
-  .card{
-    padding:16px;
-    border-radius:18px;
-  }
-
-  .hero{
-    padding:24px 14px;
+    align-items:flex-start;
+    padding:13px 0;
   }
 
   .scoreboard{
-    grid-template-columns:1fr 28px 1fr;
-    gap:7px;
+    grid-template-columns:1fr 1fr;
   }
 
-  .score{
-    padding:13px 7px;
+  .target-box{
+    grid-column:1/-1;
+    order:-1;
   }
 
-  .score strong{
-    font-size:30px;
-  }
-
-  .score small{
-    font-size:11px;
-  }
-
-  .vs{
-    font-size:12px;
-  }
-
-  .roundbar{
-    font-size:12px;
-  }
-
-  .scenario-text{
-    font-size:17px;
-  }
-
-  .options{
+  .options,
+  .judge,
+  .section-grid,
+  .footer-grid{
     grid-template-columns:1fr;
-    gap:9px;
-  }
-
-  .option{
-    width:100%;
-    min-height:64px;
-    padding:14px;
-    font-size:15px;
-  }
-
-  .actions{
-    flex-direction:column;
-  }
-
-  .actions button{
-    width:100%;
-    min-height:50px;
-  }
-
-  .judge{
-    grid-template-columns:1fr;
-  }
-
-  .judge button{
-    min-height:52px;
   }
 
   .stats{
     grid-template-columns:1fr;
   }
 
-  .collab-grid{
-    grid-template-columns:1fr;
-  }
-
-  .collab{
-    padding:17px 12px;
-  }
-
-  .collab a,
-  .collab button{
-    width:100%;
-  }
-
-  table{
-    min-width:600px;
-  }
-
-  footer{
-    padding:25px 0 35px;
+  .card{
+    padding:18px;
+    border-radius:16px;
   }
 }
 
-@media(max-width:360px){
-
-  .container{
-    width:97%;
+@media(max-width:480px){
+  main{
+    padding-top:18px;
   }
 
-  .tab{
-    font-size:12px;
-    padding:10px 5px;
+  .tabs{
+    padding-bottom:5px;
   }
 
-  .score strong{
-    font-size:26px;
+  .option-btn{
+    min-height:auto;
   }
 
-  .roundbar{
-    gap:5px;
-    font-size:11px;
+  .start-actions,
+  .game-actions{
+    flex-direction:column;
   }
 
-  .scenario-text{
-    font-size:16px;
-  }
-
-  .option{
-    font-size:14px;
+  .start-actions .btn,
+  .game-actions .btn,
+  .sound-toggle{
+    width:100%;
   }
 }
 </style>
@@ -760,1244 +685,606 @@ footer{
 
 <body>
 
-<div class="container">
-
 <header>
-
-  <h1 class="logo">🎮 ELIGE O PIERDE</h1>
-
-  <p class="subtitle">
-    IA VS HUMANO · Ahora se juega directamente aquí
-  </p>
-
-  <span class="version">
-    VERSIÓN v7.0.1 — ALFA
-  </span>
-
-</header>
-
-<nav class="tabs">
-
-  <button class="tab active" onclick="showPage('juego',this)">
-    🎮 Juego
-  </button>
-
-  <button class="tab" onclick="showPage('reglas',this)">
-    📜 Reglas
-  </button>
-
-  <button class="tab" onclick="showPage('historial',this)">
-    🏆 Historial
-  </button>
-
-  <button class="tab" onclick="showPage('versiones',this)">
-    📜 Versiones
-  </button>
-
-  <button class="tab" onclick="showPage('licencia',this)">
-    📄 Licencia
-  </button>
-
-  <button class="tab" onclick="showPage('sugerencias',this)">
-    💡 Sugerencias
-  </button>
-
-</nav>
-
-<main>
-
-<!-- =====================================================
-     JUEGO
-===================================================== -->
-
-<section id="juego" class="page active">
-
-  <!-- INICIO -->
-  <div id="startCard" class="card hero">
-
-    <div style="font-size:48px">
-      ⚡
+  <div class="container header-inner">
+    <div class="brand">
+      <h1>🎮 ELIGE O PIERDE</h1>
+      <span>IA VS HUMANO · Ahora se juega directamente aquí</span>
     </div>
 
-    <h2>
-      ¿TE ATREVES A ELEGIR?
-    </h2>
-
-    <p>
-      Juega una partida completa contra la IA sin salir de esta página.
-      La IA crea el escenario, elige una opción y tú debes tomar tu propia decisión.
-    </p>
-
-    <div class="setup">
-
-      <div style="text-align:left">
-
-        <label for="playerName">
-          TU NOMBRE
-        </label>
-
-        <input
-          id="playerName"
-          maxlength="18"
-          placeholder="Ej: nruto"
-          value=""
-          autocomplete="nickname"
-        >
-
-      </div>
-
-      <button class="primary" onclick="startGame()">
-        🚀 EMPEZAR
-      </button>
-
+    <div class="version-badge">
+      VERSIÓN v7.0.1 — ALFA
     </div>
-
-    <div class="sound-control">
-
-      <button
-        id="soundBtn"
-        class="sound-button"
-        onclick="toggleSound()"
-      >
-        🔊 Sonido: ON
-      </button>
-
-    </div>
-
   </div>
 
+  <nav>
+    <div class="container">
+      <div class="tabs">
+        <button class="tab active" data-page="juego">🎮 Juego</button>
+        <button class="tab" data-page="reglas">📜 Reglas</button>
+        <button class="tab" data-page="historial">📊 Historial</button>
+        <button class="tab" data-page="versiones">🧩 Versiones</button>
+        <button class="tab" data-page="licencia">📄 Licencia</button>
+        <button class="tab" data-page="sugerencias">💡 Sugerencias</button>
+      </div>
+    </div>
+  </nav>
+</header>
 
-  <!-- ===================================================
-       JUEGO: VA ANTES DE COLABORADORES Y SEDES
-  ==================================================== -->
+<main>
+<div class="container">
 
-  <div id="gameArea" class="hidden">
+  <!-- ===================== JUEGO ===================== -->
+  <section id="juego" class="page active">
 
-    <div class="card">
+    <!-- INICIO -->
+    <div id="startCard" class="card start-card">
+      <h2>¿TE ATREVES A ELEGIR?</h2>
 
-      <div class="scoreboard">
+      <p class="start-description">
+        En cada ronda recibirás una situación con varias opciones.
+        La IA elegirá una y tú tendrás que elegir la tuya.
+        Después se decide quién gana el punto.
+      </p>
 
-        <div class="score ai">
-
-          <small>
-            🤖 IA
-          </small>
-
-          <strong id="aiScore">
-            0
-          </strong>
-
-          <div class="progress">
-            <span id="aiProgress"></span>
-          </div>
-
-        </div>
-
-        <div class="vs">
-          VS
-        </div>
-
-        <div class="score me">
-
-          <small>
-            🧑 <span id="playerLabel">TÚ</span>
-          </small>
-
-          <strong id="playerScore">
-            0
-          </strong>
-
-          <div class="progress">
-            <span id="playerProgress"></span>
-          </div>
-
-        </div>
-
+      <div class="input-group">
+        <label for="playerName">Nombre del jugador</label>
+        <input
+          id="playerName"
+          type="text"
+          maxlength="18"
+          autocomplete="off"
+          placeholder="Ej: nruto"
+        >
       </div>
 
-      <div class="roundbar" style="margin-top:16px">
+      <div class="start-actions">
+        <button id="startBtn" class="btn primary" type="button">
+          🚀 EMPEZAR
+        </button>
 
-        <span>
-          Ronda <strong id="roundNumber">1</strong>
-        </span>
-
-        <span>
-          Meta: <strong>20</strong>
-        </span>
-
-        <span>
-          🔥 Racha: <strong id="streak">0</strong>
-        </span>
-
+        <button id="soundBtn" class="sound-toggle" type="button">
+          🔊 Sonido: ON
+        </button>
       </div>
 
+      <p class="muted" style="margin-top:15px;font-size:.85rem;">
+        Objetivo: llegar a 20 puntos.
+      </p>
     </div>
 
+    <!-- PARTIDA -->
+    <div id="gameArea" class="hidden">
 
-    <div class="card scenario" id="scenarioCard">
-
-      <h3 id="phaseTitle">
-        FASE 1 — CREACIÓN
-      </h3>
-
-      <p
-        class="scenario-text"
-        id="scenarioText"
-      ></p>
-
-      <div
-        class="options"
-        id="options"
-      ></div>
-
-
-      <!-- IA -->
-
-      <div
-        id="aiBox"
-        class="ai-box hidden"
-      >
-
-        <div class="tag">
-          🤖 DECISIÓN DE LA IA
+      <div class="scoreboard">
+        <div class="score-box">
+          <div class="label">🤖 IA</div>
+          <div id="aiScore" class="score ai">0</div>
         </div>
 
-        <div
-          class="ai-choice-text"
-          id="aiChoice"
-        ></div>
+        <div class="target-box">
+          <span>OBJETIVO</span>
+          <strong>20</strong>
+          <div id="streakLabel" class="streak">🔥 Racha: 0</div>
+        </div>
 
-        <div
-          class="reason"
-          id="aiReason"
-        ></div>
-
+        <div class="score-box">
+          <div id="playerLabel" class="label">🧑 JUGADOR</div>
+          <div id="playerScore" class="score player">0</div>
+        </div>
       </div>
 
+      <div class="card">
 
-      <!-- HUMANO -->
+        <div class="game-title">
+          <div>
+            <div class="phase">FASE 1 — CREACIÓN</div>
+            <div class="scenario" id="scenarioText">
+              Preparando escenario...
+            </div>
+          </div>
 
-      <div id="playerBox" class="hidden">
-
-        <div
-          class="message"
-          style="margin-top:18px"
-        >
-
-          Ahora es tu turno.
-          Elige <strong>SOLO UNA</strong>
-          opción y después podrás juzgar quién merece el punto.
-
+          <div id="roundLabel" class="round-number">
+            Ronda 0
+          </div>
         </div>
 
-        <div class="actions">
+        <div id="options" class="options"></div>
 
-          <button
-            class="secondary"
-            id="confirmChoice"
-            onclick="confirmPlayerChoice()"
-            disabled
-          >
-            ✅ Confirmar elección
-          </button>
+        <div id="aiDecision" class="decision-box">
+          <div class="decision-title">🤖 ELECCIÓN DE LA IA</div>
 
+          <div id="aiChoice" class="decision-text">
+            Esperando...
+          </div>
+
+          <div id="aiReason" class="reason">
+            -
+          </div>
         </div>
 
-      </div>
+        <div class="player-panel">
+          <h3>🧑 TU ELECCIÓN</h3>
 
+          <p class="muted" style="margin-bottom:10px;">
+            Elige una opción.
+          </p>
 
-      <!-- JUEZ -->
+          <div id="playerChoiceText" class="decision-text">
+            Todavía no has elegido.
+          </div>
 
-      <div id="judgeBox" class="hidden">
-
-        <div
-          class="message"
-          style="margin-top:18px"
-        >
-
-          <strong>
-            ⚖️ JUEZ HUMANO:
-          </strong>
-
-          ¿Quién cumplió mejor las reglas de esta ronda?
-
+          <div class="confirm-row">
+            <button id="confirmBtn" class="btn primary" type="button" disabled>
+              ✅ CONFIRMAR ELECCIÓN
+            </button>
+          </div>
         </div>
 
-        <div
-          class="judge"
-          style="margin-top:10px"
-        >
-
-          <button
-            class="judge-ai"
-            onclick="awardPoint('ai')"
-          >
+        <div id="judgeBox" class="judge hidden">
+          <button id="judgeAiBtn" class="btn danger" type="button">
             🤖 Punto para IA
           </button>
 
-          <button
-            class="judge-me"
-            onclick="awardPoint('me')"
-          >
+          <button id="judgePlayerBtn" class="btn primary" type="button">
             🧑 Punto para mí
           </button>
+        </div>
 
+        <div id="resultBox" class="result-box hidden">
+          <div id="resultTitle" class="result-title">
+            Resultado
+          </div>
+
+          <div id="resultDetail" class="result-detail">
+            -
+          </div>
+        </div>
+
+        <div class="game-actions">
+          <button id="nextRoundBtn" class="btn gold hidden" type="button">
+            ➡️ SIGUIENTE RONDA
+          </button>
+
+          <!-- BOTÓN CORREGIDO -->
+          <button id="endGameBtn" class="btn danger" type="button">
+            🛑 TERMINAR PARTIDA
+          </button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <small>Rondas</small>
+            <strong id="roundStat">0</strong>
+          </div>
+
+          <div class="stat">
+            <small>Victorias</small>
+            <strong id="winsStat">0</strong>
+          </div>
+
+          <div class="stat">
+            <small>Mejor racha</small>
+            <strong id="bestStat">0</strong>
+          </div>
         </div>
 
       </div>
-
-
-      <div
-        id="roundResult"
-        class="message hidden"
-        style="margin-top:18px"
-      ></div>
-
-
-      <div class="actions">
-
-        <button
-          class="primary hidden"
-          id="nextRound"
-          onclick="nextRound()"
-        >
-          ➡️ SIGUIENTE RONDA
-        </button>
-
-        <button
-          type="button"
-          class="danger"
-          id="endGameBtn"
-          onclick="endGame()"
-        >
-          🛑 Terminar partida
-        </button>
-
-      </div>
-
     </div>
 
+    <!-- PARTIDA TERMINADA -->
+    <div id="finishedCard" class="card finish-card hidden">
+      <div id="finishIcon" class="finish-icon">🏆</div>
 
-    <!-- ESTADÍSTICAS -->
-
-    <div class="card">
-
-      <h3>
-        📊 Estadísticas de la partida
-      </h3>
-
-      <div class="stats">
-
-        <div class="stat">
-
-          <span>
-            Rondas
-          </span>
-
-          <b id="statRounds">
-            0
-          </b>
-
-        </div>
-
-        <div class="stat">
-
-          <span>
-            Victorias tuyas
-          </span>
-
-          <b id="statWins">
-            0
-          </b>
-
-        </div>
-
-        <div class="stat">
-
-          <span>
-            Racha máxima
-          </span>
-
-          <b id="statBestStreak">
-            0
-          </b>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- RESULTADO -->
-
-  <div
-    id="finishedCard"
-    class="card hero hidden"
-  >
-
-    <div
-      style="font-size:55px"
-      id="finishIcon"
-    >
-      🏆
-    </div>
-
-    <h2 id="finishTitle">
-      PARTIDA TERMINADA
-    </h2>
-
-    <p id="finishText"></p>
-
-    <button
-      class="primary"
-      onclick="resetToStart()"
-    >
-      🔄 NUEVA PARTIDA
-    </button>
-
-  </div>
-
-
-  <!-- ===================================================
-       COLABORADORES ABAJO DEL JUEGO
-  ==================================================== -->
-
-  <div class="card collaborators">
-
-    <h2>
-      👥 Colaboradores
-    </h2>
-
-    <p class="collaborators-description">
-      Personas y herramientas que ayudan al desarrollo de
-      <b>ELIGE O PIERDE</b>.
-    </p>
-
-    <div class="collab-grid">
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          👑
-        </div>
-
-        <h3>
-          nruto
-        </h3>
-
-        <p>
-          Creador de ELIGE O PIERDE
-        </p>
-
-      </div>
-
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          🤖
-        </div>
-
-        <h3>
-          ChatGPT
-        </h3>
-
-        <p>
-          Asistencia en desarrollo y programación
-        </p>
-
-      </div>
-
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          💻
-        </div>
-
-        <h3>
-          GitHub
-        </h3>
-
-        <p>
-          Plataforma utilizada para publicar el proyecto
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- SEDES -->
-
-    <div
-      style="
-        margin-top:25px;
-        padding-top:22px;
-        border-top:1px solid var(--line);
-      "
-    >
-
-      <h2>
-        🌐 Sedes de ELIGE O PIERDE
+      <h2 id="finishTitle">
+        PARTIDA TERMINADA
       </h2>
 
-      <p class="collaborators-description">
-        También puedes acceder a las diferentes sedes del proyecto.
+      <div id="finishText" class="finish-text">
+        -
+      </div>
+
+      <button id="newGameBtn" class="btn primary" type="button">
+        🔄 NUEVA PARTIDA
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ===================== REGLAS ===================== -->
+  <section id="reglas" class="page">
+
+    <div class="card">
+      <h2>📜 REGLAS DE ELIGE O PIERDE</h2>
+      <p class="muted">
+        La versión 7.0.1 ALFA conserva la estructura principal del juego.
       </p>
+    </div>
 
+    <div class="rules">
 
-      <!-- SEGUNDA SEDE -->
+      <div class="rule">
+        <strong>1. Objetivo</strong>
+        <p>
+          Llegar a 20 puntos antes que la otra parte.
+        </p>
+      </div>
 
-      <div
-        class="collab"
-        style="margin-bottom:12px"
-      >
+      <div class="rule">
+        <strong>2. Creación</strong>
+        <p>
+          En cada ronda aparece una situación con 2 a 4 opciones.
+        </p>
+      </div>
 
-        <div class="collab-icon">
-          🏢
+      <div class="rule">
+        <strong>3. Elección de la IA</strong>
+        <p>
+          La IA selecciona una opción y muestra una razón breve.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>4. Elección humana</strong>
+        <p>
+          El jugador selecciona una opción y la confirma.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>5. Decisión</strong>
+        <p>
+          Después de confirmar, se elige manualmente quién recibe el punto.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>6. Puntuación</strong>
+        <p>
+          El ganador de cada ronda recibe +1 punto.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>7. Racha</strong>
+        <p>
+          Las victorias consecutivas del jugador aumentan su racha.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>8. Historial</strong>
+        <p>
+          Las partidas terminadas pueden guardarse localmente en el navegador.
+        </p>
+      </div>
+
+      <div class="rule">
+        <strong>9. Terminar partida</strong>
+        <p>
+          El jugador puede terminar manualmente una partida utilizando
+          el botón “Terminar partida”.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ===================== HISTORIAL ===================== -->
+  <section id="historial" class="page">
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;">
+        <div>
+          <h2>📊 HISTORIAL</h2>
+          <p class="muted">
+            Tus partidas se almacenan en este navegador.
+          </p>
         </div>
 
-        <h3>
-          Segunda sede
-        </h3>
+        <button id="clearHistoryBtn" class="btn danger" type="button">
+          🗑️ BORRAR HISTORIAL
+        </button>
+      </div>
+    </div>
 
-        <p>
-          Otra versión publicada de ELIGE O PIERDE.
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Resultado</th>
+              <th>Rondas</th>
+              <th>Racha</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+
+      <div id="historyEmpty" class="empty hidden">
+        Todavía no hay partidas guardadas.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== VERSIONES ===================== -->
+  <section id="versiones" class="page">
+
+    <div class="card">
+      <h2>🧩 HISTORIAL DE VERSIONES</h2>
+      <p class="muted">
+        Evolución del proyecto ELIGE O PIERDE.
+      </p>
+    </div>
+
+    <div class="section-grid">
+
+      <div class="card">
+        <h3>v1.0.0</h3>
+        <p class="muted">Primera versión del concepto.</p>
+      </div>
+
+      <div class="card">
+        <h3>v1.1.0</h3>
+        <p class="muted">Mejoras iniciales de interacción.</p>
+      </div>
+
+      <div class="card">
+        <h3>v1.2.0</h3>
+        <p class="muted">Más escenarios y ajustes visuales.</p>
+      </div>
+
+      <div class="card">
+        <h3>v1.2.1</h3>
+        <p class="muted">Correcciones y pequeños cambios.</p>
+      </div>
+
+      <div class="card">
+        <h3>v2.00.2</h3>
+        <p class="muted">Nueva organización del proyecto.</p>
+      </div>
+
+      <div class="card">
+        <h3>v3.0.0</h3>
+        <p class="muted">Expansión del sistema principal.</p>
+      </div>
+
+      <div class="card">
+        <h3>v5.0.0</h3>
+        <p class="muted">Abril 2026 · Nueva etapa del juego.</p>
+      </div>
+
+      <div class="card">
+        <h3>v6.0.0</h3>
+        <p class="muted">Agosto 2026 · Gran actualización.</p>
+      </div>
+
+      <div class="card">
+        <h3>v6.2.0</h3>
+        <p class="muted">Mejoras de interfaz y funcionamiento.</p>
+      </div>
+
+      <div class="card">
+        <h3>v7.0.1 ALFA</h3>
+        <p class="muted">
+          Septiembre 2026 · Rama oficial actual.
         </p>
+      </div>
 
+    </div>
+
+  </section>
+
+  <!-- ===================== LICENCIA ===================== -->
+  <section id="licencia" class="page">
+
+    <div class="card">
+      <h2>📄 LICENCIA</h2>
+
+      <h3>ELIGE O PIERDE — Versión 7.0.1 ALFA</h3>
+
+      <p class="muted" style="margin-top:10px;">
+        © 2026 Nicolas Mendoza / nruto.
+      </p>
+
+      <p style="margin-top:14px;">
+        Proyecto conceptual, reglas y diseño:
+        <strong>Nicolas Paco</strong>.
+      </p>
+
+      <p style="margin-top:14px;">
+        Proyecto orientado a entretenimiento y uso educativo.
+      </p>
+
+      <p style="margin-top:14px;">
+        No se permite redistribuir o vender el proyecto como propio
+        sin autorización del autor.
+      </p>
+
+      <p style="margin-top:14px;color:var(--muted);">
+        Créditos de herramientas y colaboración:
+        ChatGPT / OpenAI, GitHub y herramientas adicionales utilizadas
+        durante el desarrollo.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ===================== SUGERENCIAS ===================== -->
+  <section id="sugerencias" class="page">
+
+    <div class="card">
+      <h2>💡 SUGERENCIAS</h2>
+
+      <p class="muted">
+        Puedes enviar sugerencias, ideas, errores o propuestas para
+        futuras versiones.
+      </p>
+
+      <div style="margin-top:20px;">
+        <a
+          class="btn primary"
+          href="https://docs.google.com/forms/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="display:inline-block;text-decoration:none;"
+        >
+          📝 ENVIAR SUGERENCIA
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== INFORMACIÓN ===================== -->
+  <section class="page" id="infoExtra">
+    <div class="card">
+      <h2>ℹ️ INFORMACIÓN</h2>
+      <p class="muted">
+        ELIGE O PIERDE es un juego de decisiones entre humano e IA.
+      </p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+
+    <div class="footer-box">
+      <h3>👤 Autor</h3>
+      <p>Nicolas Mendoza / nruto</p>
+      <p>Bogotá · 2026</p>
+    </div>
+
+    <div class="footer-box">
+      <h3>🌐 Proyecto</h3>
+      <p>
         <a
           href="https://narutoqqq844-droid.github.io/Elije-o-Pierdes-/"
           target="_blank"
           rel="noopener noreferrer"
-          class="secondary"
-          style="
-            display:inline-block;
-            text-decoration:none;
-            margin-top:10px;
-          "
         >
-          🔗 Abrir segunda sede
+          Sede N.º 2
         </a>
-
-      </div>
-
-
-      <!-- TERCERA SEDE -->
-
-      <div class="collab">
-
-        <div class="collab-icon">
-          🌎
-        </div>
-
-        <h3>
-          Tercera sede
-        </h3>
-
-        <p>
-        <!-- SEDE DE MANTENIMIENTO -->
-
-<div class="collab">
-
-  <div class="collab-icon">
-    🛠️
-  </div>
-
-  <h3>
-    Sede de mantenimiento
-  </h3>
-
-  <p>
-    Sitio utilizado para el mantenimiento y gestión de
-    ELIGE O PIERDE.
-  </p>
-
-  <a
-    href="https://sites.google.com/nuevaciencia.edu.co/elige-o-pierdes/inicio?authuser=0&pli=1"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="secondary"
-    style="
-      display:inline-block;
-      text-decoration:none;
-      margin-top:10px;
-    "
-  >
-    🛠️ Abrir sede de mantenimiento
-  </a>
-
-</div>
-
-
-<!-- =====================================================
-     REGLAS
-===================================================== -->
-
-<section id="reglas" class="page">
-
-  <div class="card">
-
-    <h2>
-      📜 REGLAS OFICIALES — v7.0.1
-    </h2>
-
-    <div class="rule">
-      <b>1. Objetivo:</b>
-      llegar a 20 puntos.
+      </p>
+      <p style="margin-top:5px;">
+        Tercera sede: Próximamente
+      </p>
     </div>
 
-    <div class="rule">
-      <b>2. Creación:</b>
-      la IA crea un escenario con 2–4 opciones claras,
-      diferentes y cerradas.
-    </div>
-
-    <div class="rule">
-      <b>3. Decisión:</b>
-      la IA debe elegir SOLO UNA opción
-      y justificarla.
-    </div>
-
-    <div class="rule">
-      <b>4. Turno humano:</b>
-      después de la decisión de la IA,
-      el jugador elige SOLO UNA opción.
-    </div>
-
-    <div class="rule">
-      <b>5. Prohibiciones:</b>
-      no usar “depende”, no evadir la elección,
-      no dar múltiples opciones y no cambiar el escenario.
-    </div>
-
-    <div class="rule">
-      <b>6. Punto:</b>
-      el jugador actúa como juez y decide quién gana el punto.
-    </div>
-
-    <div class="rule">
-      <b>7. Racha:</b>
-      cada punto consecutivo del jugador aumenta su racha.
-    </div>
-
-    <div class="rule">
-      <b>8. Final:</b>
-      la partida termina cuando IA o jugador llega a 20 puntos,
-      o cuando el jugador la termina manualmente.
+    <div class="footer-box">
+      <h3>🛠️ Mantenimiento</h3>
+      <p>
+        <a
+          href="https://sites.google.com/nuevaciencia.edu.co/elige-o-pierdes/inicio?authuser=0&pli=1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Sitio de mantenimiento
+        </a>
+      </p>
     </div>
 
   </div>
-
-</section>
-
-
-```html
-<!-- =========================================================
-     VERSIONES
-========================================================= -->
-
-<section id="versiones">
-
-  <h2>📋 VERSIONES</h2>
-
-  <!-- =====================================================
-       v1.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🎮 Versión 1.0.0</h3>
-
-    <p>
-      Primera versión de <strong>ELIGE O PIERDE</strong>.
-    </p>
-
-    <ul>
-      <li>🎯 Sistema principal de decisiones.</li>
-      <li>🤖 Sistema de elección de la IA.</li>
-      <li>🏆 Sistema básico de puntos.</li>
-      <li>🎮 Primeros escenarios.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v1.1.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>⚡ Versión 1.1.0</h3>
-
-    <p>
-      Primera actualización importante del juego.
-    </p>
-
-    <ul>
-      <li>🎮 Nuevos escenarios.</li>
-      <li>🧠 Mejoras en las decisiones de la IA.</li>
-      <li>📊 Mejoras en el sistema de puntos.</li>
-      <li>🛠️ Correcciones de errores.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v1.2.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 1.2.0</h3>
-
-    <p>
-      Actualización con mejoras generales de juego.
-    </p>
-
-    <ul>
-      <li>🎮 Más situaciones para elegir.</li>
-      <li>🤖 Mejoras del sistema de IA.</li>
-      <li>📈 Mejor control de puntuaciones.</li>
-      <li>🛠️ Correcciones y mejoras internas.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v1.2.1
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔧 Versión 1.2.1</h3>
-
-    <p>
-      Actualización de mantenimiento.
-    </p>
-
-    <ul>
-      <li>🐛 Corrección de errores.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🎮 Ajustes del sistema de juego.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v2.00.2
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔥 Versión 2.00.2</h3>
-
-    <p>
-      Nueva etapa del desarrollo de ELIGE O PIERDE.
-    </p>
-
-    <ul>
-      <li>🎮 Mejoras importantes del juego.</li>
-      <li>🤖 Mejoras del sistema de IA.</li>
-      <li>📊 Mejoras de puntuación.</li>
-      <li>🛠️ Correcciones generales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v3.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 3.0.0</h3>
-
-    <p>
-      Gran actualización del proyecto.
-    </p>
-
-    <ul>
-      <li>🎮 Nueva experiencia de juego.</li>
-      <li>🤖 Mejoras importantes de la IA.</li>
-      <li>📊 Sistema de progreso mejorado.</li>
-      <li>🏆 Mejoras en los rangos.</li>
-      <li>🛠️ Correcciones generales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v5.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>💥 Versión 5.0.0 — Abril 2026</h3>
-
-    <p>
-      Gran evolución de <strong>ELIGE O PIERDE</strong>.
-    </p>
-
-    <ul>
-      <li>🤖 Integración con sistemas de IA.</li>
-      <li>🎮 Nuevos escenarios.</li>
-      <li>🏆 Sistema de objetivos.</li>
-      <li>📈 Mejoras de progreso.</li>
-      <li>🔥 Sistema de rachas.</li>
-      <li>🧠 Mejoras en las decisiones.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.0.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🌌 Versión 6.0.0 — Agosto 2026</h3>
-
-    <p>
-      <strong>GRAN ACTUALIZACIÓN</strong>
-    </p>
-
-    <ul>
-      <li>🎮 Ahora se juega directamente en la página.</li>
-      <li>🤖 Sistema IA VS HUMANO.</li>
-      <li>🧠 Nuevas decisiones generadas durante la partida.</li>
-      <li>🏆 Objetivo de 20 puntos.</li>
-      <li>🔥 Sistema de rachas.</li>
-      <li>📊 Barra de progreso.</li>
-      <li>📜 Historial local de partidas.</li>
-      <li>👤 Sistema de nombre del jugador.</li>
-      <li>📱 Interfaz mejorada.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.2.0
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>⚡ Versión 6.2.0</h3>
-
-    <p>
-      Actualización de mejoras y estabilidad.
-    </p>
-
-    <ul>
-      <li>🛠️ Correcciones internas.</li>
-      <li>⚡ Mejoras de rendimiento.</li>
-      <li>🎮 Ajustes del sistema de juego.</li>
-      <li>📊 Mejoras visuales.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v6.2.1
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🔧 Versión 6.2.1</h3>
-
-    <p>
-      Actualización de mantenimiento.
-    </p>
-
-    <ul>
-      <li>🐛 Corrección de errores.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🎮 Ajustes menores del juego.</li>
-    </ul>
-
-  </div>
-
-
-  <!-- =====================================================
-       v7.0.1 ALFA
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🚀 Versión 7.0.1 — Septiembre 2026</h3>
-
-    <p>
-      <strong>NUEVA ACTUALIZACIÓN — ALFA</strong>
-    </p>
-
-    <p>
-      ELIGE O PIERDE entra en una nueva etapa de desarrollo,
-      enfocada en ampliar el contenido del juego, mejorar
-      la estabilidad y preparar futuras funciones.
-    </p>
-
-    <ul>
-      <li>🎮 Nuevos escenarios para las partidas.</li>
-      <li>🧠 Nuevas situaciones y decisiones.</li>
-      <li>🎯 Mayor variedad de situaciones.</li>
-      <li>⚡ Mejoras de estabilidad.</li>
-      <li>🛠️ Correcciones de errores.</li>
-      <li>📊 Mejoras internas del sistema de juego.</li>
-      <li>📱 Preparación de la aplicación Android.</li>
-      <li>🔗 Preparación de la integración Android + Web.</li>
-      <li>🚀 Preparación de futuras funciones.</li>
-    </ul>
-
-    <p>
-      <strong>Estado:</strong> 🟡 EN DESARROLLO
-    </p>
-
-    <p>
-      <strong>App Android:</strong> 🔒 PRÓXIMAMENTE
-    </p>
-
-    <p>
-      <strong>Rama oficial actual:</strong> 7.0.1 alfa
-    </p>
-
-    <p>
-      <strong>Próximo objetivo:</strong>
-      continuar ampliando el juego y avanzar con la integración
-      entre Android y la versión web.
-    </p>
-
-  </div>
-
-
-  <!-- =====================================================
-       RAMA OFICIAL
-  ====================================================== -->
-
-  <div class="version-card">
-
-    <h3>🏆 Rama oficial actual</h3>
-
-    <p>
-      <strong>7.0.1 alfa</strong>
-    </p>
-
-    <p>
-      Esta es actualmente la rama oficial de desarrollo
-      de ELIGE O PIERDE.
-    </p>
-
-  </div>
-
-</section>
-```
-
-
-
-<!-- =====================================================
-     LICENCIA
-===================================================== -->
-
-<section id="licencia" class="page">
-
-  <div class="card">
-
-    <h2>
-      📄 Licencia
-    </h2>
-
-    <p>
-      <b>
-        ELIGE O PIERDE — Versión 6.2.1
-      </b>
-    </p>
-
-    <p>
-      © 2026 Nicolas Mendoza / nruto.
-      Proyecto conceptual, reglas y diseño:
-      Nicolas Paco.
-    </p>
-
-    <p>
-      Distribuido con fines educativos y de entretenimiento.
-      No se permite redistribuir o vender sin permiso del autor.
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SUGERENCIAS
-===================================================== -->
-
-<section id="sugerencias" class="page">
-
-  <div class="card">
-
-    <h2>
-      💡 Sugerencias
-    </h2>
-
-    <p style="color:var(--muted)">
-      Puedes enviar tus ideas y sugerencias para futuras versiones.
-    </p>
-
-    <a
-      class="secondary"
-      style="display:inline-block;text-decoration:none"
-      href="https://docs.google.com/forms/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Abrir Google Forms ↗
-    </a>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-
-  🎮 <b>ELIGE O PIERDE</b>
-
-  <br>
-
-  Creado por nruto — Bogotá, 2026
-  ·
-  Versión 6.2.1
-
 </footer>
 
-</div>
-
-
 <script>
+"use strict";
+
 /* =========================================================
    SONIDO
 ========================================================= */
 
-let soundEnabled =
-  localStorage.getItem("elige_sound") !== "off";
-
-let audioContext=null;
-
-function updateSoundButton(){
-
-  const btn=
-    document.getElementById("soundBtn");
-
-  if(!btn)return;
-
-  btn.textContent=
-    soundEnabled
-      ? "🔊 Sonido: ON"
-      : "🔇 Sonido: OFF";
-}
+let soundEnabled = localStorage.getItem("elige_sound") !== "off";
+let audioContext = null;
 
 function initAudio(){
-
-  if(!audioContext){
-
-    const AudioCtx=
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(AudioCtx){
-      audioContext=new AudioCtx();
+  try{
+    if(!audioContext){
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-  }
 
-  if(
-    audioContext &&
-    audioContext.state==="suspended"
-  ){
-    audioContext.resume();
+    if(audioContext.state === "suspended"){
+      audioContext.resume().catch(()=>{});
+    }
+  }catch(error){
+    console.warn("Audio no disponible:",error);
   }
 }
 
-function playSound(
-  frequency=440,
-  duration=.12,
-  type="sine",
-  volume=.035
-){
-
-  if(!soundEnabled)return;
+function beep(frequency, duration, type="sine", volume=.035){
+  if(!soundEnabled) return;
 
   try{
-
     initAudio();
 
-    if(!audioContext)return;
+    if(!audioContext) return;
 
-    const oscillator=
-      audioContext.createOscillator();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-    const gain=
-      audioContext.createGain();
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
 
-    oscillator.type=type;
-    oscillator.frequency.value=frequency;
-
-    gain.gain.setValueAtTime(
-      volume,
-      audioContext.currentTime
-    );
-
+    gain.gain.setValueAtTime(volume,audioContext.currentTime);
     gain.gain.exponentialRampToValueAtTime(
-      .001,
-      audioContext.currentTime+duration
+      0.001,
+      audioContext.currentTime + duration
     );
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
 
     oscillator.start();
-
-    oscillator.stop(
-      audioContext.currentTime+duration
-    );
-
+    oscillator.stop(audioContext.currentTime + duration);
   }catch(error){
-
-    console.log(
-      "Audio no disponible:",
-      error
-    );
+    console.warn("No se pudo reproducir sonido:",error);
   }
 }
 
 function playStartSound(){
-
-  playSound(440,.1);
-
-  setTimeout(
-    ()=>playSound(660,.1),
-    100
-  );
-
-  setTimeout(
-    ()=>playSound(880,.16),
-    200
-  );
-}
-
-function playWinSound(){
-
-  playSound(523,.1);
-
-  setTimeout(
-    ()=>playSound(659,.1),
-    100
-  );
-
-  setTimeout(
-    ()=>playSound(784,.2),
-    200
-  );
-}
-
-function playLoseSound(){
-
-  playSound(
-    330,
-    .15,
-    "sawtooth"
-  );
-
-  setTimeout(
-    ()=>playSound(
-      220,
-      .25,
-      "sawtooth"
-    ),
-    150
-  );
+  beep(520,.09,"sine");
+  setTimeout(()=>beep(720,.12,"sine"),90);
 }
 
 function playSelectSound(){
-
-  playSound(
-    600,
-    .08,
-    "square",
-    .025
-  );
+  beep(600,.07,"triangle");
 }
 
-function playNextSound(){
-
-  playSound(
-    700,
-    .08
-  );
+function playPointSound(){
+  beep(700,.08,"triangle");
+  setTimeout(()=>beep(900,.11,"triangle"),90);
 }
 
 function playEndSound(){
-
-  playSound(
-    300,
-    .12
-  );
-
-  setTimeout(
-    ()=>playSound(
-      200,
-      .25
-    ),
-    120
-  );
+  beep(420,.12,"sine");
+  setTimeout(()=>beep(320,.18,"sine"),120);
 }
 
-function toggleSound(){
+function updateSoundButton(){
+  const btn = document.getElementById("soundBtn");
 
-  soundEnabled=!soundEnabled;
+  if(!btn) return;
 
-  localStorage.setItem(
-    "elige_sound",
-    soundEnabled
-      ? "on"
-      : "off"
-  );
-
-  updateSoundButton();
-
-  if(soundEnabled){
-
-    initAudio();
-
-    playSound(
-      700,
-      .12
-    );
-  }
+  btn.textContent = soundEnabled
+    ? "🔊 Sonido: ON"
+    : "🔇 Sonido: OFF";
 }
-
-
-
 
 
 /* =========================================================
-   ESTADO DEL JUEGO
+   ESTADO DE LA PARTIDA
 ========================================================= */
 
-let game={
+let game = {
   active:false,
   name:"Jugador",
   ai:0,
@@ -2010,673 +1297,685 @@ let game={
   selected:null,
   aiIndex:null,
   judged:false,
-  saved:false
+  saved:false,
+  lastScenarioIndex:-1
 };
 
-```javascript
-```javascript
+
 /* =========================================================
-   ESCENARIOS v7.0.1 ALFA
+   ESCENARIOS
 ========================================================= */
 
 const scenarios = [
 
   {
-    t: "Encuentras una caja misteriosa. Solo puedes abrir una puerta:",
-    o: [
-      "Puerta roja: escuchas música",
-      "Puerta azul: está completamente oscura",
-      "Puerta verde: sale humo",
-      "Puerta amarilla: escuchas una risa"
+    text:"Encuentras una caja misteriosa. Solo puedes abrir una puerta:",
+    options:[
+      "🔴 Puerta roja con música",
+      "🔵 Puerta azul completamente oscura",
+      "🟢 Puerta verde con humo",
+      "🟡 Puerta amarilla con una risa"
     ],
-    r: [
-      "La roja parece la opción menos peligrosa.",
-      "La azul podría esconder cualquier cosa.",
-      "El humo puede ser una advertencia.",
-      "La risa hace sospechar de una trampa."
+    reasons:[
+      "La música podría indicar que hay algo esperándote.",
+      "La oscuridad puede ocultar tanto peligro como una salida.",
+      "El humo puede revelar que existe algún mecanismo detrás.",
+      "Una risa misteriosa hace sospechar que hay algo especial."
     ]
   },
 
   {
-    t: "Tienes que sobrevivir una noche en un lugar desconocido. Elige un recurso:",
-    o: [
-      "Una linterna con 20% de batería",
-      "Un mapa incompleto",
-      "Una mochila con comida",
-      "Un radio que solo recibe señales"
+    text:"Tienes que sobrevivir una noche en un lugar desconocido. Elige un recurso:",
+    options:[
+      "🔦 Linterna con 20% de batería",
+      "🗺️ Mapa incompleto",
+      "🎒 Mochila con comida",
+      "📻 Radio que solo recibe señal"
     ],
-    r: [
-      "La linterna permite explorar de inmediato.",
-      "Un mapa incompleto sigue dando información.",
-      "La comida garantiza recursos básicos.",
-      "El radio podría revelar dónde hay otras personas."
+    reasons:[
+      "La luz puede ayudarte a encontrar rutas.",
+      "Un mapa puede revelar lugares importantes.",
+      "La comida aumenta tus posibilidades de sobrevivir.",
+      "La radio podría recibir información útil."
     ]
   },
 
   {
-    t: "Una IA te ofrece un trato: puedes ganar mucho, pero debes aceptar una condición:",
-    o: [
-      "Perder tus recuerdos de ayer",
-      "No usar internet durante un mes",
-      "Entregar todos tus puntos actuales",
-      "Dejar que la IA elija tu próximo reto"
+    text:"Una IA te ofrece un trato: puedes ganar mucho, pero debes aceptar una condición:",
+    options:[
+      "🧠 Perder los recuerdos de ayer",
+      "🌐 No usar internet durante un mes",
+      "🎯 Entregar todos tus puntos",
+      "🤖 Dejar que la IA elija el siguiente desafío"
     ],
-    r: [
-      "Los recuerdos son demasiado valiosos.",
-      "Un mes sin internet es difícil pero temporal.",
-      "Perder puntos es un costo directo y claro.",
-      "La IA tendría demasiado control sobre la partida."
+    reasons:[
+      "Perder recuerdos puede tener consecuencias inesperadas.",
+      "Un mes sin internet sería un sacrificio importante.",
+      "Entregar puntos puede cambiar completamente la partida.",
+      "Permitir que la IA elija aumenta la incertidumbre."
     ]
   },
 
   {
-    t: "Solo puedes salvar uno de cuatro objetos durante una emergencia:",
-    o: [
-      "Tu teléfono",
-      "Una botella de agua",
-      "Un botiquín",
-      "Una mochila con herramientas"
+    text:"Solo puedes salvar uno de cuatro objetos durante una emergencia:",
+    options:[
+      "📱 Teléfono",
+      "💧 Botella de agua",
+      "🩹 Botiquín",
+      "🛠️ Mochila de herramientas"
     ],
-    r: [
+    reasons:[
       "El teléfono puede servir para pedir ayuda.",
       "El agua es esencial para sobrevivir.",
-      "El botiquín puede resolver heridas.",
-      "Las herramientas pueden ayudar a salir del problema."
+      "El botiquín puede ayudar ante una lesión.",
+      "Las herramientas pueden servir para muchas situaciones."
     ]
   },
 
   {
-    t: "Debes elegir una habilidad para una misión imposible:",
-    o: [
-      "Ser invisible durante 10 minutos",
-      "Leer una mente una vez",
-      "Retroceder 30 segundos",
-      "Tener suerte durante una hora"
+    text:"Debes elegir una habilidad para una misión imposible:",
+    options:[
+      "👻 Ser invisible durante 10 segundos",
+      "🧠 Leer la mente una vez",
+      "⏪ Retroceder 30 segundos",
+      "🍀 Tener suerte durante una hora"
     ],
-    r: [
-      "Diez minutos de invisibilidad permiten una infiltración.",
-      "Leer una mente una vez da información muy precisa.",
-      "Treinta segundos pueden cambiar una decisión crítica.",
-      "La suerte puede resolver situaciones impredecibles."
+    reasons:[
+      "La invisibilidad puede permitir escapar de un peligro.",
+      "Leer una mente puede revelar información crítica.",
+      "Retroceder 30 segundos puede corregir un error.",
+      "La suerte puede ayudarte en situaciones impredecibles."
     ]
   },
 
   {
-    t: "Tienes una sola oportunidad para ganar un torneo:",
-    o: [
-      "Jugar seguro y sumar poco",
-      "Arriesgarlo todo en la primera ronda",
-      "Estudiar al rival antes de actuar",
-      "Cambiar completamente de estrategia"
+    text:"Tienes una sola oportunidad para ganar un torneo:",
+    options:[
+      "🛡️ Jugar seguro",
+      "🔥 Arriesgar todo en la primera ronda",
+      "🔎 Estudiar al rival",
+      "🔄 Cambiar de estrategia"
     ],
-    r: [
-      "La seguridad reduce el riesgo de quedar eliminado.",
-      "Arriesgarse puede generar una ventaja enorme.",
-      "Conocer al rival ayuda a tomar mejores decisiones.",
-      "Una estrategia nueva puede sorprender al rival."
+    reasons:[
+      "La seguridad reduce riesgos.",
+      "Un inicio agresivo puede darte ventaja.",
+      "Conocer al rival puede ser decisivo.",
+      "Cambiar la estrategia evita ser predecible."
     ]
   },
 
   {
-    t: "Un desconocido te deja cuatro objetos y dice que uno es la llave de salida:",
-    o: [
-      "Una moneda vieja",
-      "Un reloj detenido",
-      "Una tarjeta negra",
-      "Una pequeña piedra con un símbolo"
+    text:"Un desconocido te deja cuatro objetos y dice que uno es la llave de salida:",
+    options:[
+      "🪙 Moneda antigua",
+      "⏰ Reloj detenido",
+      "🃏 Tarjeta negra",
+      "🪨 Piedra con símbolo"
     ],
-    r: [
-      "La moneda parece demasiado común.",
-      "El reloj podría ocultar un mecanismo.",
-      "La tarjeta puede abrir algo electrónico.",
-      "El símbolo podría ser una pista directa."
+    reasons:[
+      "Las monedas antiguas suelen esconder secretos.",
+      "Un reloj detenido podría indicar algo.",
+      "Una tarjeta negra parece un objeto de acceso.",
+      "El símbolo puede contener una pista."
     ]
   },
 
   {
-    t: "Un portal aparece delante de ti. Solo puedes escoger un destino:",
-    o: [
-      "Una ciudad futurista",
-      "Un planeta desconocido",
-      "Una dimensión congelada",
-      "Una isla misteriosa"
+    text:"Un portal aparece delante de ti. Solo puedes escoger un destino:",
+    options:[
+      "🏙️ Ciudad futurista",
+      "🪐 Planeta desconocido",
+      "❄️ Dimensión congelada",
+      "🏝️ Isla misteriosa"
     ],
-    r: [
-      "La ciudad futurista podría tener tecnología avanzada.",
-      "Un planeta desconocido ofrece una aventura única.",
-      "La dimensión congelada puede esconder secretos.",
-      "Una isla misteriosa podría contener recursos."
+    reasons:[
+      "Una ciudad futurista puede tener tecnología útil.",
+      "Un planeta desconocido podría esconder grandes descubrimientos.",
+      "La dimensión congelada podría contener recursos únicos.",
+      "La isla misteriosa podría ocultar una salida."
     ]
   },
 
   {
-    t: "Una tormenta eléctrica se acerca y tienes que elegir dónde refugiarte:",
-    o: [
-      "Una cueva",
-      "Una casa abandonada",
-      "Un túnel",
-      "Un árbol gigante"
+    text:"Una tormenta eléctrica se acerca y tienes que elegir dónde refugiarte:",
+    options:[
+      "🕳️ Cueva",
+      "🏚️ Casa abandonada",
+      "🚇 Túnel",
+      "🌳 Árbol gigante"
     ],
-    r: [
-      "La cueva puede ofrecer protección contra la tormenta.",
-      "La casa puede tener recursos y refugio.",
-      "El túnel podría protegerte del clima.",
-      "El árbol es grande, pero puede atraer rayos."
+    reasons:[
+      "Una cueva puede protegerte de la lluvia.",
+      "Una casa ofrece mayor espacio.",
+      "Un túnel puede cubrirte completamente.",
+      "El árbol parece seguro, pero tiene riesgos."
     ]
   },
 
   {
-    t: "Encuentras una computadora antigua con cuatro archivos misteriosos:",
-    o: [
-      "Archivo secreto",
-      "Mapa desconocido",
-      "Registro de experimentos",
-      "Mensaje cifrado"
+    text:"Encuentras una computadora antigua con cuatro archivos misteriosos:",
+    options:[
+      "🔐 Archivo secreto",
+      "🗺️ Mapa desconocido",
+      "🧪 Registros de experimentos",
+      "💻 Mensaje cifrado"
     ],
-    r: [
+    reasons:[
       "El archivo secreto podría contener información importante.",
-      "El mapa puede revelar una ubicación desconocida.",
-      "Los experimentos podrían explicar lo ocurrido.",
-      "El mensaje cifrado puede esconder una pista."
+      "El mapa puede mostrar un lugar desconocido.",
+      "Los experimentos pueden explicar lo ocurrido.",
+      "El mensaje cifrado podría esconder una instrucción."
     ]
   },
 
   {
-    t: "Un tren futurista llega a una estación abandonada. Solo puedes subir a un vagón:",
-    o: [
-      "Vagón delantero",
-      "Vagón central",
-      "Vagón de carga",
-      "Último vagón"
+    text:"Un tren futurista llega a una estación abandonada. Solo puedes subir a un vagón:",
+    options:[
+      "🚆 Vagón delantero",
+      "🚆 Vagón central",
+      "📦 Vagón de carga",
+      "🚪 Último vagón"
     ],
-    r: [
-      "El vagón delantero permite estar cerca del control.",
-      "El centro puede ser una posición equilibrada.",
-      "La carga podría contener recursos.",
-      "El último vagón permite observar lo que queda atrás."
+    reasons:[
+      "El vagón delantero suele estar cerca del control.",
+      "El centro puede ofrecer más estabilidad.",
+      "El vagón de carga puede tener recursos.",
+      "El último vagón permite observar lo que ocurre detrás."
     ]
   },
 
   {
-    t: "Una puerta tiene cuatro códigos posibles y solo uno abre la salida:",
-    o: [
-      "1234",
-      "0000",
-      "7777",
-      "El código escrito en la pared"
+    text:"Una puerta tiene cuatro códigos posibles y solo uno abre la salida:",
+    options:[
+      "🔢 1234",
+      "🔢 0000",
+      "🔢 7777",
+      "🧱 El código escrito en la pared"
     ],
-    r: [
-      "1234 es fácil de recordar, pero demasiado obvio.",
-      "0000 es un código simple que podría ser una trampa.",
-      "7777 parece elegido deliberadamente.",
-      "La pista de la pared puede contener la respuesta."
+    reasons:[
+      "Los códigos simples son comunes.",
+      "0000 puede ser un código predeterminado.",
+      "7777 parece elegido intencionalmente.",
+      "La pared probablemente contiene una pista."
     ]
   },
 
   {
-    t: "Un dron te sigue desde el cielo. ¿Qué haces?",
-    o: [
-      "Intentar esconderte",
-      "Seguirlo",
-      "Intentar comunicarte",
-      "Continuar normalmente"
+    text:"Un dron te sigue desde el cielo. ¿Qué haces?",
+    options:[
+      "🙈 Esconderte",
+      "👣 Seguirlo",
+      "📡 Intentar comunicarte",
+      "🚶 Continuar normalmente"
     ],
-    r: [
-      "Esconderte evita que el dron siga detectándote.",
-      "Seguirlo podría llevarte hasta su origen.",
-      "Comunicarte puede revelar quién lo controla.",
-      "Continuar normalmente evita tomar una decisión precipitada."
+    reasons:[
+      "Esconderte evita llamar su atención.",
+      "Seguirlo puede revelar quién lo controla.",
+      "Comunicarse puede explicar la situación.",
+      "Continuar normalmente evita reaccionar impulsivamente."
     ]
   },
 
   {
-    t: "Debes escoger una herramienta para una misión:",
-    o: [
-      "Cuchillo multiusos",
-      "Cuerda resistente",
-      "Linterna potente",
-      "Martillo"
+    text:"Debes escoger una herramienta para una misión:",
+    options:[
+      "🛠️ Multiherramienta",
+      "🪢 Cuerda",
+      "🔦 Linterna potente",
+      "🔨 Martillo"
     ],
-    r: [
-      "El cuchillo puede servir para varias tareas.",
-      "La cuerda puede ayudarte a superar obstáculos.",
-      "La linterna permite explorar lugares oscuros.",
-      "El martillo puede romper o reparar objetos."
+    reasons:[
+      "Una multiherramienta sirve para muchas tareas.",
+      "La cuerda permite superar obstáculos.",
+      "La luz ayuda a explorar.",
+      "El martillo puede romper o construir."
     ]
   },
 
   {
-    t: "Llegas a una isla desconocida. ¿Qué zona exploras primero?",
-    o: [
-      "La playa",
-      "La jungla",
-      "La montaña",
-      "Las ruinas"
+    text:"Llegas a una isla desconocida. ¿Qué zona exploras primero?",
+    options:[
+      "🏖️ Playa",
+      "🌴 Selva",
+      "⛰️ Montaña",
+      "🏛️ Ruinas"
     ],
-    r: [
-      "La playa puede ofrecer una buena vista del entorno.",
-      "La jungla puede esconder recursos.",
-      "La montaña permite observar la isla desde arriba.",
-      "Las ruinas podrían revelar la historia del lugar."
+    reasons:[
+      "La playa permite revisar la zona de llegada.",
+      "La selva puede esconder recursos.",
+      "La montaña ofrece una vista amplia.",
+      "Las ruinas podrían contener respuestas."
     ]
   },
 
   {
-    t: "Tu nave espacial detecta una anomalía. ¿Qué sistema revisas primero?",
-    o: [
-      "Escudos",
-      "Motores",
-      "Cámaras",
-      "Navegación"
+    text:"Tu nave espacial detecta una anomalía. ¿Qué sistema revisas primero?",
+    options:[
+      "🛡️ Escudos",
+      "🚀 Motores",
+      "📹 Cámaras",
+      "🧭 Navegación"
     ],
-    r: [
-      "Los escudos protegen la nave.",
+    reasons:[
+      "Los escudos protegen frente a amenazas.",
       "Los motores son esenciales para escapar.",
-      "Las cámaras pueden mostrar qué está ocurriendo.",
-      "La navegación permite comprobar la ubicación."
+      "Las cámaras pueden mostrar el origen.",
+      "La navegación puede detectar cambios."
     ]
   },
 
   {
-    t: "Entras en una habitación con cuatro interruptores:",
-    o: [
-      "Interruptor rojo",
-      "Interruptor azul",
-      "Interruptor verde",
-      "Interruptor amarillo"
+    text:"Entras en una habitación con cuatro interruptores:",
+    options:[
+      "🔴 Rojo",
+      "🔵 Azul",
+      "🟢 Verde",
+      "🟡 Amarillo"
     ],
-    r: [
-      "El rojo puede activar un sistema importante.",
-      "El azul podría controlar la iluminación.",
-      "El verde puede activar una salida.",
-      "El amarillo podría activar una alarma."
+    reasons:[
+      "El rojo suele representar peligro o energía.",
+      "El azul puede representar seguridad.",
+      "El verde suele relacionarse con activación.",
+      "El amarillo podría ser una advertencia."
     ]
   },
 
   {
-    t: "Recibes un mensaje: 'Tienes 60 segundos'. ¿Qué haces?",
-    o: [
-      "Buscar información",
-      "Salir inmediatamente",
-      "Esperar",
-      "Preguntar qué está pasando"
+    text:"Recibes un mensaje: 'Tienes 60 segundos'. ¿Qué haces?",
+    options:[
+      "🔎 Buscar información",
+      "🏃 Salir",
+      "⏳ Esperar",
+      "📢 Preguntar"
     ],
-    r: [
-      "Buscar información puede revelar el peligro.",
-      "Salir evita perder tiempo.",
-      "Esperar permite observar antes de actuar.",
-      "Preguntar puede revelar información importante."
+    reasons:[
+      "La información puede revelar qué ocurre.",
+      "Salir elimina el riesgo.",
+      "Esperar puede revelar la verdadera intención.",
+      "Preguntar puede obtener una respuesta."
     ]
   },
 
   {
-    t: "Llegas a una ciudad evacuada. Solo queda un vehículo disponible:",
-    o: [
-      "Una motocicleta",
-      "Un automóvil",
-      "Un camión",
-      "Una bicicleta"
+    text:"Llegas a una ciudad evacuada. Solo queda un vehículo disponible:",
+    options:[
+      "🏍️ Motocicleta",
+      "🚗 Auto",
+      "🚚 Camión",
+      "🚲 Bicicleta"
     ],
-    r: [
-      "La motocicleta permite moverte rápidamente.",
-      "El automóvil ofrece protección y espacio.",
-      "El camión puede transportar muchos recursos.",
-      "La bicicleta no necesita combustible."
+    reasons:[
+      "La motocicleta es rápida y pequeña.",
+      "El auto ofrece protección.",
+      "El camión puede transportar recursos.",
+      "La bicicleta no depende de combustible."
     ]
   },
 
   {
-    t: "Encuentras un mapa con una X marcada. ¿Dónde investigas?",
-    o: [
-      "Un faro",
-      "Un búnker",
-      "Una torre",
-      "Un lago"
+    text:"Encuentras un mapa con una X marcada. ¿Dónde investigas?",
+    options:[
+      "🗼 Faro",
+      "🏢 Búnker",
+      "🗼 Torre",
+      "🌊 Lago"
     ],
-    r: [
-      "El faro puede contener señales o información.",
-      "El búnker podría guardar recursos.",
-      "La torre ofrece una posición elevada.",
-      "El lago podría esconder una entrada."
+    reasons:[
+      "El faro suele guardar lugares importantes.",
+      "Un búnker puede contener suministros.",
+      "La torre tiene buena visibilidad.",
+      "El lago podría ocultar algo."
     ]
   },
 
   {
-    t: "Una IA te ofrece cuatro niveles de acceso:",
-    o: [
-      "Acceso básico",
-      "Acceso avanzado",
-      "Acceso maestro",
-      "Acceso desconocido"
+    text:"Una IA te ofrece cuatro niveles de acceso:",
+    options:[
+      "🟢 Básico",
+      "🔵 Avanzado",
+      "🟣 Maestro",
+      "⚫ Desconocido"
     ],
-    r: [
-      "El acceso básico presenta menos riesgos.",
+    reasons:[
+      "El acceso básico es más seguro.",
       "El acceso avanzado permite más funciones.",
-      "El acceso maestro ofrece mayor control.",
-      "El acceso desconocido puede esconder información."
+      "El nivel maestro da mayor control.",
+      "El desconocido tiene el mayor misterio."
     ]
   },
 
   {
-    t: "Estás atrapado en un edificio y encuentras cuatro posibles salidas:",
-    o: [
-      "Las escaleras",
-      "El ascensor",
-      "Una ventana",
-      "La puerta trasera"
+    text:"Estás atrapado en un edificio y encuentras cuatro posibles salidas:",
+    options:[
+      "🪜 Escaleras",
+      "🛗 Ascensor",
+      "🪟 Ventana",
+      "🚪 Puerta trasera"
     ],
-    r: [
-      "Las escaleras permiten salir sin depender de electricidad.",
-      "El ascensor puede ser el camino más rápido.",
-      "La ventana podría ofrecer una ruta alternativa.",
-      "La puerta trasera puede ser una salida discreta."
+    reasons:[
+      "Las escaleras funcionan incluso sin electricidad.",
+      "El ascensor puede ser rápido.",
+      "La ventana ofrece una salida alternativa.",
+      "La puerta trasera suele ser menos visible."
     ]
   },
 
   {
-    t: "Encuentras una mochila abandonada. Solo puedes llevar uno de sus contenidos:",
-    o: [
-      "Comida",
-      "Agua",
-      "Herramientas",
-      "Medicinas"
+    text:"Encuentras una mochila abandonada. Solo puedes llevar uno de sus contenidos:",
+    options:[
+      "🍞 Comida",
+      "💧 Agua",
+      "🛠️ Herramientas",
+      "💊 Medicinas"
     ],
-    r: [
+    reasons:[
       "La comida proporciona energía.",
       "El agua es esencial.",
-      "Las herramientas permiten resolver problemas.",
-      "Las medicinas pueden ser útiles en una emergencia."
+      "Las herramientas sirven para muchas tareas.",
+      "Las medicinas pueden resultar críticas."
     ]
   },
 
   {
-    t: "Entras en un laboratorio abandonado. Hay cuatro cosas que investigar:",
-    o: [
-      "Un robot",
-      "Una planta desconocida",
-      "Una computadora",
-      "Una cápsula misteriosa"
+    text:"Entras en un laboratorio abandonado. Hay cuatro cosas que investigar:",
+    options:[
+      "🤖 Robot",
+      "🌿 Planta desconocida",
+      "💻 Computadora",
+      "🧪 Cápsula misteriosa"
     ],
-    r: [
-      "El robot podría contener información.",
+    reasons:[
+      "El robot podría guardar información.",
       "La planta puede ser parte del experimento.",
-      "La computadora puede guardar registros.",
-      "La cápsula podría contener algo importante."
+      "La computadora probablemente contiene registros.",
+      "La cápsula parece estar relacionada con el laboratorio."
     ]
   },
 
   {
-    t: "Un portal estará abierto durante pocos segundos:",
-    o: [
-      "Entrar",
-      "Observar",
-      "Lanzar un objeto",
-      "Cerrar el portal"
+    text:"Un portal estará abierto durante pocos segundos:",
+    options:[
+      "🚪 Entrar",
+      "👀 Observar",
+      "📦 Lanzar un objeto",
+      "❌ Cerrar el portal"
     ],
-    r: [
-      "Entrar permite descubrir directamente qué hay al otro lado.",
-      "Observar permite obtener información antes de decidir.",
-      "Lanzar un objeto puede revelar cómo funciona.",
-      "Cerrar el portal elimina el riesgo inmediato."
+    reasons:[
+      "Entrar podría ser la única oportunidad.",
+      "Observar primero permite obtener información.",
+      "Lanzar un objeto permite probar el portal.",
+      "Cerrar el portal elimina el riesgo."
     ]
   },
 
   {
-    t: "Necesitas un compañero para una misión peligrosa:",
-    o: [
-      "Un explorador",
-      "Un científico",
-      "Un guerrero",
-      "Un robot"
+    text:"Necesitas un compañero para una misión peligrosa:",
+    options:[
+      "🧭 Explorador",
+      "🔬 Científico",
+      "⚔️ Guerrero",
+      "🤖 Robot"
     ],
-    r: [
-      "El explorador puede encontrar rutas.",
-      "El científico puede analizar los problemas.",
-      "El guerrero puede proteger al equipo.",
+    reasons:[
+      "El explorador conoce caminos difíciles.",
+      "El científico puede analizar lo desconocido.",
+      "El guerrero aporta protección.",
       "El robot puede realizar tareas especiales."
     ]
   },
 
   {
-    t: "Una alarma suena en una base secreta:",
-    o: [
-      "Buscar el origen",
-      "Evacuar",
-      "Cerrar las puertas",
-      "Preparar la defensa"
+    text:"Una alarma suena en una base secreta:",
+    options:[
+      "🔎 Buscar el origen",
+      "🏃 Evacuar",
+      "🚪 Cerrar puertas",
+      "🛡️ Preparar defensa"
     ],
-    r: [
-      "Buscar el origen permite saber qué sucede.",
+    reasons:[
+      "Saber el origen permite entender el peligro.",
       "Evacuar reduce el riesgo.",
-      "Cerrar las puertas puede contener el problema.",
-      "Preparar la defensa permite responder a una amenaza."
+      "Cerrar puertas limita el acceso.",
+      "Preparar defensa ayuda si llega una amenaza."
     ]
   },
 
   {
-    t: "Aparecen cuatro caminos hacia otra dimensión:",
-    o: [
-      "Camino de cristal",
-      "Camino de fuego",
-      "Camino de hielo",
-      "Camino de sombras"
+    text:"Aparecen cuatro caminos hacia otra dimensión:",
+    options:[
+      "💎 Cristal",
+      "🔥 Fuego",
+      "❄️ Hielo",
+      "🌑 Sombras"
     ],
-    r: [
-      "El cristal parece estable y permite ver alrededor.",
-      "El fuego puede ser peligroso pero llamativo.",
-      "El hielo puede ocultar secretos.",
-      "Las sombras podrían llevar a un lugar desconocido."
+    reasons:[
+      "El cristal parece estable.",
+      "El fuego puede representar energía.",
+      "El hielo puede conservar secretos.",
+      "Las sombras esconden información."
     ]
   },
 
   {
-    t: "Encuentras un robot con una máquina especial:",
-    o: [
-      "Crear objetos",
-      "Reparar objetos",
-      "Copiar objetos",
-      "Destruir objetos"
+    text:"Encuentras un robot con una máquina especial:",
+    options:[
+      "🧱 Crear objetos",
+      "🔧 Reparar",
+      "📋 Copiar",
+      "💥 Destruir"
     ],
-    r: [
-      "Crear objetos puede proporcionar nuevos recursos.",
-      "Reparar objetos permite recuperar herramientas.",
-      "Copiar objetos puede aumentar tus recursos.",
-      "Destruir objetos puede eliminar obstáculos."
+    reasons:[
+      "Crear objetos ofrece nuevas posibilidades.",
+      "Reparar aumenta la utilidad de la máquina.",
+      "Copiar puede multiplicar recursos.",
+      "Destruir podría eliminar una amenaza."
     ]
   },
 
   {
-    t: "Una tormenta solar se acerca a una base espacial:",
-    o: [
-      "Activar los escudos",
-      "Apagar sistemas",
-      "Alejar la nave",
-      "Buscar refugio"
+    text:"Una tormenta solar se acerca a una base espacial:",
+    options:[
+      "🛡️ Activar escudos",
+      "⚡ Apagar sistemas",
+      "🚀 Mover la nave",
+      "🏠 Buscar refugio"
     ],
-    r: [
-      "Los escudos pueden proteger la base.",
-      "Apagar sistemas reduce el consumo de energía.",
-      "Alejar la nave puede evitar la tormenta.",
-      "El refugio ofrece protección directa."
+    reasons:[
+      "Los escudos protegen de radiación.",
+      "Apagar sistemas puede reducir daños.",
+      "Mover la nave puede evitar la tormenta.",
+      "Un refugio puede proteger al personal."
     ]
   },
 
   {
-    t: "En un mercado encuentras cuatro objetos imposibles:",
-    o: [
-      "Una brújula que apunta al peligro",
-      "Un reloj que detiene el tiempo durante 1 segundo",
-      "Una llave que abre cualquier puerta",
-      "Un mapa que cambia cada hora"
+    text:"En un mercado encuentras cuatro objetos imposibles:",
+    options:[
+      "🧭 Brújula que apunta al peligro",
+      "⏱️ Reloj que detiene el tiempo 1 segundo",
+      "🔑 Llave que abre cualquier puerta",
+      "🗺️ Mapa que cambia cada hora"
     ],
-    r: [
-      "La brújula puede advertir sobre peligros.",
-      "El reloj permite reaccionar en un momento crítico.",
-      "La llave puede abrir lugares inaccesibles.",
+    reasons:[
+      "La brújula permite detectar amenazas.",
+      "Un segundo puede ser suficiente para escapar.",
+      "Una llave universal tiene muchas utilidades.",
       "El mapa puede revelar información cambiante."
     ]
   },
 
   {
-    t: "Puedes elegir una habilidad especial:",
-    o: [
-      "Teletransportarte una vez",
-      "Ser invisible durante 1 minuto",
-      "Duplicar un objeto",
-      "Ver el futuro durante 10 segundos"
+    text:"Puedes elegir una habilidad especial:",
+    options:[
+      "🌀 Teletransportarte una vez",
+      "👻 Ser invisible durante 1 minuto",
+      "📦 Duplicar un objeto",
+      "🔮 Ver el futuro durante 10 segundos"
     ],
-    r: [
-      "El teletransporte permite escapar o llegar a otro lugar.",
-      "La invisibilidad permite pasar sin ser detectado.",
-      "Duplicar un objeto puede aumentar tus recursos.",
-      "Ver el futuro permite anticipar una situación."
+    reasons:[
+      "El teletransporte permite escapar.",
+      "La invisibilidad facilita infiltrarse.",
+      "Duplicar objetos ofrece recursos adicionales.",
+      "Ver el futuro permite anticiparse."
     ]
   },
 
   {
-    t: "Debes entrar en una base enemiga. Elige una entrada:",
-    o: [
-      "Entrada principal",
-      "Túnel subterráneo",
-      "Techo",
-      "Entrada de mantenimiento"
+    text:"Debes entrar en una base enemiga. Elige una entrada:",
+    options:[
+      "🚪 Entrada principal",
+      "🕳️ Túnel subterráneo",
+      "🏢 Techo",
+      "🔧 Mantenimiento"
     ],
-    r: [
-      "La entrada principal es directa pero visible.",
-      "El túnel puede permitir una entrada discreta.",
-      "El techo puede ofrecer una ruta inesperada.",
-      "Mantenimiento puede tener menos vigilancia."
+    reasons:[
+      "La entrada principal es directa.",
+      "El túnel puede ser menos vigilado.",
+      "El techo ofrece un acceso alternativo.",
+      "Mantenimiento puede llevar al interior."
     ]
   },
 
   {
-    t: "Una IA te permite mejorar un sistema. ¿Qué eliges?",
-    o: [
-      "Velocidad",
-      "Seguridad",
-      "Memoria",
-      "Comunicación"
+    text:"Una IA te permite mejorar un sistema. ¿Qué eliges?",
+    options:[
+      "⚡ Velocidad",
+      "🔒 Seguridad",
+      "🧠 Memoria",
+      "📡 Comunicación"
     ],
-    r: [
-      "La velocidad permite procesar tareas rápidamente.",
+    reasons:[
+      "La velocidad mejora el rendimiento.",
       "La seguridad protege el sistema.",
-      "La memoria permite conservar más información.",
-      "La comunicación facilita la conexión con otros sistemas."
+      "La memoria aumenta la capacidad.",
+      "La comunicación permite conectar recursos."
     ]
   },
 
   {
-    t: "Llegas a una ciudad futurista. ¿Qué zona visitas?",
-    o: [
-      "Distrito tecnológico",
-      "Zona residencial",
-      "Centro de energía",
-      "Sector desconocido"
+    text:"Llegas a una ciudad futurista. ¿Qué zona visitas?",
+    options:[
+      "💻 Distrito tecnológico",
+      "🏠 Zona residencial",
+      "⚡ Centro energético",
+      "❓ Sector desconocido"
     ],
-    r: [
-      "El distrito tecnológico puede tener tecnología avanzada.",
-      "La zona residencial puede ofrecer recursos.",
-      "El centro de energía puede revelar cómo funciona la ciudad.",
-      "El sector desconocido puede esconder secretos."
+    reasons:[
+      "La tecnología puede ofrecer información.",
+      "La zona residencial podría estar abandonada.",
+      "La energía es fundamental para la ciudad.",
+      "Lo desconocido puede contener algo especial."
     ]
   },
 
   {
-    t: "Una criatura misteriosa bloquea tu camino:",
-    o: [
-      "Pasar rápidamente",
-      "Buscar otra ruta",
-      "Intentar comunicarte",
-      "Esperar y observar"
+    text:"Una criatura misteriosa bloquea tu camino:",
+    options:[
+      "🏃 Pasar rápidamente",
+      "🛣️ Buscar otra ruta",
+      "🗣️ Comunicarte",
+      "👀 Esperar y observar"
     ],
-    r: [
-      "Pasar rápidamente evita quedarse expuesto.",
-      "Otra ruta puede reducir el riesgo.",
-      "Comunicarte podría revelar sus intenciones.",
-      "Observar permite conocer su comportamiento."
+    reasons:[
+      "Actuar rápido reduce el tiempo de exposición.",
+      "Otra ruta evita el enfrentamiento.",
+      "Tal vez la criatura no sea hostil.",
+      "Observar permite comprender su comportamiento."
     ]
   },
 
   {
-    t: "Encuentras un vehículo abandonado. Solo puedes tomar un objeto:",
-    o: [
-      "Combustible",
-      "Comida",
-      "Herramientas",
-      "Equipo de comunicación"
+    text:"Encuentras un vehículo abandonado. Solo puedes tomar un objeto:",
+    options:[
+      "⛽ Combustible",
+      "🍖 Comida",
+      "🛠️ Herramientas",
+      "📡 Equipo de comunicación"
     ],
-    r: [
-      "El combustible puede permitir usar el vehículo.",
-      "La comida proporciona energía.",
-      "Las herramientas permiten reparar cosas.",
-      "La comunicación puede permitir pedir ayuda."
+    reasons:[
+      "El combustible puede hacer funcionar otros vehículos.",
+      "La comida ayuda a sobrevivir.",
+      "Las herramientas resuelven problemas.",
+      "La comunicación permite pedir ayuda."
     ]
   },
 
   {
-    t: "Encuentras una puerta secreta en una habitación:",
-    o: [
-      "Abrirla",
-      "Buscar el mecanismo",
-      "Escuchar detrás",
-      "Ignorarla"
+    text:"Encuentras una puerta secreta en una habitación:",
+    options:[
+      "🚪 Abrir",
+      "🔎 Buscar mecanismo",
+      "👂 Escuchar detrás",
+      "🚶 Ignorar"
     ],
-    r: [
-      "Abrirla permite descubrir directamente qué hay detrás.",
-      "Buscar el mecanismo puede revelar cómo funciona.",
-      "Escuchar permite obtener información sin abrirla.",
-      "Ignorarla evita entrar en una situación desconocida."
+    reasons:[
+      "Abrir directamente puede descubrir el secreto.",
+      "Buscar el mecanismo puede evitar una trampa.",
+      "Escuchar proporciona información.",
+      "Ignorarla elimina el riesgo."
     ]
   },
 
   {
-    t: "Tienes que elegir una base para comenzar una nueva aventura:",
-    o: [
-      "Una isla",
-      "Una ciudad",
-      "Una montaña",
-      "Una estación espacial"
+    text:"Tienes que elegir una base para comenzar una nueva aventura:",
+    options:[
+      "🏝️ Isla",
+      "🏙️ Ciudad",
+      "⛰️ Montaña",
+      "🛰️ Estación espacial"
     ],
-    r: [
-      "La isla ofrece aislamiento y exploración.",
-      "La ciudad ofrece muchos recursos y posibilidades.",
-      "La montaña proporciona una posición elevada.",
-      "La estación espacial permite explorar el espacio."
+    reasons:[
+      "Una isla ofrece aislamiento.",
+      "Una ciudad ofrece muchos recursos.",
+      "La montaña proporciona una posición estratégica.",
+      "Una estación espacial ofrece tecnología."
     ]
   }
 
 ];
 
-/* =========================================================
-   SCROLL INTELIGENTE
-========================================================= */
-```
-
-**Importante:** reemplaza tu bloque actual de `ESCENARIOS` completo por este. No pegues otro `const scenarios = [` debajo, porque quedaría duplicado.
-
 
 /* =========================================================
-   SCROLL INTELIGENTE
+   FUNCIONES AUXILIARES
 ========================================================= */
 
-function scrollToElement(
-  id,
-  block="start"
-){
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
-  const element=
-    document.getElementById(id);
+function scrollToElement(id, behavior="smooth"){
+  const element = document.getElementById(id);
 
-  if(!element)return;
+  if(!element) return;
 
-  setTimeout(()=>{
+  element.scrollIntoView({
+    behavior,
+    block:"start"
+  });
+}
 
-    element.scrollIntoView({
-      behavior:"smooth",
-      block:block
-    });
+function updateBoard(){
+  const aiScore = document.getElementById("aiScore");
+  const playerScore = document.getElementById("playerScore");
+  const roundStat = document.getElementById("roundStat");
+  const winsStat = document.getElementById("winsStat");
+  const bestStat = document.getElementById("bestStat");
+  const streakLabel = document.getElementById("streakLabel");
 
-  },80);
+  if(aiScore) aiScore.textContent = game.ai;
+  if(playerScore) playerScore.textContent = game.me;
+  if(roundStat) roundStat.textContent = game.round;
+  if(winsStat) winsStat.textContent = game.wins;
+  if(bestStat) bestStat.textContent = game.best;
+
+  if(streakLabel){
+    streakLabel.textContent = "🔥 Racha: " + game.streak;
+  }
 }
 
 
@@ -2684,32 +1983,27 @@ function scrollToElement(
    NAVEGACIÓN
 ========================================================= */
 
-function showPage(id,btn){
+function showPage(id, btn=null){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.remove("active");
+  });
 
-  const page=
-    document.getElementById(id);
+  const page = document.getElementById(id);
 
   if(page){
     page.classList.add("active");
   }
 
-  document
-    .querySelectorAll(".tab")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.classList.remove("active");
+  });
 
   if(btn){
     btn.classList.add("active");
   }
 
-  if(id==="historial"){
+  if(id === "historial"){
     renderHistory();
   }
 
@@ -2721,26 +2015,22 @@ function showPage(id,btn){
 
 
 /* =========================================================
-   INICIAR PARTIDA
+   START GAME
 ========================================================= */
 
 function startGame(){
 
   initAudio();
 
-  playStartSound();
+  const nameInput = document.getElementById("playerName");
 
-  game={
+  const enteredName = nameInput
+    ? nameInput.value.trim()
+    : "";
 
+  game = {
     active:true,
-
-    name:
-      document
-        .getElementById("playerName")
-        .value
-        .trim() ||
-      "Jugador",
-
+    name:enteredName || "Jugador",
     ai:0,
     me:0,
     round:0,
@@ -2751,37 +2041,33 @@ function startGame(){
     selected:null,
     aiIndex:null,
     judged:false,
-    saved:false
+    saved:false,
+    lastScenarioIndex:-1
   };
 
-  document
-    .getElementById("startCard")
-    .classList.add("hidden");
+  document.getElementById("startCard").classList.add("hidden");
+  document.getElementById("finishedCard").classList.add("hidden");
+  document.getElementById("gameArea").classList.remove("hidden");
 
-  document
-    .getElementById("finishedCard")
-    .classList.add("hidden");
+  const playerLabel = document.getElementById("playerLabel");
 
-  document
-    .getElementById("gameArea")
-    .classList.remove("hidden");
+  if(playerLabel){
+    playerLabel.textContent = "🧑 " + game.name.toUpperCase();
+  }
 
-  document
-    .getElementById("playerLabel")
-    .textContent=
-      game.name.toUpperCase();
+  const endBtn = document.getElementById("endGameBtn");
 
-  document
-    .getElementById("endGameBtn")
-    .disabled=false;
+  if(endBtn){
+    endBtn.disabled = false;
+  }
+
+  updateBoard();
 
   nextRound(true);
 
-  /* Llevar al usuario directamente al juego */
-  scrollToElement(
-    "gameArea",
-    "start"
-  );
+  playStartSound();
+
+  scrollToElement("gameArea");
 }
 
 
@@ -2789,195 +2075,147 @@ function startGame(){
    SIGUIENTE RONDA
 ========================================================= */
 
-function nextRound(
-  fromStart=false
-){
+function nextRound(initial=false){
 
-  if(!game.active)return;
+  if(!game.active){
+    return;
+  }
 
-  if(
-    game.ai>=20 ||
-    game.me>=20
-  ){
-
+  if(game.me >= 20 || game.ai >= 20){
     finishGame();
     return;
   }
 
-  if(!fromStart){
-    playNextSound();
-  }
-
   game.round++;
+  game.selected = null;
+  game.judged = false;
 
-  game.selected=null;
-
-  game.judged=false;
-
-  /* Evitar repetir escenario inmediatamente */
-  let newScenario;
+  let index;
 
   do{
-
-    newScenario=
-      scenarios[
-        Math.floor(
-          Math.random()*
-          scenarios.length
-        )
-      ];
-
+    index = Math.floor(Math.random() * scenarios.length);
   }while(
-    scenarios.length>1 &&
-    game.scenario &&
-    newScenario===game.scenario
+    scenarios.length > 1 &&
+    index === game.lastScenarioIndex
   );
 
-  game.scenario=
-    newScenario;
+  game.lastScenarioIndex = index;
+  game.scenario = scenarios[index];
 
-  const s=
-    game.scenario;
-
-  game.aiIndex=
-    Math.floor(
-      Math.random()*
-      s.o.length
-    );
-
-  document
-    .getElementById("roundNumber")
-    .textContent=
-      game.round;
-
-  document
-    .getElementById("scenarioText")
-    .textContent=
-      s.t;
-
-  document
-    .getElementById("phaseTitle")
-    .textContent=
-      "FASE 1 — CREACIÓN / FASE 2 — DECISIÓN";
-
-  const box=
-    document.getElementById("options");
-
-  box.innerHTML="";
-
-  s.o.forEach(
-    (x,i)=>{
-
-      const b=
-        document.createElement("button");
-
-      b.type="button";
-
-      b.className="option";
-
-      b.textContent=
-        (i+1)+". "+x;
-
-      b.onclick=()=>{
-        selectPlayer(i,b);
-      };
-
-      box.appendChild(b);
-
-    }
+  game.aiIndex = Math.floor(
+    Math.random() * game.scenario.options.length
   );
 
-  document
-    .getElementById("aiBox")
-    .classList
-    .remove("hidden");
+  const scenarioText = document.getElementById("scenarioText");
+  const roundLabel = document.getElementById("roundLabel");
+  const optionsContainer = document.getElementById("options");
 
-  document
-    .getElementById("aiChoice")
-    .textContent=
-      "“"+
-      s.o[game.aiIndex]+
-      "”";
+  if(scenarioText){
+    scenarioText.textContent = game.scenario.text;
+  }
 
-  document
-    .getElementById("aiReason")
-    .textContent=
-      "Razón: "+
-      s.r[game.aiIndex];
+  if(roundLabel){
+    roundLabel.textContent = "Ronda " + game.round;
+  }
 
-  document
-    .getElementById("playerBox")
-    .classList
-    .remove("hidden");
+  if(optionsContainer){
 
-  document
-    .getElementById("judgeBox")
-    .classList
-    .add("hidden");
+    optionsContainer.innerHTML = "";
 
-  document
-    .getElementById("roundResult")
-    .classList
-    .add("hidden");
+    game.scenario.options.forEach((option,index)=>{
 
-  document
-    .getElementById("nextRound")
-    .classList
-    .add("hidden");
+      const btn = document.createElement("button");
 
-  document
-    .getElementById("nextRound")
-    .textContent=
-      "➡️ SIGUIENTE RONDA";
+      btn.type = "button";
+      btn.className = "option-btn";
+      btn.textContent = option;
+      btn.dataset.index = String(index);
 
-  document
-    .getElementById("nextRound")
-    .onclick=
-      nextRound;
+      btn.addEventListener("click",()=>{
+        selectPlayer(index);
+      });
 
-  document
-    .getElementById("confirmChoice")
-    .disabled=true;
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  const aiChoice = document.getElementById("aiChoice");
+  const aiReason = document.getElementById("aiReason");
+
+  if(aiChoice){
+    aiChoice.textContent =
+      game.scenario.options[game.aiIndex];
+  }
+
+  if(aiReason){
+    aiReason.textContent =
+      game.scenario.reasons[game.aiIndex];
+  }
+
+  document.getElementById("playerChoiceText").textContent =
+    "Todavía no has elegido.";
+
+  document.getElementById("confirmBtn").disabled = true;
+  document.getElementById("judgeBox").classList.add("hidden");
+  document.getElementById("resultBox").classList.add("hidden");
+  document.getElementById("nextRoundBtn").classList.add("hidden");
 
   updateBoard();
 
-  /* Llevar al nuevo escenario,
-     nunca a top:0 de toda la página. */
-  scrollToElement(
-    "gameArea",
-    "start"
-  );
+  if(!initial){
+    scrollToElement("gameArea");
+  }
 }
 
 
 /* =========================================================
-   ELEGIR OPCIÓN
+   ELECCIÓN DEL JUGADOR
 ========================================================= */
 
-function selectPlayer(i,b){
+function selectPlayer(index){
+
+  if(!game.active){
+    return;
+  }
+
+  if(game.judged){
+    return;
+  }
+
+  if(!game.scenario){
+    return;
+  }
 
   if(
-    !game.active ||
-    game.judged
+    index < 0 ||
+    index >= game.scenario.options.length
   ){
     return;
   }
 
-  game.selected=i;
+  game.selected = index;
 
-  document
-    .querySelectorAll(
-      "#options .option"
-    )
-    .forEach(
-      x=>x.classList.remove("selected")
+  document.querySelectorAll(".option-btn").forEach((btn,i)=>{
+    btn.classList.toggle(
+      "selected",
+      i === index
     );
+  });
 
-  b.classList.add("selected");
+  const playerChoiceText =
+    document.getElementById("playerChoiceText");
 
-  document
-    .getElementById("confirmChoice")
-    .disabled=false;
+  if(playerChoiceText){
+    playerChoiceText.textContent =
+      game.scenario.options[index];
+  }
+
+  const confirmBtn =
+    document.getElementById("confirmBtn");
+
+  if(confirmBtn){
+    confirmBtn.disabled = false;
+  }
 
   playSelectSound();
 }
@@ -2989,243 +2227,136 @@ function selectPlayer(i,b){
 
 function confirmPlayerChoice(){
 
-  if(
-    !game.active ||
-    game.selected===null
-  ){
+  if(!game.active){
     return;
   }
 
-  document
-    .querySelectorAll(
-      "#options .option"
-    )
-    .forEach(
-      (b,i)=>{
-
-        b.disabled=true;
-
-        if(
-          i===game.aiIndex
-        ){
-          b.classList.add(
-            "ai-choice"
-          );
-        }
-
-      }
-    );
-
-  document
-    .getElementById("confirmChoice")
-    .disabled=true;
-
-  document
-    .getElementById("judgeBox")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("roundResult")
-    .classList
-    .remove("hidden");
-
-  document
-    .getElementById("roundResult")
-    .textContent=
-      "Tu elección: “"+
-      game.scenario.o[
-        game.selected
-      ]+
-      "”. Ahora decide quién merece el punto.";
-
-  /* Llevar directamente al juez */
-  scrollToElement(
-    "judgeBox",
-    "center"
-  );
-}
-
-
-/* =========================================================
-   DAR PUNTO
-========================================================= */
-
-function awardPoint(who){
-
-  if(
-    !game.active ||
-    game.judged
-  ){
+  if(game.selected === null){
     return;
   }
 
-  game.judged=true;
-
-  if(who==="me"){
-
-    game.me++;
-
-    game.streak++;
-
-    game.wins++;
-
-    game.best=
-      Math.max(
-        game.best,
-        game.streak
-      );
-
-    document
-      .getElementById("roundResult")
-      .innerHTML=
-        "🏆 <b>"+
-        escapeHtml(game.name)+
-        " gana el punto.</b> ¡Buena elección!";
-
-    playWinSound();
-
-  }else{
-
-    game.ai++;
-
-    game.streak=0;
-
-    document
-      .getElementById("roundResult")
-      .innerHTML=
-        "🤖 <b>La IA gana el punto.</b> Tu racha se reinicia.";
-
-    playLoseSound();
+  if(game.judged){
+    return;
   }
 
-  document
-    .getElementById("judgeBox")
-    .classList
-    .add("hidden");
+  document.querySelectorAll(".option-btn").forEach(btn=>{
+    btn.disabled = true;
+  });
 
-  updateBoard();
-
-  if(
-    game.ai>=20 ||
-    game.me>=20
-  ){
-
-    const next=
-      document.getElementById(
-        "nextRound"
-      );
-
-    next.textContent=
-      "🏁 Ver resultado";
-
-    next.onclick=
-      finishGame;
-
-    next.classList
-      .remove("hidden");
-
-    scrollToElement(
-      "roundResult",
-      "center"
-    );
-
-  }else{
-
-    const next=
-      document.getElementById(
-        "nextRound"
-      );
-
-    next.textContent=
-      "➡️ SIGUIENTE RONDA";
-
-    next.onclick=
-      nextRound;
-
-    next.classList
-      .remove("hidden");
-
-    /* Llevar al botón siguiente */
-    scrollToElement(
-      "nextRound",
-      "center"
-    );
-  }
+  document.getElementById("confirmBtn").disabled = true;
+  document.getElementById("judgeBox").classList.remove("hidden");
+  document.getElementById("aiDecision").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
 }
 
 
 /* =========================================================
-   TABLERO
+   OTORGAR PUNTO
 ========================================================= */
 
-function updateBoard(){
-
-  document
-    .getElementById("aiScore")
-    .textContent=
-      game.ai;
-
-  document
-    .getElementById("playerScore")
-    .textContent=
-      game.me;
-
-  document
-    .getElementById("aiProgress")
-    .style.width=
-      Math.min(
-        game.ai/20*100,
-        100
-      )+
-      "%";
-
-  document
-    .getElementById("playerProgress")
-    .style.width=
-      Math.min(
-        game.me/20*100,
-        100
-      )+
-      "%";
-
-  document
-    .getElementById("streak")
-    .textContent=
-      game.streak;
-
-  document
-    .getElementById("statRounds")
-    .textContent=
-      game.round;
-
-  document
-    .getElementById("statWins")
-    .textContent=
-      game.wins;
-
-  document
-    .getElementById("statBestStreak")
-    .textContent=
-      game.best;
-}
-
-
-/* =========================================================
-   TERMINAR PARTIDA
-========================================================= */
-
-function endGame(){
+function awardPoint(winner){
 
   if(!game.active){
     return;
   }
 
-  const confirmar=
-    confirm(
-      "¿Seguro que quieres terminar la partida?\n\n"+
-      "Tu resultado actual se guardará en el historial."
-    );
+  if(game.judged){
+    return;
+  }
+
+  if(winner !== "ai" && winner !== "me"){
+    return;
+  }
+
+  game.judged = true;
+
+  const judgeAiBtn =
+    document.getElementById("judgeAiBtn");
+
+  const judgePlayerBtn =
+    document.getElementById("judgePlayerBtn");
+
+  if(judgeAiBtn) judgeAiBtn.disabled = true;
+  if(judgePlayerBtn) judgePlayerBtn.disabled = true;
+
+  let title = "";
+  let detail = "";
+
+  if(winner === "ai"){
+
+    game.ai++;
+    game.streak = 0;
+
+    title = "🤖 Punto para la IA";
+    detail =
+      "La IA recibe el punto en esta ronda.";
+
+  }else{
+
+    game.me++;
+    game.wins++;
+    game.streak++;
+
+    if(game.streak > game.best){
+      game.best = game.streak;
+    }
+
+    title = "🧑 Punto para ti";
+    detail =
+      "Has ganado esta ronda. 🔥 Racha actual: " +
+      game.streak;
+
+  }
+
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultDetail").textContent = detail;
+  document.getElementById("resultBox").classList.remove("hidden");
+  document.getElementById("judgeBox").classList.add("hidden");
+
+  updateBoard();
+
+  playPointSound();
+
+  const nextBtn =
+    document.getElementById("nextRoundBtn");
+
+  if(game.me >= 20 || game.ai >= 20){
+
+    if(nextBtn){
+      nextBtn.textContent = "🏁 VER RESULTADO";
+      nextBtn.classList.remove("hidden");
+    }
+
+  }else{
+
+    if(nextBtn){
+      nextBtn.textContent = "➡️ SIGUIENTE RONDA";
+      nextBtn.classList.remove("hidden");
+    }
+
+  }
+
+  scrollToElement("resultBox");
+}
+
+
+/* =========================================================
+   TERMINAR PARTIDA
+   CORREGIDO
+========================================================= */
+
+function endGame(){
+
+  if(!game || !game.active){
+    return;
+  }
+
+  const confirmar = window.confirm(
+    "¿Seguro que quieres terminar la partida?\n\n" +
+    "Tu resultado actual se guardará en el historial."
+  );
 
   if(!confirmar){
     return;
@@ -3233,107 +2364,91 @@ function endGame(){
 
   playEndSound();
 
-  finishGame();
+  finishGame(true);
 }
 
 
 /* =========================================================
-   FINALIZAR
+   FINALIZAR PARTIDA
 ========================================================= */
 
-function finishGame(){
+function finishGame(manual=false){
 
-  if(!game.active){
+  if(!game || !game.active){
     return;
   }
 
-  game.active=false;
+  game.active = false;
 
   let title;
   let icon;
 
-  if(game.me>=20){
-
-    title="👑 ¡TÚ GANASTE!";
-    icon="🏆";
-
-  }else if(game.ai>=20){
-
-    title="🤖 LA IA GANÓ";
-    icon="🤖";
-
+  if(game.me >= 20){
+    title = "👑 ¡TÚ GANASTE!";
+    icon = "🏆";
+  }else if(game.ai >= 20){
+    title = "🤖 LA IA GANÓ";
+    icon = "🤖";
   }else{
-
-    title="🎮 PARTIDA TERMINADA";
-    icon="🛑";
+    title = "🎮 PARTIDA TERMINADA";
+    icon = "🛑";
   }
 
-  document
-    .getElementById("finishIcon")
-    .textContent=
-      icon;
+  document.getElementById("finishIcon").textContent = icon;
+  document.getElementById("finishTitle").textContent = title;
 
-  document
-    .getElementById("finishTitle")
-    .textContent=
-      title;
+  let endMessage = manual
+    ? "La partida fue terminada manualmente."
+    : "La partida llegó a su final.";
 
-  document
-    .getElementById("finishText")
-    .innerHTML=
-      "<b>"+
-      escapeHtml(game.name)+
-      "</b>: "+
-      game.me+
-      " puntos · <b>IA</b>: "+
-      game.ai+
-      " puntos<br>"+
-      "Rondas jugadas: "+
-      game.round+
-      " · Racha máxima: "+
-      game.best;
+  document.getElementById("finishText").innerHTML =
+    "<b>" + escapeHtml(game.name) + "</b>: " +
+    game.me +
+    " puntos · <b>IA</b>: " +
+    game.ai +
+    " puntos<br>" +
+    "Rondas jugadas: " +
+    game.round +
+    " · Racha máxima: " +
+    game.best +
+    "<br><br>" +
+    escapeHtml(endMessage);
 
-  document
-    .getElementById("gameArea")
-    .classList
-    .add("hidden");
+  document.getElementById("gameArea").classList.add("hidden");
+  document.getElementById("finishedCard").classList.remove("hidden");
 
-  document
-    .getElementById("finishedCard")
-    .classList
-    .remove("hidden");
+  const endBtn =
+    document.getElementById("endGameBtn");
+
+  if(endBtn){
+    endBtn.disabled = true;
+  }
 
   saveHistory();
 
-  scrollToElement(
-    "finishedCard",
-    "start"
-  );
+  scrollToElement("finishedCard");
 }
 
 
 /* =========================================================
-   NUEVA PARTIDA
+   VOLVER AL INICIO
 ========================================================= */
 
 function resetToStart(){
 
-  document
-    .getElementById("gameArea")
-    .classList
-    .add("hidden");
+  game.active = false;
 
-  document
-    .getElementById("finishedCard")
-    .classList
-    .add("hidden");
+  document.getElementById("gameArea").classList.add("hidden");
+  document.getElementById("finishedCard").classList.add("hidden");
+  document.getElementById("startCard").classList.remove("hidden");
 
-  document
-    .getElementById("startCard")
-    .classList
-    .remove("hidden");
+  document.getElementById("endGameBtn").disabled = false;
 
-  game.active=false;
+  document.querySelectorAll(".option-btn").forEach(btn=>{
+    btn.disabled = false;
+  });
+
+  document.getElementById("playerName").focus();
 
   window.scrollTo({
     top:0,
@@ -3346,167 +2461,309 @@ function resetToStart(){
    HISTORIAL
 ========================================================= */
 
+const HISTORY_KEY = "elige_pierde_history";
+
 function saveHistory(){
 
   if(game.saved){
     return;
   }
 
-  game.saved=true;
-
-  const h=
-    JSON.parse(
-      localStorage.getItem(
-        "elige_pierde_history"
-      ) ||
-      "[]"
-    );
-
-  h.unshift({
-
+  const data = {
     name:game.name,
-
     me:game.me,
-
     ai:game.ai,
-
-    rounds:game.round,
-
+    round:game.round,
     best:game.best,
+    date:new Date().toLocaleString("es-CO")
+  };
 
-    date:
-      new Date()
-        .toLocaleString("es-CO")
+  let history = [];
 
-  });
+  try{
+    history = JSON.parse(
+      localStorage.getItem(HISTORY_KEY) || "[]"
+    );
+  }catch(error){
+    history = [];
+  }
 
-  localStorage.setItem(
-    "elige_pierde_history",
-    JSON.stringify(
-      h.slice(0,30)
-    )
-  );
+  if(!Array.isArray(history)){
+    history = [];
+  }
+
+  history.unshift(data);
+
+  history = history.slice(0,30);
+
+  try{
+    localStorage.setItem(
+      HISTORY_KEY,
+      JSON.stringify(history)
+    );
+  }catch(error){
+    console.warn("No se pudo guardar el historial:",error);
+  }
+
+  game.saved = true;
 }
-
-
-/* =========================================================
-   MOSTRAR HISTORIAL
-========================================================= */
 
 function renderHistory(){
 
-  const h=
-    JSON.parse(
-      localStorage.getItem(
-        "elige_pierde_history"
-      ) ||
-      "[]"
-    );
+  const body = document.getElementById("historyBody");
+  const empty = document.getElementById("historyEmpty");
 
-  const el=
-    document.getElementById(
-      "historyTable"
-    );
-
-  if(!h.length){
-
-    el.innerHTML=
-      '<div class="empty">'+
-      'Todavía no hay partidas guardadas.'+
-      '</div>';
-
+  if(!body || !empty){
     return;
   }
 
-  el.innerHTML=
-    '<div style="overflow:auto">'+
+  let history = [];
 
-    '<table>'+
+  try{
+    history = JSON.parse(
+      localStorage.getItem(HISTORY_KEY) || "[]"
+    );
+  }catch(error){
+    history = [];
+  }
 
-    '<thead>'+
-    '<tr>'+
-    '<th>Jugador</th>'+
-    '<th>Resultado</th>'+
-    '<th>Rondas</th>'+
-    '<th>Racha</th>'+
-    '<th>Fecha</th>'+
-    '</tr>'+
-    '</thead>'+
+  if(!Array.isArray(history)){
+    history = [];
+  }
 
-    '<tbody>'+
+  body.innerHTML = "";
 
-    h.map(
-      x=>
+  if(history.length === 0){
 
-      `<tr>
-        <td>${escapeHtml(x.name)}</td>
-        <td>🧑 ${x.me} — 🤖 ${x.ai}</td>
-        <td>${x.rounds}</td>
-        <td>🔥 ${x.best}</td>
-        <td>${escapeHtml(x.date)}</td>
-      </tr>`
+    empty.classList.remove("hidden");
+    return;
 
-    ).join("")+
+  }
 
-    '</tbody>'+
+  empty.classList.add("hidden");
 
-    '</table>'+
+  history.forEach(item=>{
 
-    '</div>';
+    const row = document.createElement("tr");
+
+    let resultText = "";
+
+    if(item.me > item.ai){
+      resultText = "🧑 " + item.me + " - " + item.ai;
+    }else if(item.ai > item.me){
+      resultText = "🤖 " + item.ai + " - " + item.me;
+    }else{
+      resultText = "⚖️ " + item.me + " - " + item.ai;
+    }
+
+    row.innerHTML = `
+      <td>${escapeHtml(item.name || "Jugador")}</td>
+      <td>${escapeHtml(resultText)}</td>
+      <td>${Number(item.round) || 0}</td>
+      <td>🔥 ${Number(item.best) || 0}</td>
+      <td>${escapeHtml(item.date || "-")}</td>
+    `;
+
+    body.appendChild(row);
+  });
 }
-
-
-/* =========================================================
-   BORRAR HISTORIAL
-========================================================= */
 
 function clearHistory(){
 
-  if(
-    confirm(
-      "¿Borrar todo el historial de este navegador?"
-    )
-  ){
+  const confirmClear = window.confirm(
+    "¿Seguro que quieres borrar todo el historial?"
+  );
 
-    localStorage.removeItem(
-      "elige_pierde_history"
+  if(!confirmClear){
+    return;
+  }
+
+  try{
+    localStorage.removeItem(HISTORY_KEY);
+  }catch(error){
+    console.warn("No se pudo borrar el historial:",error);
+  }
+
+  renderHistory();
+}
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  /* Sonido */
+  updateSoundButton();
+
+  /* Pestañas */
+  document.querySelectorAll(".tab").forEach(tab=>{
+
+    tab.addEventListener("click",()=>{
+
+      const pageId = tab.dataset.page;
+
+      showPage(pageId,tab);
+    });
+
+  });
+
+  /* Botón iniciar */
+  const startBtn =
+    document.getElementById("startBtn");
+
+  if(startBtn){
+    startBtn.addEventListener(
+      "click",
+      startGame
+    );
+  }
+
+  /* Sonido */
+  const soundBtn =
+    document.getElementById("soundBtn");
+
+  if(soundBtn){
+
+    soundBtn.addEventListener("click",()=>{
+
+      soundEnabled = !soundEnabled;
+
+      localStorage.setItem(
+        "elige_sound",
+        soundEnabled ? "on" : "off"
+      );
+
+      updateSoundButton();
+
+      if(soundEnabled){
+        initAudio();
+        beep(600,.08,"triangle");
+      }
+
+    });
+
+  }
+
+  /* Confirmar */
+  const confirmBtn =
+    document.getElementById("confirmBtn");
+
+  if(confirmBtn){
+    confirmBtn.addEventListener(
+      "click",
+      confirmPlayerChoice
+    );
+  }
+
+  /* Punto IA */
+  const judgeAiBtn =
+    document.getElementById("judgeAiBtn");
+
+  if(judgeAiBtn){
+    judgeAiBtn.addEventListener(
+      "click",
+      ()=>{
+        awardPoint("ai");
+      }
+    );
+  }
+
+  /* Punto jugador */
+  const judgePlayerBtn =
+    document.getElementById("judgePlayerBtn");
+
+  if(judgePlayerBtn){
+    judgePlayerBtn.addEventListener(
+      "click",
+      ()=>{
+        awardPoint("me");
+      }
+    );
+  }
+
+  /* Siguiente ronda */
+  const nextRoundBtn =
+    document.getElementById("nextRoundBtn");
+
+  if(nextRoundBtn){
+
+    nextRoundBtn.addEventListener(
+      "click",
+      ()=>{
+        if(!game.active){
+          return;
+        }
+
+        if(game.me >= 20 || game.ai >= 20){
+          finishGame(false);
+          return;
+        }
+
+        nextRound();
+      }
     );
 
-    renderHistory();
   }
-}
 
+  /* TERMINAR PARTIDA */
+  const endGameBtn =
+    document.getElementById("endGameBtn");
 
-/* =========================================================
-   SEGURIDAD
-========================================================= */
+  if(endGameBtn){
 
-function escapeHtml(s){
+    endGameBtn.addEventListener(
+      "click",
+      endGame
+    );
 
-  return String(s).replace(
-    /[&<>"']/g,
+  }
 
-    m=>({
+  /* Nueva partida */
+  const newGameBtn =
+    document.getElementById("newGameBtn");
 
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
+  if(newGameBtn){
+    newGameBtn.addEventListener(
+      "click",
+      resetToStart
+    );
+  }
 
-    }[m])
-  );
-}
+  /* Borrar historial */
+  const clearHistoryBtn =
+    document.getElementById("clearHistoryBtn");
 
+  if(clearHistoryBtn){
+    clearHistoryBtn.addEventListener(
+      "click",
+      clearHistory
+    );
+  }
 
-/* =========================================================
-   INICIO
-========================================================= */
+  /* Historial inicial */
+  renderHistory();
 
-updateSoundButton();
+  /* Nombre con Enter */
+  const playerName =
+    document.getElementById("playerName");
 
-renderHistory();
+  if(playerName){
 
+    playerName.addEventListener(
+      "keydown",
+      event=>{
+        if(event.key === "Enter"){
+          event.preventDefault();
+          startGame();
+        }
+      }
+    );
+
+  }
+
+});
 </script>
 
 </body>
